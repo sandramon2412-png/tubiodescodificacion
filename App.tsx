@@ -320,7 +320,12 @@ const App: React.FC = () => {
               <div className="mt-10 sm:mt-16 space-y-10 sm:space-y-12">
                 {/* Visual Guarantee Badge - Better spacing for mobile */}
                 <div className="bg-white sm:bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-3xl p-6 sm:p-10 max-w-2xl mx-auto shadow-md relative overflow-hidden transition-all hover:border-[#8B4B9C]">
-                  <div className="absolute top-0 right-0 -mr-6 -mt-4 bg-green-500 text-white px-10 py-2 rotate-45 text-[9px] font-bold shadow-lg uppercase tracking-widest z-10 text-center">Garantizado</div>
+                  {/* Improved Ribbon for better visibility */}
+                  <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden pointer-events-none">
+                    <div className="bg-green-500 text-white text-[9px] font-bold py-1.5 w-[150%] absolute top-5 -right-[30%] rotate-45 shadow-lg uppercase tracking-widest text-center">
+                      Garantizado
+                    </div>
+                  </div>
                   <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
                     <div className="bg-green-50 p-4 rounded-full border-2 border-green-100 shadow-inner flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 sm:h-14 sm:w-14 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -346,11 +351,11 @@ const App: React.FC = () => {
                     </svg>
                     PROCESO DE PAGO 100% SEGURO
                   </p>
-                  <div className="flex flex-wrap justify-center items-center gap-5 sm:gap-8 px-4 opacity-80 transition hover:opacity-100">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-4 sm:h-6 grayscale hover:grayscale-0 transition duration-300" alt="Visa" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-6 sm:h-8 grayscale hover:grayscale-0 transition duration-300" alt="Mastercard" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-4 sm:h-6 grayscale hover:grayscale-0 transition duration-300" alt="Paypal" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" className="h-5 sm:h-7 grayscale hover:grayscale-0 transition duration-300" alt="Apple Pay" />
+                  <div className="flex flex-wrap justify-center items-center gap-5 sm:gap-8 px-4 opacity-100 transition">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/512px-Visa_Inc._logo.svg.png" className="h-4 sm:h-6 w-auto object-contain" alt="Visa" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/512px-Mastercard-logo.svg.png" className="h-7 sm:h-10 w-auto object-contain" alt="Mastercard" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/512px-PayPal.svg.png" className="h-5 sm:h-8 w-auto object-contain" alt="Paypal" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/512px-Apple_Pay_logo.svg.png" className="h-6 sm:h-9 w-auto object-contain" alt="Apple Pay" />
                   </div>
                 </div>
               </div>
