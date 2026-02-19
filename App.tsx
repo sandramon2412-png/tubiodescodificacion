@@ -109,7 +109,9 @@ const App: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
           <div className="bg-white p-6 sm:p-10 rounded-3xl shadow-lg border border-purple-100">
             <div className="text-center mb-8 flex flex-col items-center">
-              <span className="inline-block bg-purple-100 text-[#8B4B9C] px-4 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest text-center">{CONTENT.analyzer.tag}</span>
+              <div className="w-fit mx-auto bg-purple-100 text-[#8B4B9C] px-4 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest">
+                {CONTENT.analyzer.tag}
+              </div>
               <h2 className="text-2xl sm:text-3xl font-bold mt-4">{CONTENT.analyzer.title}</h2>
               <p className="text-gray-600 mt-2 text-sm sm:text-base">{CONTENT.analyzer.subtitle}</p>
             </div>
@@ -289,20 +291,24 @@ const App: React.FC = () => {
                    <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
                    <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
-                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">{CONTENT.pricing.launchPriceLabel}</p>
+                <div className="w-fit mx-auto">
+                  <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">{CONTENT.pricing.launchPriceLabel}</p>
+                </div>
               </div>
 
               <div className="max-w-xl mx-auto space-y-6 px-2">
                 <button 
                   onClick={scrollToOffer}
-                  className="w-full bg-[#8B4B9C] hover:bg-purple-800 text-white py-5 sm:py-6 rounded-2xl text-xl sm:text-3xl font-black shadow-xl transition-all transform hover:scale-105 active:scale-95 uppercase tracking-tighter flex items-center justify-center gap-3"
+                  className="w-full bg-[#8B4B9C] hover:bg-purple-800 text-white py-5 sm:py-6 px-4 rounded-2xl text-xl sm:text-3xl font-black shadow-xl transition-all transform hover:scale-105 active:scale-95 uppercase tracking-tighter flex items-center justify-center text-center gap-3"
                 >
-                  <span className="animate-bounce">🔥</span> {CONTENT.pricing.cta}
+                  <span className="animate-bounce flex-shrink-0">🔥</span>
+                  <span className="leading-tight">{CONTENT.pricing.cta.replace(/🔥/g, '').replace(/"/g, '')}</span>
+                  <span className="animate-bounce flex-shrink-0">🔥</span>
                 </button>
                 
                 {/* Visual nudge specifically reorganized for mobile */}
                 <div className="flex justify-center">
-                  <div className="inline-block bg-purple-100/80 backdrop-blur-sm border border-purple-200 px-6 py-3 rounded-2xl">
+                  <div className="w-fit mx-auto bg-purple-100/80 backdrop-blur-sm border border-purple-200 px-6 py-3 rounded-2xl">
                       <p className="text-[#8B4B9C] font-bold italic text-xs sm:text-sm leading-tight text-center">
                           ☕ ¡Recibe todo el pack por menos de lo que cuesta un café!
                       </p>
@@ -403,9 +409,11 @@ const App: React.FC = () => {
           </p>
           <button 
             onClick={scrollToOffer}
-            className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-8 sm:px-12 py-5 sm:py-6 rounded-full font-black text-xl sm:text-2xl shadow-2xl transition duration-300 uppercase tracking-wide transform hover:scale-105 active:scale-95"
+            className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-8 sm:px-12 py-5 sm:py-6 rounded-full font-black text-xl sm:text-2xl shadow-2xl transition duration-300 uppercase tracking-wide transform hover:scale-105 active:scale-95 flex items-center justify-center text-center gap-3 mx-auto"
           >
-            {CONTENT.closing.finalCta}
+            <span className="animate-bounce flex-shrink-0">🔥</span>
+            <span className="leading-tight">{CONTENT.closing.finalCta.replace(/🔥/g, '').trim()}</span>
+            <span className="animate-bounce flex-shrink-0">🔥</span>
           </button>
           <div className="space-y-4 mt-12 sm:mt-16 border-t border-white/10 pt-10">
             <p className="text-purple-200 text-sm uppercase tracking-widest font-bold opacity-60">{CONTENT.closing.signOff}</p>
