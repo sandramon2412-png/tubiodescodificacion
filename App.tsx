@@ -301,10 +301,12 @@ const App: React.FC = () => {
                 </button>
                 
                 {/* Visual nudge specifically reorganized for mobile */}
-                <div className="inline-block bg-purple-100/80 backdrop-blur-sm border border-purple-200 px-6 py-3 rounded-2xl mx-auto">
-                    <p className="text-[#8B4B9C] font-bold italic text-xs sm:text-sm leading-tight">
-                        ☕ ¡Recibe todo el pack por menos de lo que cuesta un café!
-                    </p>
+                <div className="flex justify-center">
+                  <div className="inline-block bg-purple-100/80 backdrop-blur-sm border border-purple-200 px-6 py-3 rounded-2xl">
+                      <p className="text-[#8B4B9C] font-bold italic text-xs sm:text-sm leading-tight">
+                          ☕ ¡Recibe todo el pack por menos de lo que cuesta un café!
+                      </p>
+                  </div>
                 </div>
               </div>
               
@@ -321,7 +323,7 @@ const App: React.FC = () => {
                     </div>
                     <div className="text-center sm:text-left space-y-2">
                       <h4 className="text-xl sm:text-2xl font-black text-gray-900 leading-tight uppercase tracking-tight">{CONTENT.pricing.guarantee}</h4>
-                      <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-md">
+                      <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-md mx-auto sm:mx-0">
                         Si en los próximos 7 días sientes que no es para ti, 
                         te devolvemos el <strong>100% de tu dinero</strong> de inmediato. 
                         <em> Sin preguntas y sin trámites. Tu paz mental es lo primero.</em>
