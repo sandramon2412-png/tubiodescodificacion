@@ -108,8 +108,8 @@ const App: React.FC = () => {
       <section id="analyzer" className="py-12 sm:py-16 bg-purple-50">
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
           <div className="bg-white p-6 sm:p-10 rounded-3xl shadow-lg border border-purple-100">
-            <div className="text-center mb-8">
-              <span className="bg-purple-100 text-[#8B4B9C] px-4 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest">{CONTENT.analyzer.tag}</span>
+            <div className="text-center mb-8 flex flex-col items-center">
+              <span className="inline-block bg-purple-100 text-[#8B4B9C] px-4 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest text-center">{CONTENT.analyzer.tag}</span>
               <h2 className="text-2xl sm:text-3xl font-bold mt-4">{CONTENT.analyzer.title}</h2>
               <p className="text-gray-600 mt-2 text-sm sm:text-base">{CONTENT.analyzer.subtitle}</p>
             </div>
@@ -289,7 +289,7 @@ const App: React.FC = () => {
                    <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
                    <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
-                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4">{CONTENT.pricing.launchPriceLabel}</p>
+                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">{CONTENT.pricing.launchPriceLabel}</p>
               </div>
 
               <div className="max-w-xl mx-auto space-y-6 px-2">
@@ -303,7 +303,7 @@ const App: React.FC = () => {
                 {/* Visual nudge specifically reorganized for mobile */}
                 <div className="flex justify-center">
                   <div className="inline-block bg-purple-100/80 backdrop-blur-sm border border-purple-200 px-6 py-3 rounded-2xl">
-                      <p className="text-[#8B4B9C] font-bold italic text-xs sm:text-sm leading-tight">
+                      <p className="text-[#8B4B9C] font-bold italic text-xs sm:text-sm leading-tight text-center">
                           ☕ ¡Recibe todo el pack por menos de lo que cuesta un café!
                       </p>
                   </div>
@@ -314,7 +314,7 @@ const App: React.FC = () => {
               <div className="mt-10 sm:mt-16 space-y-10 sm:space-y-12">
                 {/* Visual Guarantee Badge - Better spacing for mobile */}
                 <div className="bg-white sm:bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-3xl p-6 sm:p-10 max-w-2xl mx-auto shadow-md relative overflow-hidden transition-all hover:border-[#8B4B9C]">
-                  <div className="absolute top-0 right-0 -mr-6 -mt-4 bg-green-500 text-white px-10 py-2 rotate-45 text-[9px] font-bold shadow-lg uppercase tracking-widest z-10">Garantizado</div>
+                  <div className="absolute top-0 right-0 -mr-6 -mt-4 bg-green-500 text-white px-10 py-2 rotate-45 text-[9px] font-bold shadow-lg uppercase tracking-widest z-10 text-center">Garantizado</div>
                   <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
                     <div className="bg-green-50 p-4 rounded-full border-2 border-green-100 shadow-inner flex-shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 sm:h-14 sm:w-14 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
