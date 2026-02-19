@@ -351,11 +351,11 @@ const App: React.FC = () => {
                     </svg>
                     PROCESO DE PAGO 100% SEGURO
                   </p>
-                  <div className="flex flex-wrap justify-center items-center gap-5 sm:gap-8 px-4 opacity-100 transition">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/512px-Visa_Inc._logo.svg.png" className="h-4 sm:h-6 w-auto object-contain" alt="Visa" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/512px-Mastercard-logo.svg.png" className="h-7 sm:h-10 w-auto object-contain" alt="Mastercard" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/512px-PayPal.svg.png" className="h-5 sm:h-8 w-auto object-contain" alt="Paypal" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/512px-Apple_Pay_logo.svg.png" className="h-6 sm:h-9 w-auto object-contain" alt="Apple Pay" />
+                  <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 px-4 py-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/1200px-Visa.svg.png" className="h-6 sm:h-10 w-auto min-w-[60px] object-contain" alt="Visa" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" className="h-8 sm:h-12 w-auto min-w-[60px] object-contain" alt="Mastercard" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png" className="h-6 sm:h-10 w-auto min-w-[60px] object-contain" alt="Paypal" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/1200px-Apple_Pay_logo.svg.png" className="h-8 sm:h-12 w-auto min-w-[60px] object-contain" alt="Apple Pay" />
                   </div>
                 </div>
               </div>
