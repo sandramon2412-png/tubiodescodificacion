@@ -228,9 +228,9 @@ const App: React.FC = () => {
                     {CONTENT.stack.mainTitle}
                   </h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {mainItems.map((item, idx) => (
-                    <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
+                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
                       <div className="relative aspect-[4/3] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
                         <img 
                           src={item.image} 
@@ -258,9 +258,9 @@ const App: React.FC = () => {
                     {CONTENT.stack.bonusTitle}
                   </h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {bonusItems.map((item, idx) => (
-                    <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-yellow-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
+                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-yellow-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
                       <div className="relative aspect-[4/3] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
                         <img 
                           src={item.image} 
