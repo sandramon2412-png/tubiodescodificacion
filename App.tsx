@@ -167,9 +167,9 @@ const App: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 px-4">Miles de mujeres ya han transformado sus vidas</h2>
             <p className="text-gray-500 mt-2 max-w-lg mx-auto italic">"Únete a la comunidad de mujeres conscientes que están sanando desde adentro hacia afuera."</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {TESTIMONIALS.map((t, idx) => (
-              <div key={idx} className="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
+              <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
                 <div className="flex text-[#E0C4C3] mb-4 text-sm">
                   {[...Array(t.rating)].map((_, i) => <span key={i}>★</span>)}
                 </div>
@@ -231,13 +231,14 @@ const App: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {mainItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
-                      <div className="relative aspect-[4/3] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden">
                         <img 
                           src={item.image} 
                           alt={item.title} 
-                          className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-105" 
+                          className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
+                          style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 95%)', mixBlendMode: 'multiply' }}
                         />
-                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-10 uppercase">INCLUIDO</div>
+                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase">INCLUIDO</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col justify-between">
                         <h4 className="font-bold text-gray-800 leading-tight mb-2 text-sm sm:text-base">📖 {item.title}</h4>
@@ -261,13 +262,14 @@ const App: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {bonusItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-yellow-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
-                      <div className="relative aspect-[4/3] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden">
                         <img 
                           src={item.image} 
                           alt={item.title} 
-                          className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-105" 
+                          className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
+                          style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 95%)', mixBlendMode: 'multiply' }}
                         />
-                        <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-10 uppercase">BONUS GRATIS</div>
+                        <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase">BONUS GRATIS</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col justify-between">
                         <h4 className="font-bold text-purple-700 leading-tight mb-2 text-sm sm:text-base">🎁 {item.title}</h4>
