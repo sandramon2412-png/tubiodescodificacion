@@ -231,12 +231,12 @@ const App: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {mainItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
-                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden bg-transparent shadow-none">
                         <img 
                           src={item.image} 
                           alt={item.title} 
                           className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
-                          style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 95%)', mixBlendMode: 'multiply' }}
+                          style={{ mixBlendMode: 'multiply', maskImage: 'radial-gradient(circle, black 40%, transparent 90%)', WebkitMaskImage: 'radial-gradient(circle, black 40%, transparent 90%)' }}
                         />
                         <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase">INCLUIDO</div>
                       </div>
@@ -262,12 +262,12 @@ const App: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {bonusItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden shadow-lg border border-yellow-100 flex flex-col group transition hover:shadow-xl transform hover:-translate-y-1">
-                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-[4/3] w-full flex items-center justify-center overflow-hidden bg-transparent shadow-none">
                         <img 
                           src={item.image} 
                           alt={item.title} 
                           className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
-                          style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 95%)', mixBlendMode: 'multiply' }}
+                          style={{ mixBlendMode: 'multiply', maskImage: 'radial-gradient(circle, black 40%, transparent 90%)', WebkitMaskImage: 'radial-gradient(circle, black 40%, transparent 90%)' }}
                         />
                         <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase">BONUS GRATIS</div>
                       </div>
