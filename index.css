@@ -6,7 +6,7 @@
   --font-display: "Playfair Display", serif;
 }
 
-/* Configuración base */
+/* Compatibilidad para clase container en Tailwind v4 */
 .container {
   width: 100%;
   margin-left: auto;
@@ -19,33 +19,4 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   @apply font-display;
-}
-
-/* --- CLASE DE MARCA DE AGUA (CORREGIDA) --- */
-.bg-watermark {
-  position: relative;
-  overflow: hidden;
-}
-
-.bg-watermark::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://i.imgur.com/zlHgy9z.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  /* 'cover' hace que la imagen se estire para cubrir toda la sección clara */
-  background-size: cover; 
-  opacity: 0.05; 
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Asegura que el texto esté por encima de la imagen */
-.bg-watermark > * {
-  position: relative;
-  z-index: 1;
 }
