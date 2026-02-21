@@ -50,7 +50,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
       {/* Header Alert */}
-      <div className="bg-red-600 text-white text-center py-2 px-4 text-xs sm:text-sm font-bold animate-pulse uppercase tracking-wide">
+      <div className="bg-[#E0C4C3] text-purple-900 text-center py-2 px-4 text-xs font-bold animate-pulse uppercase tracking-widest">
         {CONTENT.hero.upperAlert}
       </div>
 
@@ -86,7 +86,7 @@ const App: React.FC = () => {
       </section>
 
       {/* Pain Section */}
-      <section className="py-16 sm:py-20 bg-gray-50">
+      <section className="py-16 sm:py-20 bg-gray-50 bg-watermark">
         <div className="container mx-auto px-6 max-w-3xl text-center space-y-6 sm:space-y-8">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">
             {CONTENT.pain.question}
@@ -161,7 +161,7 @@ const App: React.FC = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 sm:py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-white bg-watermark">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 px-4">Miles de mujeres ya han transformado sus vidas</h2>
@@ -367,7 +367,7 @@ const App: React.FC = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 sm:py-20 bg-gray-50">
+      <section className="py-16 sm:py-20 bg-gray-50 bg-watermark">
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10 sm:mb-12 uppercase tracking-tight">❓ PREGUNTAS FRECUENTES</h2>
           <div className="space-y-3 sm:space-y-4">
@@ -498,6 +498,5 @@ const App: React.FC = () => {
     </div>
   );
 };
-export default App;
 
-
+export default App; 
