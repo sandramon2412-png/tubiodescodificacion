@@ -43,7 +43,7 @@ export const CONTENT = {
     ]
   },
   stack: {
-    title: "📚 PROBANDO CAMBIOS 123",
+    title: "📚 TODO LO QUE RECIBES HOY",
     subtitle: "OFERTA DE LANZAMIENTO",
     mainTitle: "EL SISTEMA COMPLETO",
     bonusTitle: "REGALOS EXCLUSIVOS (BONUS)"
