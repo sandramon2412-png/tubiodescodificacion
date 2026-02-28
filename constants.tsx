@@ -15,7 +15,7 @@ export const CONTENT = {
     subtitle: "El Sistema de Biodescodificación Femenina que conecta tus síntomas físicos con emociones bloqueadas para una sanación completa.",
     cta: "🚀 \"SÍ, QUIERO TRANSFORMAR MI VIDA\"",
     footer: "Acceso inmediato - Descarga en 2 minutos",
-    heroImage: "https://i.imgur.com/vx9jsY9.jpeg"
+    heroImage: "https://i.imgur.com/hD7pK5a.png"
   },
   pain: {
     question: "¿Alguna vez has sentido que tu cuerpo te está enviando señales que no logras entender?",
@@ -35,6 +35,7 @@ export const CONTENT = {
     title: "Con el Sistema de Biodescodificación Femenina vas a:",
     items: [
       { icon: '🔓', title: 'Decodificar el lenguaje secreto', desc: 'Cada síntoma físico que llevas cargando tiene un mensaje emocional específico.' },
+      { icon: '📱', title: 'Registrar y ver patrones en nuestra App', desc: 'Lleva un diario de tus síntomas en un mapa corporal interactivo y descubre la relación entre tus emociones y tus dolencias con gráficos de evolución.' },
       { icon: '💫', title: 'Elevar tu autosanación', desc: 'Rituales diarios que te ayudarán a despertar tu poder sanador interno.' },
       { icon: '🧘‍♀️', title: 'Liberar la ansiedad de raíz', desc: 'Técnicas profundas de tapping y meditación que funcionan en minutos.' },
       { icon: '✨', title: 'Encontrar tu propósito', desc: '30 días estructurados para despertar tu esencia más auténtica.' },
@@ -44,9 +45,9 @@ export const CONTENT = {
   },
   stack: {
     title: "📚 TODO LO QUE RECIBES HOY",
-    subtitle: "OFERTA DE LANZAMIENTO",
-    mainTitle: "EL SISTEMA COMPLETO",
-    bonusTitle: "REGALOS EXCLUSIVOS (BONUS)"
+    subtitle: "OFERTA DE LANZAMIENTO - VALOR TOTAL: $299 USD",
+    mainTitle: "EL SISTEMA COMPLETO DE BIODESCODIFICACIÓN FEMENINA",
+    bonusTitle: "🎁 REGALOS EXCLUSIVOS (BONUS POR TIEMPO LIMITADO)"
   },
   pricing: {
     totalValueLabel: "Valor Total Estimado",
@@ -136,52 +137,56 @@ export const FAQS: FAQItem[] = [
 
 export const STACK_ITEMS: StackItem[] = [
   { 
-    title: "Libro Principal: Tu Cuerpo Tiene Algo Que Decirte", 
+    title: "📖 Libro Principal: \"Biodescodificación Femenina - El Código Secreto de Tu Cuerpo\" (130 págs.)", 
+    value: 27, 
+    image: "https://i.imgur.com/hD7pK5a.png",
+    description: "El libro que escribimos juntas, con el método RE-CONECT, el diccionario de 60 señales, casos guiados y todos los ejercicios prácticos. La base de todo tu proceso de sanación."
+  },
+  { 
+    title: "📱 App Interactiva \"Código Cuerpo\" (Acceso Exclusivo)", 
     value: 47, 
-    image: "https://i.imgur.com/vx9jsY9.jpeg" 
+    image: "https://i.imgur.com/tp3ywRK.png",
+    description: "La extensión digital de tu libro. Incluye: Mapa corporal interactivo, Diario emocional guiado, Reto 7 Días, Meditaciones y tapping, Seguimiento de progreso."
   },
   { 
-    title: "Guía de Meditación en 5 minutos", 
+    title: "📚 5 Guías Prácticas Descargables (PDF)", 
+    value: 49, 
+    image: "https://i.imgur.com/PVXfooh.png",
+    description: "🧘‍♀️ Guía de Meditación, 👆 Guía de Tapping, 🌅 5 rituales diarios, 💬 50 afirmaciones, 🙏 Plantillas de Gratitud."
+  },
+  { 
+    title: "🎁 BONUS 1: \"Volver a Mí: Amor propio en tiempos de ansiedad\" (Libro digital)", 
     value: 27, 
-    image: "https://i.imgur.com/GXkXaw3.png" 
-  },
-  { 
-    title: "Guía de Tapping para liberar emociones", 
-    value: 27, 
-    image: "https://i.imgur.com/Yv5JmBh.jpeg" 
-  },
-  { 
-    title: "5 rituales diarios para reconectar", 
-    value: 27, 
-    image: "https://i.imgur.com/kOjImtH.png" 
-  },
-  { 
-    title: "50 afirmaciones de alta vibración", 
-    value: 17, 
-    image: "https://i.imgur.com/qf8oUcJ.png" 
-  },
-  { 
-    title: "BONUS 1: Volver a Mí (Amor propio)", 
-    value: 37, 
     image: "https://i.imgur.com/1hDDUH5.png",
-    isBonus: true 
+    isBonus: true,
+    description: "Aprende a cultivar el amor propio incluso cuando la ansiedad intenta sabotearlo. Ejercicios prácticos para reconectar con tu valor."
   },
   { 
-    title: "BONUS 2: Despierta tu Luz (Reto 30 días)", 
-    value: 47, 
-    image: "https://i.imgur.com/EKsngIC.png",
-    isBonus: true 
-  },
-  { 
-    title: "BONUS 3: Cuando Amar Duele (Relaciones)", 
+    title: "🎁 BONUS 2: \"Despierta tu luz: Reto espiritual de 30 días\" (Libro digital)", 
     value: 37, 
-    image: "https://i.imgur.com/xSbkW9P.png",
-    isBonus: true 
+    image: "https://i.imgur.com/EKsngIC.png",
+    isBonus: true,
+    description: "Un día a día estructurado para reconectar con tu esencia más auténtica. Cada día una reflexión, una práctica y una afirmación."
   },
   { 
-    title: "BONUS 4: Plantillas de Gratitud diarias", 
+    title: "🎁 BONUS 3: \"Cuando amar duele: Ansiedad en las relaciones\" (Libro digital)", 
+    value: 27, 
+    image: "https://i.imgur.com/xSbkW9P.png",
+    isBonus: true,
+    description: "Descubre por qué tus relaciones te generan ansiedad y cómo sanar los patrones que se repiten. Herramientas para vincularte desde la paz."
+  },
+  { 
+    title: "🎁 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
     value: 17, 
     image: "https://i.imgur.com/ZvuT6H6.jpeg",
-    isBonus: true 
+    isBonus: true,
+    description: "Un diseño bonito y práctico para que cada día anotes tu afirmación y tu logro. Fomenta el hábito de la gratitud."
+  },
+  { 
+    title: "🎁 BONUS 5: Acceso a la Comunidad Privada de Mujeres Conscientes", 
+    value: 97, 
+    image: "https://picsum.photos/seed/community/400/400",
+    isBonus: true,
+    description: "Un espacio seguro en Telegram/WhatsApp donde compartir tus procesos, recibir apoyo y conectar con otras mujeres en el mismo camino. Acompañamiento real."
   }
 ];

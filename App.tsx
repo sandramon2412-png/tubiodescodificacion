@@ -59,8 +59,8 @@ const App: React.FC = () => {
         <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 sm:space-y-8 animate-fade-in text-center lg:text-left">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight animate-fade-in">
-  Descubre el <span className="text-[#E0C4C3]">Mensaje Oculto</span> que tu Cuerpo te envía, Sana desde la Raíz y <span className="italic text-[#E0C4C3]">Reconecta con tu Esencia</span>
-</h1>
+              Descifra el <span className="text-[#E0C4C3]">Código Secreto</span> de tu Cuerpo con el Método que Conecta tus Síntomas con su Origen Emocional + <span className="italic text-[#E0C4C3]">App Interactiva</span>
+            </h1>
             <p className="text-lg lg:text-xl opacity-90 font-light max-w-2xl mx-auto lg:mx-0">
               {CONTENT.hero.subtitle}
             </p>
@@ -74,13 +74,29 @@ const App: React.FC = () => {
             </div>
             <p className="text-xs sm:text-sm italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
-          <div className="relative group max-w-md mx-auto lg:max-w-none">
-            <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
-            <img 
-              src={CONTENT.hero.heroImage} 
-              alt="Tu Cuerpo Tiene Algo Que Decirte" 
-              className="relative rounded-2xl shadow-2xl w-full object-cover aspect-square border-4 border-white/20"
-            />
+          <div className="relative group max-w-md mx-auto lg:max-w-none flex flex-col items-center lg:items-end">
+            {/* Main Book Image */}
+            <div className="relative w-full sm:w-4/5 lg:w-full">
+              <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
+              <img 
+                src={CONTENT.hero.heroImage} 
+                alt="Tu Cuerpo Tiene Algo Que Decirte" 
+                className="relative rounded-2xl shadow-2xl w-full h-auto border-4 border-white/20 z-10"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            
+            {/* App Image / Mockup */}
+            <div className="relative -mt-16 sm:-mt-24 lg:-mt-32 -mr-8 sm:-mr-12 lg:-mr-16 w-1/2 sm:w-2/5 lg:w-1/2 z-20 animate-bounce-subtle">
+              <div className="absolute -inset-2 bg-purple-500/20 rounded-[2rem] blur-xl"></div>
+              <img 
+                src="https://i.imgur.com/tp3ywRK.png" 
+                alt="App Interactiva de Biodescodificación" 
+                className="relative rounded-[2rem] shadow-2xl w-full border-4 border-white/30"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -148,9 +164,9 @@ const App: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl font-bold">{CONTENT.benefits.title}</h2>
             <div className="h-1 w-24 bg-[#E0C4C3] mx-auto"></div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {CONTENT.benefits.items.map((benefit, idx) => (
-              <div key={idx} className="bg-white/10 p-6 sm:p-8 rounded-2xl hover:bg-white/20 transition backdrop-blur-sm border border-white/10 group">
+              <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white/10 p-6 sm:p-8 rounded-2xl hover:bg-white/20 transition backdrop-blur-sm border border-white/10 group">
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{benefit.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
                 <p className="text-purple-100 text-sm sm:text-base leading-relaxed">{benefit.desc}</p>
@@ -230,7 +246,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {mainItems.map((item, idx) => (
-                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1">
+                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-purple-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center bg-transparent!">
                         <img 
                           src={item.image} 
@@ -238,10 +254,13 @@ const App: React.FC = () => {
                           className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
                           style={{ mixBlendMode: 'multiply', maskImage: 'radial-gradient(circle, black 20%, transparent 75%)', WebkitMaskImage: 'radial-gradient(circle, black 20%, transparent 75%)' }}
                         />
-                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase">INCLUIDO</div>
+                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
                       </div>
-                      <div className="p-5 flex-1 flex flex-col justify-between">
-                        <h4 className="font-bold text-gray-800 leading-tight mb-2 text-sm sm:text-base">📖 {item.title}</h4>
+                      <div className="p-5 flex-1 flex flex-col">
+                        <h4 className="font-bold text-gray-800 leading-tight mb-2 text-sm sm:text-base">{item.title}</h4>
+                        {item.description && (
+                          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">{item.description}</p>
+                        )}
                         <div className="flex justify-between items-center pt-2 mt-auto border-t border-gray-50">
                           <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value} USD</span>
                           <span className="text-[#8B4B9C] text-[10px] font-black uppercase">HOY: $0.00</span>
@@ -261,7 +280,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {bonusItems.map((item, idx) => (
-                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1">
+                    <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-yellow-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center bg-transparent!">
                         <img 
                           src={item.image} 
@@ -269,10 +288,13 @@ const App: React.FC = () => {
                           className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105"
                           style={{ mixBlendMode: 'multiply', maskImage: 'radial-gradient(circle, black 20%, transparent 75%)', WebkitMaskImage: 'radial-gradient(circle, black 20%, transparent 75%)' }}
                         />
-                        <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase">BONUS GRATIS</div>
+                        <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">BONUS GRATIS</div>
                       </div>
-                      <div className="p-5 flex-1 flex flex-col justify-between">
-                        <h4 className="font-bold text-purple-700 leading-tight mb-2 text-sm sm:text-base">🎁 {item.title}</h4>
+                      <div className="p-5 flex-1 flex flex-col">
+                        <h4 className="font-bold text-purple-700 leading-tight mb-2 text-sm sm:text-base">{item.title}</h4>
+                        {item.description && (
+                          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">{item.description}</p>
+                        )}
                         <div className="flex justify-between items-center pt-2 mt-auto border-t border-gray-50">
                           <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value} USD</span>
                           <span className="text-green-600 text-[10px] font-black uppercase tracking-widest">REGALO</span>
@@ -287,14 +309,15 @@ const App: React.FC = () => {
             {/* Final Pricing Block - MOBILE OPTIMIZED */}
             <div className="mt-16 sm:mt-24 border-t-2 border-dashed border-purple-200 pt-12 text-center space-y-8">
               <div className="space-y-1">
-                <p className="text-gray-400 line-through text-lg sm:text-2xl font-medium tracking-tight">Valor Total: ${totalValue}+ USD</p>
+                <p className="text-gray-500 font-bold text-sm sm:text-base uppercase tracking-widest mb-2">💰 INVERSIÓN TOTAL</p>
+                <p className="text-gray-400 line-through text-lg sm:text-2xl font-medium tracking-tight">Valor Total de todo el pack: $299 USD</p>
                 <div className="flex items-center justify-center gap-1 sm:gap-2">
                    <span className="text-4xl sm:text-6xl font-black text-[#8B4B9C]">$</span>
                    <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
                    <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
                 <div className="w-fit mx-auto">
-                  <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">{CONTENT.pricing.launchPriceLabel}</p>
+                  <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO POR TIEMPO LIMITADO</p>
                 </div>
               </div>
 
@@ -485,11 +508,18 @@ const App: React.FC = () => {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.02); }
         }
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
         .animate-fade-in {
           animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .animate-pulse-subtle {
           animation: pulse-subtle 2.5s infinite ease-in-out;
+        }
+        .animate-bounce-subtle {
+          animation: bounce-subtle 3s infinite ease-in-out;
         }
         html {
           scroll-behavior: smooth;

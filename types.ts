@@ -16,4 +16,5 @@ export interface StackItem {
   value: number;
   image: string;
   isBonus?: boolean;
+  description?: string;
 }
