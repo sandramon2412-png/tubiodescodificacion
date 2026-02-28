@@ -34,13 +34,12 @@ export const CONTENT = {
   benefits: {
     title: "Con el Sistema de Biodescodificación Femenina vas a:",
     items: [
-      { icon: '🔓', title: 'Decodificar el lenguaje secreto', desc: 'Cada síntoma físico que llevas cargando tiene un mensaje emocional específico.' },
-      { icon: '📱', title: 'Registrar y ver patrones en nuestra App', desc: 'Lleva un diario de tus síntomas en un mapa corporal interactivo y descubre la relación entre tus emociones y tus dolencias con gráficos de evolución.' },
-      { icon: '💫', title: 'Elevar tu autosanación', desc: 'Rituales diarios que te ayudarán a despertar tu poder sanador interno.' },
-      { icon: '🧘‍♀️', title: 'Liberar la ansiedad de raíz', desc: 'Técnicas profundas de tapping y meditación que funcionan en minutos.' },
-      { icon: '✨', title: 'Encontrar tu propósito', desc: '30 días estructurados para despertar tu esencia más auténtica.' },
-      { icon: '🔄', title: 'Reconectar con tu intuición', desc: 'Despertar esa sabiduría interior que siempre has tenido.' },
-      { icon: '💖', title: 'Crear abundancia emocional', desc: 'Dominar decretos y afirmaciones que transforman tu vibración.' }
+      { icon: '🔓', title: 'Decodifica el lenguaje secreto de tu cuerpo', desc: 'Cada síntoma físico tiene un mensaje emocional específico. Aprenderás a traducirlos con nuestro diccionario de 60 señales.' },
+      { icon: '📱', title: 'Registra y descubre tus patrones en nuestra App', desc: 'Lleva un diario interactivo en un mapa corporal. La app analiza tu historial y te muestra la relación entre tus emociones y tus síntomas con gráficos de evolución.' },
+      { icon: '🧘‍♀️', title: 'Libera la ansiedad desde la raíz', desc: 'Técnicas profundas de tapping y meditación guiada (en la app y en guías PDF) que funcionan en minutos.' },
+      { icon: '💫', title: 'Elevar tu autosanación con rituales diarios', desc: 'Pequeños actos sagrados que despertarán tu poder sanador interno y te reconectarán contigo misma.' },
+      { icon: '✨', title: 'Encuentra tu propósito en 30 días', desc: 'Un reto estructurado día a día para despertar tu esencia más auténtica.' },
+      { icon: '💖', title: 'Crea abundancia emocional con afirmaciones', desc: 'Decretos y afirmaciones de alta vibración que transforman tu diálogo interno y tu realidad.' }
     ]
   },
   stack: {
@@ -150,7 +149,7 @@ export const STACK_ITEMS: StackItem[] = [
     title: "📱 App Interactiva \"Código Cuerpo\" (Acceso Exclusivo)", 
     value: 47, 
     image: "https://i.imgur.com/tp3ywRK.png",
-    description: "La extensión digital de tu libro. Incluye: Mapa corporal interactivo, Diario emocional guiado, Reto 7 Días, Meditaciones y tapping, Seguimiento de progreso."
+    description: "La extensión digital de tu libro. Incluye: 🗺️ Mapa corporal interactivo: Toca la zona donde sientes la molestia y registra tu síntoma en 4 pasos. 💬 Mensaje al instante: Recibe la interpretación simbólica y una reparación en 3 niveles. 📝 Diario emocional guiado: Los 5 ejercicios clave del libro en versión digital. 🎯 Reto 7 Días: La rutina del libro paso a paso, con checks y espacio para reflexiones. 🎧 Meditaciones y tapping: Audios guiados para la culpa, el miedo, la ansiedad y más. 📊 Seguimiento de progreso: Gráficos de síntomas y detector de patrones (\"He notado que los lunes...\")."
   },
   { 
     title: "📚 5 Guías Prácticas Descargables (PDF)", 
