@@ -197,6 +197,84 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* Nueva Sección: Conoce la App que Transforma */}
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-purple-50 overflow-hidden">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            {/* App Visuals */}
+            <div className="w-full lg:w-1/2 relative">
+              <div className="absolute -inset-4 bg-purple-200/50 rounded-[3rem] blur-3xl"></div>
+              <div className="relative flex justify-center items-center gap-4 sm:gap-6">
+                {/* Main Mockup */}
+                <div className="w-2/3 sm:w-3/5 z-20 transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+                  <img 
+                    src="https://i.imgur.com/tp3ywRK.png" 
+                    alt="App Código Cuerpo - Mapa Corporal" 
+                    className="rounded-[2.5rem] shadow-2xl border-4 border-white"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                {/* Secondary Mockup */}
+                <div className="w-1/2 sm:w-2/5 absolute -right-4 sm:-right-8 top-1/2 -translate-y-1/2 z-10 transform rotate-6 opacity-80 hover:opacity-100 transition-all duration-500">
+                  <img 
+                    src="https://i.imgur.com/Kel8mP3.png" 
+                    alt="App Código Cuerpo - Diario" 
+                    className="rounded-[2rem] shadow-xl border-4 border-white"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* App Content */}
+            <div className="w-full lg:w-1/2 space-y-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 bg-purple-100 text-[#8B4B9C] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
+                  📱 Acceso Exclusivo
+                </div>
+                <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">
+                  Conoce la App <span className="text-[#8B4B9C]">"Código Cuerpo"</span>
+                </h2>
+                <p className="text-xl text-gray-600 font-medium italic">
+                  Tu diario emocional siempre en el bolsillo
+                </p>
+                <p className="text-gray-600 leading-relaxed text-lg">
+                  La app que extiende la magia del libro a tu día a día. Interactiva, intuitiva y diseñada para que puedas registrar tus síntomas en segundos y recibir orientación inmediata.
+                </p>
+              </div>
+
+              <div className="grid gap-6">
+                {[
+                  { icon: "🗺️", title: "Toca donde te duele", desc: "Selecciona la zona en un mapa corporal femenino y registra tu síntoma en 4 pasos." },
+                  { icon: "💬", title: "Recibe el mensaje", desc: "Al instante, la app te muestra la interpretación simbólica y una reparación en 3 niveles." },
+                  { icon: "📝", title: "Haz los ejercicios del libro", desc: "\"Lo que no dije\", \"Mi verdad hoy\", \"Mis dos voces\"... en versión digital interactiva." },
+                  { icon: "🎯", title: "Completa el Reto 7 Días", desc: "Día a día, con ejercicios guiados y espacio para tus reflexiones." },
+                  { icon: "🎧", title: "Escucha meditaciones y tapping", desc: "Audios guiones completos para tu práctica diaria." },
+                  { icon: "📊", title: "Descubre tus patrones", desc: "La app analiza tu historial y te muestra frases como \"He notado que los lunes sueles tener dolor de cabeza. ¿Quieres explorar esto?\"" }
+                ].map((feature, i) => (
+                  <div key={i} className="flex gap-4 group">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white rounded-2xl shadow-sm border border-purple-100 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-1">{feature.title}</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <p className="text-[#8B4B9C] font-bold flex items-center gap-2">
+                  <span className="w-8 h-[2px] bg-[#8B4B9C]"></span>
+                  Todo sincronizado, todo guardado, siempre contigo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Objections */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-6 max-w-4xl">

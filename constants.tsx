@@ -132,6 +132,10 @@ export const FAQS: FAQItem[] = [
   {
     question: "¿Necesito experiencia previa en meditación?",
     answer: "No. Las guías de meditación incluidas son de 5 minutos y están diseñadas para ser seguidas fácilmente por cualquier principiante."
+  },
+  {
+    question: "¿Cómo accedo a la app después de la compra?",
+    answer: "Al completar tu compra, recibirás un email con el enlace directo a la app \"Código Cuerpo\" y un código de acceso exclusivo. Solo tendrás que introducir tu nombre y el código para activar tu cuenta. La app funciona directamente en tu navegador (no necesitas instalar nada) y puedes guardarla en la pantalla de inicio de tu móvil como si fuera una app nativa."
   }
 ];
 
