@@ -227,9 +227,9 @@ const App: React.FC = () => {
             </div>
 
             {/* App Content */}
-            <div className="w-full lg:w-1/2 space-y-8">
+            <div className="w-full lg:w-1/2 space-y-8 text-center lg:text-left">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 bg-purple-100 text-[#8B4B9C] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
+                <div className="inline-flex items-center gap-2 bg-purple-100 text-[#8B4B9C] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0">
                   📱 Acceso Exclusivo
                 </div>
                 <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">
@@ -515,14 +515,16 @@ const App: React.FC = () => {
           <p className="text-lg sm:text-xl opacity-90 max-w-2xl mx-auto italic px-4 leading-relaxed">
             "{CONTENT.closing.finalSub}"
           </p>
-          <button 
-            onClick={scrollToOffer}
-            className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-8 sm:px-12 py-5 sm:py-6 rounded-full font-black text-xl sm:text-2xl shadow-2xl transition duration-300 uppercase tracking-wide transform hover:scale-105 active:scale-95 flex items-center justify-center text-center gap-3 mx-auto"
-          >
-            <span className="animate-bounce flex-shrink-0">🔥</span>
-            <span className="leading-tight">{CONTENT.closing.finalCta.replace(/🔥/g, '').trim()}</span>
-            <span className="animate-bounce flex-shrink-0">🔥</span>
-          </button>
+          <div className="flex justify-center pt-4">
+            <button 
+              onClick={scrollToOffer}
+              className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-8 sm:px-12 py-5 sm:py-6 rounded-full font-black text-xl sm:text-2xl shadow-2xl transition duration-300 uppercase tracking-wide transform hover:scale-105 active:scale-95 flex items-center justify-center text-center gap-3 w-fit"
+            >
+              <span className="animate-bounce flex-shrink-0">🔥</span>
+              <span className="leading-tight">{CONTENT.closing.finalCta.replace(/🔥/g, '').trim()}</span>
+              <span className="animate-bounce flex-shrink-0">🔥</span>
+            </button>
+          </div>
           <div className="space-y-4 mt-12 sm:mt-16 border-t border-white/10 pt-10">
             <p className="text-purple-200 text-sm uppercase tracking-widest font-bold opacity-60">{CONTENT.closing.signOff}</p>
             <p className="font-bold text-3xl sm:text-4xl italic tracking-tight">{CONTENT.closing.mentorName}</p>

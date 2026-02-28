@@ -189,7 +189,7 @@ export const STACK_ITEMS: StackItem[] = [
   { 
     title: "🎁 BONUS 5: Acceso a la Comunidad Privada de Mujeres Conscientes", 
     value: 97, 
-    image: "https://picsum.photos/seed/community/400/400",
+    image: "https://i.imgur.com/WheJ70c.jpeg",
     isBonus: true,
     description: "Un espacio seguro en Telegram/WhatsApp donde compartir tus procesos, recibir apoyo y conectar con otras mujeres en el mismo camino. Acompañamiento real."
   }
