@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ShoppingBag, CheckCircle } from 'lucide-react';
 import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
@@ -47,8 +49,71 @@ const App: React.FC = () => {
   const mainItems = STACK_ITEMS.filter(item => !item.isBonus);
   const bonusItems = STACK_ITEMS.filter(item => item.isBonus);
 
+  // Social Proof Notifications
+  const [currentPurchase, setCurrentPurchase] = useState<number | null>(null);
+  const purchases = [
+    { name: "María", city: "Madrid", action: "acaba de comprar el pack completo" },
+    { name: "Lucía", city: "Ciudad de México", action: "se unió a la comunidad" },
+    { name: "Elena", city: "Buenos Aires", action: "descargó su guía de sanación" },
+    { name: "Sofía", city: "Santiago", action: "empezó su transformación" },
+    { name: "Carmen", city: "Bogotá", action: "ya tiene su acceso a la App" },
+    { name: "Valentina", city: "Lima", action: "adquirió la oferta de lanzamiento" },
+    { name: "Isabella", city: "Barcelona", action: "se unió al reto de 30 días" }
+  ];
+
+  useEffect(() => {
+    const showNextNotification = () => {
+      const randomIndex = Math.floor(Math.random() * purchases.length);
+      setCurrentPurchase(randomIndex);
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        setCurrentPurchase(null);
+      }, 5000);
+    };
+
+    // Initial delay
+    const initialTimeout = setTimeout(showNextNotification, 15000);
+    
+    // Repeat every 45-90 seconds
+    const interval = setInterval(() => {
+      showNextNotification();
+    }, Math.random() * 45000 + 45000);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+      {/* Social Proof Notification */}
+      <AnimatePresence>
+        {currentPurchase !== null && (
+          <motion.div
+            initial={{ opacity: 0, x: -50, y: 20 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: -50, scale: 0.95 }}
+            className="fixed bottom-24 left-4 sm:bottom-8 sm:left-8 z-[60] max-w-[280px] sm:max-w-sm"
+          >
+            <div className="bg-white/95 backdrop-blur-md border border-purple-100 shadow-2xl rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
+              <div className="bg-green-100 p-2 rounded-full flex-shrink-0">
+                <ShoppingBag className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs sm:text-sm text-gray-800 leading-tight">
+                  <span className="font-bold text-[#8B4B9C]">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city} {purchases[currentPurchase].action}.
+                </p>
+                <div className="flex items-center gap-1 mt-1">
+                  <CheckCircle className="w-3 h-3 text-green-500" />
+                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Compra Verificada</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Header Alert */}
       <div className="bg-[#E0C4C3] text-purple-900 text-center py-2 px-4 text-xs font-bold animate-pulse uppercase tracking-widest">
         {CONTENT.hero.upperAlert}
