@@ -2,195 +2,206 @@ import React from 'react';
 import { Testimonial, FAQItem, StackItem } from './types';
 
 export const COLORS = {
-  primary: '#8B4B9C', // Púrpura principal
-  accent: '#E0C4C3',  // Color solicitado
+  primary: '#8B4B9C',
+  accent: '#E0C4C3',
   softPink: '#FDF2F8',
   darkPurple: '#581C87'
 };
 
 export const CONTENT = {
   hero: {
-    upperAlert: "🔔 ESTA OFERTA ES LIMITADA: El precio de $6.97 USD puede regresar a $47 en cualquier momento",
-    title: "Descubre El Mensaje Oculto Que Tu Cuerpo Te Envía Cada Día, Sana Desde La Raíz y Reconecta Con Tu Esencia en Solo 30 Días",
-    subtitle: "El Sistema de Biodescodificación Femenina que conecta tus síntomas físicos con emociones bloqueadas para una sanación completa.",
-    cta: "🚀 \"SÍ, QUIERO TRANSFORMAR MI VIDA\"",
-    footer: "Acceso inmediato - Descarga en 2 minutos",
+    upperAlert: "🔔 PRECIO DE LANZAMIENTO: Solo por tiempo limitado a $6.97 USD — puede subir a $47 en cualquier momento",
+    title: "¿Tu cuerpo lleva años enviándote señales que nadie supo leer?",
+    subtitle: "Descubre el origen emocional de tus síntomas con el único sistema que combina libro + App interactiva para que entiendas — y sanes — lo que tu cuerpo realmente te está diciendo.",
+    cta: "🚀 SÍ, QUIERO ENTENDER MI CUERPO AHORA",
+    footer: "✅ Acceso inmediato · Descarga en 2 minutos · Garantía 7 días",
     heroImage: "https://i.imgur.com/hD7pK5a.png"
   },
+  identification: {
+    title: "Antes de seguir, respóndete esto con honestidad:",
+    questions: [
+      "¿Siempre te duele el mismo lugar cuando estás bajo estrés o presión emocional?",
+      "¿Tus síntomas aparecen o empeoran justo cuando algo emocionalmente difícil ocurre?",
+      "¿Sentiste que te enfermaste después de una pérdida, una traición o un momento de mucho dolor?",
+      "¿Los médicos te dicen que estás 'bien', pero tu cuerpo sigue sintiéndose mal?",
+      "¿Hay una parte tuya que siente que hay algo más detrás de lo que sientes físicamente?"
+    ],
+    conclusion: "Si dijiste que sí a aunque sea una de estas preguntas... tu cuerpo tiene algo que decirte. Y ya es hora de que lo escuches."
+  },
   pain: {
-    question: "¿Alguna vez has sentido que tu cuerpo te está enviando señales que no logras entender?",
-    quote: "Esos dolores inexplicables, esa ansiedad constante, esa sensación de estar desconECTAda de tu propósito...",
-    statement: "Tu cuerpo está tratando de hablarte.",
-    description: "Cada síntoma, cada malestar, cada emoción bloqueada tiene un mensaje profundo esperando ser decodificado. Como mujer consciente, sabes que hay algo más allá de lo que ves en la superficie. Sabes que mereces vivir en plenitud, conectada con tu esencia y tu poder interior."
+    question: "No estás exagerando. No estás loca. Estás ignorando el idioma más importante que existe:",
+    quote: "el idioma de tu propio cuerpo.",
+    statement: "Cada síntoma es una emoción que no encontró otra salida.",
+    description: "La biodescodificación dice que el cuerpo no miente. Que ese dolor de cabeza que te aparece los domingos en la noche, esa contractura que nunca termina de irse, esa ansiedad que no tiene nombre... no son accidentes. Son mensajes. Mensajes que llevan años esperando que los leas. Y hoy, por primera vez, vas a poder hacerlo."
   },
   analyzer: {
-    tag: "Herramienta Gratuita",
-    title: "¿Qué te está diciendo tu síntoma hoy?",
-    subtitle: "Escribe un síntoma que sientas (ej: dolor de espalda, migraña, acné) y obtén un breve mensaje de consciencia.",
-    placeholder: "Escribe tu síntoma aquí...",
-    button: "Consultar",
-    loading: "Analizando..."
+    tag: "🔍 Herramienta Gratuita — Impulsada por IA",
+    title: "¿Qué te está diciendo tu cuerpo HOY?",
+    subtitle: "Escribí el síntoma que más te preocupa y recibí el mensaje emocional que hay detrás.",
+    placeholder: "Ej: dolor de espalda baja, migraña, nudo en la garganta...",
+    button: "Descubrir el mensaje",
+    loading: "Analizando tu síntoma..."
   },
   benefits: {
     title: "Con el Sistema de Biodescodificación Femenina vas a:",
     items: [
-      { icon: '🔓', title: 'Decodifica el lenguaje secreto de tu cuerpo', desc: 'Cada síntoma físico tiene un mensaje emocional específico. Aprenderás a traducirlos con nuestro diccionario de 60 señales.' },
-      { icon: '📱', title: 'Registra y descubre tus patrones en nuestra App', desc: 'Lleva un diario interactivo en un mapa corporal. La app analiza tu historial y te muestra la relación entre tus emociones y tus síntomas con gráficos de evolución.' },
-      { icon: '🧘‍♀️', title: 'Libera la ansiedad desde la raíz', desc: 'Técnicas profundas de tapping y meditación guiada (en la app y en guías PDF) que funcionan en minutos.' },
-      { icon: '💫', title: 'Elevar tu autosanación con rituales diarios', desc: 'Pequeños actos sagrados que despertarán tu poder sanador interno y te reconectarán contigo misma.' },
-      { icon: '✨', title: 'Encuentra tu propósito en 30 días', desc: 'Un reto estructurado día a día para despertar tu esencia más auténtica.' },
-      { icon: '💖', title: 'Crea abundancia emocional con afirmaciones', desc: 'Decretos y afirmaciones de alta vibración que transforman tu diálogo interno y tu realidad.' }
+      { icon: '🔓', title: 'Entender cada síntoma como un mensaje, no como un castigo', desc: 'El diccionario de 60 señales corporales te explica exactamente qué emoción está detrás de lo que sentís. Sin tecnicismos. Con amor.' },
+      { icon: '📱', title: 'Consultar tu cuerpo en tiempo real desde la App', desc: 'Tocás la zona en el mapa corporal, escribís lo que sentís, y en segundos tenés la interpretación + una reparación en 3 niveles. Algo que la competencia no tiene.' },
+      { icon: '🧘‍♀️', title: 'Liberar lo que callaste durante años', desc: 'Técnicas de tapping y meditación guiada (en la app y en PDF) diseñadas específicamente para liberar emociones reprimidas que el cuerpo convirtió en dolor.' },
+      { icon: '💫', title: 'Crear una práctica diaria que sana de verdad', desc: 'Rituales de 15 minutos que despiertan tu poder sanador interno. Sin complicaciones. Sin excusas.' },
+      { icon: '✨', title: 'Reconectar con quién eras antes de cargarlo todo', desc: 'El reto de 30 días te devuelve a tu esencia paso a paso, con ejercicios guiados y espacio para tus reflexiones.' },
+      { icon: '💖', title: 'Hablar contigo misma diferente', desc: 'Afirmaciones y decretos que cambian el diálogo interno que más daño te hace: el tuyo propio.' }
     ]
   },
   stack: {
-    title: "📚 TODO LO QUE RECIBES HOY",
-    subtitle: "OFERTA DE LANZAMIENTO - VALOR TOTAL: $299 USD",
+    title: "📚 TODO LO QUE RECIBÍS HOY",
+    subtitle: "OFERTA DE LANZAMIENTO — VALOR TOTAL: $299 USD",
     mainTitle: "EL SISTEMA COMPLETO DE BIODESCODIFICACIÓN FEMENINA",
-    bonusTitle: "🎁 REGALOS EXCLUSIVOS (BONUS POR TIEMPO LIMITADO)"
+    bonusTitle: "🎁 BONOS EXCLUSIVOS — SOLO POR TIEMPO LIMITADO"
   },
   pricing: {
-    totalValueLabel: "Valor Total Estimado",
-    launchPriceLabel: "PRECIO DE LANZAMIENTO POR TIEMPO LIMITADO",
-    cta: "🔥 \"SÍ, QUIERO TRANSFORMAR MI VIDA HOY\"",
-    guarantee: "🛡️ GARANTÍA DE TRANSFORMACIÓN 7 DÍAS",
+    totalValueLabel: "Valor Total del Pack",
+    launchPriceLabel: "PRECIO DE LANZAMIENTO — SOLO POR TIEMPO LIMITADO",
+    cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $6.97",
+    guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
     paymentUrl: "https://pay.hotmart.com/U104712118U"
   },
   closing: {
-    imagine: "\"Imagínate dentro de 30 días...\"",
+    imagine: "\"Imaginá cómo te vas a sentir en 7 días...\"",
     points: [
-      "Despertarte sintiéndote en paz contigo misma.",
-      "Tu cuerpo ya no es un misterio: entiendes cada señal, cada mensaje que te envía.",
-      "La ansiedad que antes te paralizaba ahora es solo un recuerdo lejano.",
-      "Te conectas con tu intuición como si fuera tu mejor amiga, guiándote en cada decisión.",
-      "Te miras al espejo y sientes amor genuino por quien eres.",
-      "Vives alineada con tu propósito, sabiendo exactamente cuál es tu misión en esta vida."
+      "Ese dolor que te acompaña hace meses ya tiene nombre. Y con nombre, se puede sanar.",
+      "Entendés por qué tu cuerpo reacciona así en ciertos momentos — y ya no te da miedo.",
+      "La ansiedad sigue siendo parte de vos, pero ya no te controla. Ahora vos la escuchás.",
+      "Te despertás con una práctica que te ancla. Que te recuerda quién sos.",
+      "Te mirás al espejo y ves a alguien que por fin se está escuchando a sí misma.",
+      "Y sabés, con certeza, que el cambio más importante no vino de afuera. Vino de adentro."
     ],
-    reality: "Esto no es un sueño. Es tu nueva realidad esperándote.",
+    reality: "Esto no es un sueño lejano. Es lo que pasa cuando una mujer por fin aprende el idioma de su cuerpo.",
     finalCall: "☀️ EL MOMENTO ES AHORA",
-    finalSub: "Tu alma te ha guiado hasta aquí por algo. No es casualidad que estés leyendo esto HOY. Tu transformación está a un clic de distancia.",
-    finalCta: "🔥 RECLAMA TU TRANSFORMACIÓN - $6.97 USD",
-    signOff: "Con amor y luz,",
-    mentorName: "Tu Mentora",
-    ps: "P.S. Recuerda: tienes 7 días de garantía total. El único riesgo es quedarte donde estás..."
+    finalSub: "Tu cuerpo lleva años hablándote. Ya es hora de escucharlo. No mañana. Hoy.",
+    finalCta: "🔥 ACCEDER AL SISTEMA COMPLETO — $6.97 USD",
+    signOff: "Con amor y verdad,",
+    mentorName: "Tu guía en este camino",
+    ps: "P.D.: Tenés 7 días de garantía total. Si no sentís nada — ninguna emoción, ninguna claridad, ningún alivio — te devuelvo el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
   }
 };
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    name: "Ana",
-    age: 34,
+    name: "Valeria M.",
+    age: 37,
     rating: 5,
-    text: "Siento que por fin entendí lo que mi cuerpo me está diciendo, la ansiedad que me acompañó por años está desapareciendo. Es increíble como cambió mi perspectiva en tan poco tiempo."
+    text: "Tenía contracturas en el cuello desde hace 3 años. Tres años yendo al kinesiólogo sin resultado real. Con la biodescodificación entendí que era todo lo que estaba cargando sola sin pedirle ayuda a nadie. Empecé a soltar. El dolor bajó a la mitad en dos semanas."
   },
   {
-    name: "María",
-    age: 42,
+    name: "Daniela R.",
+    age: 41,
     rating: 5,
-    text: "Llevo 15 días y ya siento una conexión profunda conmigo misma que no había experimentado nunca. Los rituales son sencillos pero muy poderosos."
+    text: "Me diagnosticaron gastritis crónica a los 35. Los médicos me decían que era el estrés pero nadie me explicaba qué hacer con ese estrés. Este sistema me enseñó que me tragaba todo — literalmente. Hoy mi digestión es otra."
   },
   {
-    name: "Carmen",
-    age: 38,
+    name: "Luciana P.",
+    age: 33,
     rating: 5,
-    text: "Mis migrañas constantes tenían que ver con el estrés emocional que cargaba desde la infancia. Después de aplicar la biodescodificación y los rituales diarios, me siento más liviana y en paz."
+    text: "La app es lo que más me sorprendió. Poder tocar exactamente donde me duele y recibir el mensaje en segundos... es como tener una guía siempre conmigo. Lo uso casi todos los días."
   },
   {
-    name: "Laura",
+    name: "Marcela G.",
+    age: 44,
+    rating: 5,
+    text: "Mis migrañas de los lunes tenían todo que ver con lo que no decía los domingos en la noche. Cuando entendí eso me cambió todo. Ahora las migrañas casi no aparecen."
+  },
+  {
+    name: "Carolina S.",
     age: 29,
     rating: 5,
-    text: "Esto cambió mi vida completamente. Entender por qué mi cuerpo reaccionaba de ciertas maneras me ayudó a sanar heridas que tenía desde hace años."
-  },
-  {
-    name: "Sofía",
-    age: 45,
-    rating: 5,
-    text: "Mi gastritis crónica estaba conectada con mi tendencia a 'tragarme' todo. Ahora tengo herramientas para expresarme sanamente y mi digestión mejoró increíblemente."
+    text: "Nunca había escuchado sobre biodescodificación y entré con mucho escepticismo. Pero el libro está escrito de una manera tan clara, tan real... no pude parar de leer. Y lloré varias veces porque me sentí completamente vista."
   }
 ];
 
 export const FAQS: FAQItem[] = [
   {
-    question: "¿Cuánto tiempo necesito dedicar diariamente?",
-    answer: "Solo necesitas de 15 a 20 minutos al día para realizar las lecturas y los rituales propuestos. El sistema está diseñado para mujeres con agendas ocupadas."
+    question: "¿Necesito saber algo de biodescodificación para empezar?",
+    answer: "No, para nada. El libro está escrito en un lenguaje claro, sin tecnicismos y con mucho amor. Está pensado para mujeres reales que quieren entender su cuerpo, no para especialistas. Si nunca escuchaste esta palabra antes, estás en el lugar correcto."
   },
   {
-    question: "¿Funciona si nunca he hecho biodescodificación?",
-    answer: "¡Absolutamente! El libro guía paso a paso desde los conceptos básicos hasta las aplicaciones más profundas. No necesitas conocimientos previos."
+    question: "¿Cuánto tiempo necesito dedicar cada día?",
+    answer: "Con 15 a 20 minutos diarios es suficiente. El sistema está diseñado para mujeres con vida ocupada. No necesitás horas libres ni un espacio especial — solo el deseo de escucharte."
   },
   {
-    question: "¿Cuándo puedo ver resultados?",
-    answer: "Muchas mujeres reportan una sensación de alivio y claridad mental desde el primer día. Los cambios físicos y emocionales más profundos suelen consolidarse a lo largo de los 30 días del sistema."
+    question: "¿Esto reemplaza a mi médico o terapeuta?",
+    answer: "No, y es importante aclararlo. La biodescodificación es un complemento poderoso para cualquier tratamiento médico o psicológico que estés llevando. No reemplaza la medicina — la profundiza."
   },
   {
-    question: "¿Es compatible con otras terapias?",
-    answer: "Sí, este sistema es un complemento excelente para cualquier tratamiento médico o psicológico que estés llevando actualmente. Ayuda a acelerar los procesos de consciencia."
+    question: "¿Cuándo puedo esperar ver resultados?",
+    answer: "Muchas mujeres reportan claridad y alivio emocional desde el primer día. Los cambios más profundos — físicos y emocionales — suelen consolidarse a lo largo de los 30 días del sistema. Pero el primer 'ajá' puede llegar hoy mismo."
   },
   {
-    question: "¿Qué pasa si no me funciona?",
-    answer: "Contamos con una garantía de 7 días. Si sientes que no es para ti, te devolvemos tu dinero sin preguntas."
+    question: "¿Cómo funciona la App? ¿Tengo que instalar algo?",
+    answer: "La app funciona directamente desde tu navegador — no necesitás descargar nada. Al comprar, recibís un email con el enlace y tu código de acceso. Podés guardarla en la pantalla de inicio de tu celular como si fuera una app nativa. Es tuya para siempre."
   },
   {
-    question: "¿Necesito experiencia previa en meditación?",
-    answer: "No. Las guías de meditación incluidas son de 5 minutos y están diseñadas para ser seguidas fácilmente por cualquier principiante."
+    question: "¿Qué pasa si compro y no me sirve?",
+    answer: "Tenés 7 días de garantía total. Si en ese tiempo no sentís ninguna emoción, ninguna claridad, ningún alivio... te devolvemos el 100% de tu dinero sin preguntas y sin trámites. Así de simple."
   },
   {
-    question: "¿Cómo accedo a la app después de la compra?",
-    answer: "Al completar tu compra, recibirás un email con el enlace directo a la app \"Código Cuerpo\" y un código de acceso exclusivo. Solo tendrás que introducir tu nombre y el código para activar tu cuenta. La app funciona directamente en tu navegador (no necesitas instalar nada) y puedes guardarla en la pantalla de inicio de tu móvil como si fuera una app nativa."
+    question: "¿Solo sirve para síntomas físicos?",
+    answer: "No. Si bien el punto de entrada son los síntomas del cuerpo, el sistema trabaja con emociones bloqueadas, patrones relacionales, ansiedad, baja autoestima y desconexión con el propósito. El cuerpo es la puerta, pero la transformación es completa."
   }
 ];
 
 export const STACK_ITEMS: StackItem[] = [
   { 
-    title: "📖 Libro Principal: \"Biodescodificación Femenina - El Código Secreto de Tu Cuerpo\" (130 págs.)", 
+    title: "📖 Libro Principal: \"Biodescodificación Femenina — El Código Secreto de Tu Cuerpo\" (130 págs.)", 
     value: 27, 
     image: "https://i.imgur.com/hD7pK5a.png",
-    description: "El libro que escribimos juntas, con el método RE-CONECT, el diccionario de 60 señales, casos guiados y todos los ejercicios prácticos. La base de todo tu proceso de sanación."
+    description: "El método RE-CONECT completo. Diccionario de 60 señales corporales con su mensaje emocional. Casos guiados, ejercicios prácticos y frases sanadoras. La base de todo tu proceso."
   },
   { 
-    title: "📱 App Interactiva \"Código Cuerpo\" (Acceso Exclusivo)", 
+    title: "📱 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida", 
     value: 47, 
     image: "https://i.imgur.com/tp3ywRK.png",
-    description: "La extensión digital de tu libro. Incluye: 🗺️ Mapa corporal interactivo: Toca la zona donde sientes la molestia y registra tu síntoma en 4 pasos. 💬 Mensaje al instante: Recibe la interpretación simbólica y una reparación en 3 niveles. 📝 Diario emocional guiado: Los 5 ejercicios clave del libro en versión digital. 🎯 Reto 7 Días: La rutina del libro paso a paso, con checks y espacio para reflexiones. 🎧 Meditaciones y tapping: Audios guiados para la culpa, el miedo, la ansiedad y más. 📊 Seguimiento de progreso: Gráficos de síntomas y detector de patrones (\"He notado que los lunes...\")."
+    description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo."
   },
   { 
-    title: "📚 5 Guías Prácticas Descargables (PDF)", 
+    title: "📚 5 Guías Prácticas en PDF (descargables e imprimibles)", 
     value: 49, 
     image: "https://i.imgur.com/PVXfooh.png",
-    description: "🧘‍♀️ Guía de Meditación, 👆 Guía de Tapping, 🌅 5 rituales diarios, 💬 50 afirmaciones, 🙏 Plantillas de Gratitud."
+    description: "Guía de Meditación · Guía de Tapping · 5 Rituales Diarios · 50 Afirmaciones de Alta Vibración · Plantillas de Gratitud. Todo listo para usar desde hoy."
   },
   { 
-    title: "🎁 BONUS 1: \"Volver a Mí: Amor propio en tiempos de ansiedad\" (Libro digital)", 
+    title: "🎁 BONUS 1: \"Volver a Mí — Amor propio en tiempos de ansiedad\"", 
     value: 27, 
     image: "https://i.imgur.com/1hDDUH5.png",
     isBonus: true,
-    description: "Aprende a cultivar el amor propio incluso cuando la ansiedad intenta sabotearlo. Ejercicios prácticos para reconectar con tu valor."
+    description: "Cuando la ansiedad intenta convencerte de que no sos suficiente. Ejercicios prácticos para reconectar con tu valor cuando más difícil se siente."
   },
   { 
-    title: "🎁 BONUS 2: \"Despierta tu luz: Reto espiritual de 30 días\" (Libro digital)", 
+    title: "🎁 BONUS 2: \"Despierta Tu Luz — Reto espiritual de 30 días\"", 
     value: 37, 
     image: "https://i.imgur.com/EKsngIC.png",
     isBonus: true,
-    description: "Un día a día estructurado para reconectar con tu esencia más auténtica. Cada día una reflexión, una práctica y una afirmación."
+    description: "Un día a la vez, una práctica a la vez. Reflexión + ejercicio + afirmación para cada uno de los 30 días. Tu esencia más auténtica te espera al final."
   },
   { 
-    title: "🎁 BONUS 3: \"Cuando amar duele: Ansiedad en las relaciones\" (Libro digital)", 
+    title: "🎁 BONUS 3: \"Cuando amar duele — Ansiedad en las relaciones\"", 
     value: 27, 
     image: "https://i.imgur.com/xSbkW9P.png",
     isBonus: true,
-    description: "Descubre por qué tus relaciones te generan ansiedad y cómo sanar los patrones que se repiten. Herramientas para vincularte desde la paz."
+    description: "¿Por qué repetís los mismos patrones? ¿Por qué ciertas personas te generan ansiedad? Este libro te da las respuestas y las herramientas para vincularte desde la paz."
   },
   { 
     title: "🎁 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
     value: 17, 
     image: "https://i.imgur.com/ZvuT6H6.jpeg",
     isBonus: true,
-    description: "Un diseño bonito y práctico para que cada día anotes tu afirmación y tu logro. Fomenta el hábito de la gratitud."
+    description: "Diseño hermoso para imprimir o usar en digital. Cada día: tu afirmación, tu logro y tu intención. El hábito más simple que más cambia."
   },
   { 
-    title: "🎁 BONUS 5: Acceso a la Comunidad Privada de Mujeres Conscientes", 
+    title: "🎁 BONUS 5: Comunidad Privada de Mujeres Conscientes", 
     value: 97, 
     image: "https://i.imgur.com/WheJ70c.jpeg",
     isBonus: true,
-    description: "Un espacio seguro en Telegram/WhatsApp donde compartir tus procesos, recibir apoyo y conectar con otras mujeres en el mismo camino. Acompañamiento real."
+    description: "Un espacio real donde compartir tu proceso, recibir apoyo y saber que no estás sola en este camino. Otras mujeres que entienden exactamente lo que estás viviendo."
   }
 ];
