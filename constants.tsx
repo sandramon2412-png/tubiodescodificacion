@@ -52,7 +52,8 @@ export const CONTENT = {
     totalValueLabel: "Valor Total Estimado",
     launchPriceLabel: "PRECIO DE LANZAMIENTO POR TIEMPO LIMITADO",
     cta: "🔥 \"SÍ, QUIERO TRANSFORMAR MI VIDA HOY\"",
-    guarantee: "🛡️ GARANTÍA DE TRANSFORMACIÓN 7 DÍAS"
+    guarantee: "🛡️ GARANTÍA DE TRANSFORMACIÓN 7 DÍAS",
+    paymentUrl: "https://pay.hotmart.com/U104712118U"
   },
   closing: {
     imagine: "\"Imagínate dentro de 30 días...\"",
