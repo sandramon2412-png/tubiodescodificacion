@@ -120,22 +120,22 @@ const Landing: React.FC = () => {
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-16 lg:pt-24 lg:pb-32 bg-gradient-to-br from-purple-900 via-[#8B4B9C] to-purple-800 text-white">
         <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 sm:space-y-8 animate-fade-in text-center lg:text-left">
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in">
+          <div className="space-y-7 sm:space-y-9 animate-fade-in text-center lg:text-left">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] animate-fade-in tracking-tight">
               {CONTENT.hero.title}
             </h1>
-            <p className="text-lg lg:text-xl opacity-90 font-light max-w-2xl mx-auto lg:mx-0">
+            <p className="text-xl lg:text-2xl opacity-90 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               {CONTENT.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 onClick={handlePurchase}
-                className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-8 py-4 rounded-full font-bold text-lg shadow-xl transition transform hover:scale-105 active:scale-95"
+                className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95"
               >
                 {CONTENT.hero.cta}
               </button>
             </div>
-            <p className="text-xs sm:text-sm italic opacity-75">{CONTENT.hero.footer}</p>
+            <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
           <div className="relative group max-w-md mx-auto lg:max-w-none flex flex-col items-center lg:items-end">
             <div className="relative w-full sm:w-4/5 lg:w-full">
