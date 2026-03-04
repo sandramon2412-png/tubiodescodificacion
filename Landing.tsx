@@ -137,8 +137,8 @@ const Landing: React.FC = () => {
             </div>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
-          <div className="relative group max-w-md mx-auto lg:max-w-none flex flex-col items-center lg:items-end">
-            <div className="relative w-full sm:w-4/5 lg:w-full">
+          <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
+            <div className="relative w-full sm:w-3/4 lg:w-full">
               <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
               <img
                 src={CONTENT.hero.heroImage}
@@ -665,3 +665,4 @@ const Landing: React.FC = () => {
 };
 
 export default Landing;
+
