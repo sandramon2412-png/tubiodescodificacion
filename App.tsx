@@ -3,28 +3,26 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './Landing';
 import ThankYou from './ThankYou';
 
+declare global {
+  interface Window {
+    fbq: any;
+    _fbq: any;
+  }
+}
+
 const App: React.FC = () => {
   useEffect(() => {
-    // Meta Pixel
-    (function(f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
-      if (f.fbq) return;
-      n = f.fbq = function() {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      };
-      if (!f._fbq) f._fbq = n;
-      n.push = n;
-      n.loaded = true;
-      n.version = '2.0';
-      n.queue = [];
-      t = b.createElement(e);
-      t.async = true;
-      t.src = v;
-      s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s);
-    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    if (typeof window.fbq !== 'undefined') return;
 
-    (window as any).fbq('init', '1461669411975647');
-    (window as any).fbq('track', 'PageView');
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.fbq('init', '1461669411975647');
+      window.fbq('track', 'PageView');
+    };
   }, []);
 
   return (
