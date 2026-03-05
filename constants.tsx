@@ -64,7 +64,7 @@ export const CONTENT = {
     launchPriceLabel: "PRECIO DE LANZAMIENTO — SOLO POR TIEMPO LIMITADO",
     cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $6.97",
     guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
-    paymentUrl: "https://pay.hotmart.com/U104712118U"
+    paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
   },
   closing: {
     imagine: "\"Imaginá cómo te vas a sentir en 7 días...\"",
