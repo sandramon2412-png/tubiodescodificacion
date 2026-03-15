@@ -111,9 +111,11 @@ const ThankYou: React.FC = () => {
                     <ExternalLink className="w-5 h-5" />
                   </a>
                   
-                  <p className="text-[10px] text-gray-400 text-center font-medium italic">
-                    * Tip: Abre el link en Safari (iPhone) o Chrome (Android), toca el ícono de compartir y selecciona "Añadir a pantalla de inicio" para instalarla como app.
-                  </p>
+                  <div className="bg-purple-50 border border-purple-200 rounded-xl px-4 py-3 text-center">
+                    <p className="text-sm text-[#8B4B9C] font-semibold">
+                      📲 Tip importante: Abre el link en Safari (iPhone) o Chrome (Android), toca el ícono de compartir y selecciona "Añadir a pantalla de inicio" para instalarla como app.
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
