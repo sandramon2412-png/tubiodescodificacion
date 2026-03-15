@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    width: 794px;
+    min-height: 1123px;
+    color: #1F1535;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(145deg, #3B0764 0%, #6B21A8 50%, #9333EA 100%);
+    padding: 40px 48px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; top: -40px; left: -40px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute; bottom: -50px; right: -30px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .header .flower { font-size: 28px; margin-bottom: 8px; display: block; }
+  .header h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    color: #DDD6FE;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .header .divider {
+    width: 60px; height: 2px;
+    background: #F5C842;
+    margin: 0 auto 20px;
+    border-radius: 2px;
+  }
+  .header .welcome {
+    color: #F5C842;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .header .welcome-sub {
+    color: #EDE9FE;
+    font-size: 12px;
+  }
+
+  /* ── CONTENIDO ── */
+  .body { padding: 32px 48px 40px; }
+
+  /* Código */
+  .code-box {
+    background: #F5F0FF;
+    border-radius: 16px;
+    border-left: 5px solid #9333EA;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .code-box .key-icon { font-size: 32px; flex-shrink: 0; }
+  .code-box .code-content { flex: 1; }
+  .code-box .code-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #7C3AAD;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .code-box .code-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #3B0764;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+  }
+  .code-box .code-note {
+    font-size: 10px;
+    color: #9CA3AF;
+  }
+
+  /* Link */
+  .link-box {
+    background: #3B0764;
+    border-radius: 14px;
+    padding: 18px 24px;
+    text-align: center;
+    margin-bottom: 28px;
+    text-decoration: none;
+    display: block;
+  }
+  .link-box .link-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #DDD6FE;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .link-box .link-url {
+    font-size: 16px;
+    font-weight: 800;
+    color: #F5C842;
+    text-decoration: none;
+  }
+
+  /* Divisor */
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #DDD6FE, transparent);
+    margin: 0 0 24px;
+  }
+
+  /* Pasos */
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #7C3AAD;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .step {
+    background: #FAFAFA;
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #EDE9FE;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    background: #9333EA;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-emoji { font-size: 20px; flex-shrink: 0; }
+  .step-content .step-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3B0764;
+    margin-bottom: 2px;
+  }
+  .step-content .step-body {
+    font-size: 10.5px;
+    color: #6B7280;
+    line-height: 1.5;
+  }
+
+  /* Beneficios */
+  .benefits { display: flex; flex-direction: column; gap: 6px; margin-bottom: 28px; }
+  .benefit {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .benefit:nth-child(odd)  { background: #F5F0FF; }
+  .benefit:nth-child(even) { background: #FAFAFA; border: 1px solid #EDE9FE; }
+  .benefit .b-emoji { font-size: 16px; flex-shrink: 0; }
+  .benefit .b-text { color: #1F1535; font-weight: 500; }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #EDE9FE;
+    padding-top: 20px;
+    text-align: center;
+  }
+  .footer p { font-size: 10px; color: #9CA3AF; margin-bottom: 4px; }
+  .footer strong { color: #7C3AAD; }
+
+  @media print {
+    body { width: 100%; }
+    .link-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="flower">🌸</span>
+  <h1>Biodescodificación Femenina</h1>
+  <div class="subtitle">El Código Secreto de Tu Cuerpo + App</div>
+  <div class="divider"></div>
+  <div class="welcome">¡Bienvenida a tu transformación! 💜</div>
+  <div class="welcome-sub">Tu pago fue procesado con éxito. Aquí tienes todo lo que necesitas para comenzar.</div>
+</div>
+
+<div class="body">
+
+  <!-- Código -->
+  <div class="code-box">
+    <div class="key-icon">🔑</div>
+    <div class="code-content">
+      <div class="code-label">Tu código de acceso personal</div>
+      <div class="code-value">BIODESCODIFICA-2025</div>
+      <div class="code-note">Guarda este código — lo necesitarás cada vez que ingreses a la app</div>
+    </div>
+  </div>
+
+  <!-- Link -->
+  <a class="link-box" href="https://codigocuerpo-app.netlify.app">
+    <div class="link-label">→ Accede a tu app aquí</div>
+    <div class="link-url">codigocuerpo-app.netlify.app</div>
+  </a>
+
+  <div class="divider-line"></div>
+
+  <!-- Pasos -->
+  <div class="section-title">Cómo ingresar — 3 pasos</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-emoji">📱</div>
+      <div class="step-content">
+        <div class="step-title">Abre el link en tu celular</div>
+        <div class="step-body">Escribe o toca: codigocuerpo-app.netlify.app</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-emoji">🔑</div>
+      <div class="step-content">
+        <div class="step-title">Introduce tu código de acceso</div>
+        <div class="step-body">Escribe exactamente: <strong>BIODESCODIFICA-2025</strong></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-emoji">✅</div>
+      <div class="step-content">
+        <div class="step-title">Instálala en tu pantalla de inicio</div>
+        <div class="step-body">iPhone: Compartir → "Añadir a pantalla de inicio" &nbsp;|&nbsp; Android: Menú ⋮ → "Instalar app"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-line"></div>
+
+  <!-- Beneficios -->
+  <div class="section-title">Todo lo que incluye tu sistema</div>
+  <div class="benefits">
+    <div class="benefit"><span class="b-emoji">📖</span><span class="b-text">Libro Biodescodificación Femenina — 130 páginas con el método completo</span></div>
+    <div class="benefit"><span class="b-emoji">📱</span><span class="b-text">App Interactiva "Código Cuerpo" — acceso de por vida</span></div>
+    <div class="benefit"><span class="b-emoji">🧘</span><span class="b-text">5 Guías en PDF: Meditación, Tapping, Rituales, Afirmaciones de Alta Vibración</span></div>
+    <div class="benefit"><span class="b-emoji">🎯</span><span class="b-text">Reto 7 Días Guiado dentro de la app</span></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>¿Problemas con el acceso? Escríbenos a <strong>soporte@codigocuerpo.com</strong></p>
+    <p>© 2025 El Código Secreto de Tu Cuerpo · Todos los derechos reservados</p>
+  </div>
+
+</div>
+</body>
+</html>
