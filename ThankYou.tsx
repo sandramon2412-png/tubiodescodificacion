@@ -136,8 +136,10 @@ const ThankYou: React.FC = () => {
                     No camines sola. Únete a nuestro grupo privado de WhatsApp/Telegram para recibir apoyo, compartir tus procesos y conectar con otras mujeres.
                   </p>
                 </div>
-                <a 
-                  href="#" // Reemplazar con el link real del grupo
+                <a
+                  href="https://t.me/+VCvHS7JyDYRkYTYx"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-[#8B4B9C] hover:bg-purple-800 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition transform hover:scale-105 active:scale-95 whitespace-nowrap flex items-center gap-2"
                 >
                   Unirme al Grupo
