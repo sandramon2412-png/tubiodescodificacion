@@ -181,7 +181,6 @@ const Landing: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={handlePurchase} className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95">{CONTENT.hero.cta}</button>
             </div>
-            <p className="text-sm sm:text-base opacity-80 font-medium">{CONTENT.hero.socialProof}</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
           <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
@@ -303,9 +302,6 @@ const Landing: React.FC = () => {
                 <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">La App <span className="text-[#8B4B9C]">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-gray-600 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
                 <p className="text-gray-600 leading-relaxed text-lg">Mientras otros venden solo un PDF, nosotras creamos una experiencia interactiva que te acompaña en tiempo real.</p>
-                <div className="bg-yellow-50 border border-yellow-200 rounded-2xl px-6 py-4 text-sm text-yellow-800 font-medium leading-relaxed">
-                  {CONTENT.appSection.lifetimeNote}
-                </div>
               </div>
               <div className="grid gap-6">
                 {[
@@ -421,13 +417,7 @@ const Landing: React.FC = () => {
                   <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
                   <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
-                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO DE LA APP — POR TIEMPO LIMITADO</p>
-                <div className="bg-purple-50 border border-purple-200 rounded-2xl px-6 py-4 max-w-lg mx-auto text-center">
-                  <p className="text-purple-800 text-sm leading-relaxed">{CONTENT.pricing.launchNote}</p>
-                </div>
-                <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 max-w-lg mx-auto text-center">
-                  <p className="text-green-800 font-bold text-sm leading-relaxed">{CONTENT.pricing.singlePayment}</p>
-                </div>
+                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO — POR TIEMPO LIMITADO</p>
               </div>
               <div className="max-w-xl mx-auto space-y-6 px-2">
                 <button onClick={handlePurchase} className="w-full bg-[#8B4B9C] hover:bg-purple-800 text-white py-5 sm:py-6 px-4 rounded-2xl text-xl sm:text-3xl font-black shadow-xl transition-all transform hover:scale-105 active:scale-95 uppercase tracking-tighter flex items-center justify-center gap-3">
