@@ -97,7 +97,8 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
                 <div className="border-t border-purple-700 pt-4"><p className="text-purple-400 text-sm font-medium mb-1">Síntomas relacionados:</p><p className="text-purple-200 text-sm">{resultado.sintomas}</p></div>
               </div>
               <p className="text-purple-200 mb-6 leading-relaxed">La biodescodificación te muestra exactamente cómo sanar esta emoción — y liberar el síntoma que carga tu cuerpo.</p>
-              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-4 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $6.97</motion.a>
+              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-3 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $6.97</motion.a>
+              <p className="text-purple-400 text-xs mb-4">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
               <button onClick={reiniciar} className="text-purple-400 text-sm underline cursor-pointer bg-transparent border-0">Hacer el quiz de nuevo</button>
             </motion.div>
           )}
@@ -176,11 +177,18 @@ const Landing: React.FC = () => {
       <section className="relative overflow-hidden pt-12 pb-16 lg:pt-24 lg:pb-32 bg-gradient-to-br from-purple-900 via-[#8B4B9C] to-purple-800 text-white">
         <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-7 sm:space-y-9 animate-fade-in text-center lg:text-left">
+            {/* SOCIAL PROOF — nuevo */}
+            <div className="flex items-center justify-center lg:justify-start gap-2">
+              <span className="text-yellow-400 text-base">⭐⭐⭐⭐⭐</span>
+              <span className="text-white/80 text-sm font-medium">127 reseñas verificadas · +1.400 mujeres ya accedieron</span>
+            </div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] animate-fade-in tracking-tight">{CONTENT.hero.title}</h1>
             <p className="text-xl lg:text-2xl opacity-90 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">{CONTENT.hero.subtitle}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={handlePurchase} className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95">{CONTENT.hero.cta}</button>
             </div>
+            {/* SIN SUSCRIPCIÓN — lugar 1 */}
+            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
           <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
@@ -302,6 +310,10 @@ const Landing: React.FC = () => {
                 <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">La App <span className="text-[#8B4B9C]">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-gray-600 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
                 <p className="text-gray-600 leading-relaxed text-lg">Mientras otros venden solo un PDF, nosotras creamos una experiencia interactiva que te acompaña en tiempo real.</p>
+                {/* SIN SUSCRIPCIÓN — lugar 2, sección app */}
+                <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-full text-sm font-bold mx-auto lg:mx-0">
+                  🔓 Tu acceso es para siempre — pagas una sola vez, sin suscripciones ni cobros sorpresa
+                </div>
               </div>
               <div className="grid gap-6">
                 {[
@@ -417,13 +429,19 @@ const Landing: React.FC = () => {
                   <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
                   <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
-                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO — POR TIEMPO LIMITADO</p>
+                <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO DE LA APP — SOLO POR 48 HORAS</p>
               </div>
-              <div className="max-w-xl mx-auto space-y-6 px-2">
+              {/* SIN SUSCRIPCIÓN — lugar 3, sección pack */}
+              <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 max-w-lg mx-auto">
+                <p className="text-green-700 text-sm font-bold">✅ Todo esto es tuyo para siempre con un único pago de $6.97 USD</p>
+                <p className="text-green-600 text-xs mt-1 font-medium">Sin suscripción · Sin cobros mensuales · Sin sorpresas · Acceso de por vida 💜</p>
+              </div>
+              <div className="max-w-xl mx-auto space-y-4 px-2">
                 <button onClick={handlePurchase} className="w-full bg-[#8B4B9C] hover:bg-purple-800 text-white py-5 sm:py-6 px-4 rounded-2xl text-xl sm:text-3xl font-black shadow-xl transition-all transform hover:scale-105 active:scale-95 uppercase tracking-tighter flex items-center justify-center gap-3">
                   <span className="animate-bounce flex-shrink-0">🔥</span><span className="leading-tight">{CONTENT.pricing.cta.replace(/🔥/g, '').trim()}</span><span className="animate-bounce flex-shrink-0">🔥</span>
                 </button>
                 <p className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest flex items-center justify-center gap-2">🛡️ Compra 100% segura · 7 días de garantía total · Acceso inmediato</p>
+                <p className="text-[10px] sm:text-xs text-[#8B4B9C] font-bold uppercase tracking-widest flex items-center justify-center gap-2">🔓 Pago único · Sin suscripción · Sin cobros mensuales</p>
               </div>
               <div className="mt-10 sm:mt-16 space-y-10 sm:space-y-12">
                 <div className="bg-white border-2 border-purple-200 rounded-3xl p-6 sm:p-10 max-w-2xl mx-auto shadow-md relative overflow-hidden">
@@ -493,7 +511,7 @@ const Landing: React.FC = () => {
             </button>
             <div className="space-y-1">
               <p className="text-[10px] sm:text-xs text-white/60 font-bold uppercase tracking-widest">Acceso inmediato · Descarga en 2 minutos</p>
-              <p className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-widest">🛡️ Compra 100% segura · 7 días de garantía total</p>
+              <p className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-widest">🛡️ Compra 100% segura · 7 días de garantía total · 🔓 Pago único sin suscripción</p>
             </div>
           </div>
           <div className="space-y-4 mt-12 sm:mt-16 border-t border-white/10 pt-10">
@@ -508,13 +526,14 @@ const Landing: React.FC = () => {
         <div className="container mx-auto max-w-3xl">
           <div className="bg-white/95 backdrop-blur-md shadow-2xl rounded-2xl p-2 sm:p-3 flex items-center justify-between border border-purple-100">
             <div className="hidden sm:block ml-4">
-              <p className="text-[10px] font-bold text-[#8B4B9C] uppercase tracking-tighter">Oferta de Lanzamiento</p>
+              <p className="text-[10px] font-bold text-[#8B4B9C] uppercase tracking-tighter">Oferta de Lanzamiento · Pago único</p>
               <p className="text-sm font-black text-gray-800 truncate max-w-[150px]">Biodescodificación Femenina</p>
             </div>
             <div className="flex items-center gap-3 sm:gap-4 flex-1 sm:flex-initial justify-between sm:justify-end w-full sm:w-auto px-2">
               <div className="text-left sm:text-right leading-none">
                 <p className="text-[10px] text-gray-400 line-through mb-1">$47 USD</p>
                 <div className="flex items-baseline gap-1"><span className="text-xs font-bold text-[#8B4B9C]">$</span><span className="text-xl sm:text-2xl font-black text-[#8B4B9C]">6.97</span></div>
+                <p className="text-[9px] text-green-600 font-bold">Pago único · Sin suscripción</p>
               </div>
               <button onClick={handlePurchase} className="bg-[#8B4B9C] hover:bg-purple-800 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg transition transform hover:scale-105 active:scale-95 animate-pulse-subtle flex-1 sm:flex-initial text-center">¡ACCESO INMEDIATO! 🚀</button>
             </div>
