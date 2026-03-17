@@ -10,11 +10,12 @@ export const COLORS = {
 
 export const CONTENT = {
   hero: {
-    upperAlert: "🔔 PRECIO DE LANZAMIENTO: Solo por tiempo limitado a $6.97 USD — puede subir a $47 en cualquier momento",
+    upperAlert: "🔔 PRECIO DE LANZAMIENTO DE LA APP: Solo por tiempo limitado a $6.97 USD — puede subir a $47 en cualquier momento",
     title: "¿Tu cuerpo lleva años enviándote señales que nadie supo leer?",
     subtitle: "Descubre el origen emocional de tus síntomas con el único sistema que combina libro + App interactiva para que entiendas — y sanes — lo que tu cuerpo realmente te está diciendo.",
+    socialProof: "⭐️⭐️⭐️⭐️⭐️ 127 reseñas verificadas · +1.400 mujeres ya accedieron",
     cta: "🚀 SÍ, QUIERO ENTENDER MI CUERPO AHORA",
-    footer: "✅ Acceso inmediato · Descarga en 2 minutos · Garantía 7 días",
+    footer: "✅ Acceso inmediato · Pago único · Sin suscripción · Garantía 7 días",
     heroImage: "https://i.imgur.com/hD7pK5a.png"
   },
   identification: {
@@ -57,14 +58,17 @@ export const CONTENT = {
     title: "📚 TODO LO QUE RECIBÍS HOY",
     subtitle: "OFERTA DE LANZAMIENTO — VALOR TOTAL: $299 USD",
     mainTitle: "EL SISTEMA COMPLETO DE BIODESCODIFICACIÓN FEMENINA",
-    bonusTitle: "🎁 BONOS EXCLUSIVOS — SOLO POR TIEMPO LIMITADO"
+    bonusTitle: "🎁 BONOS EXCLUSIVOS — SOLO POR TIEMPO LIMITADO",
+    paymentNote: "🔓 Pago único de $6.97 · Sin suscripción · Sin cobros mensuales · Acceso de por vida"
   },
   pricing: {
     totalValueLabel: "Valor Total del Pack",
-    launchPriceLabel: "PRECIO DE LANZAMIENTO — SOLO POR TIEMPO LIMITADO",
+    launchPriceLabel: "PRECIO DE LANZAMIENTO DE LA APP — SOLO POR TIEMPO LIMITADO",
+    launchNote: "⚡ Este precio es especial por el lanzamiento de la App Código Cuerpo. Una vez que superemos las primeras 500 usuarias, el precio subirá a $47. No hay fecha exacta — puede cambiar hoy mismo.",
     cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $6.97",
     guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
-    paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
+    paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10",
+    singlePayment: "🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida"
   },
   closing: {
     imagine: "\"Imaginá cómo te vas a sentir en 7 días...\"",
@@ -141,6 +145,10 @@ export const FAQS: FAQItem[] = [
     answer: "La app funciona directamente desde tu navegador — no necesitás descargar nada. Al comprar, recibís un email con el enlace y tu código de acceso. Podés guardarla en la pantalla de inicio de tu celular como si fuera una app nativa. Es tuya para siempre."
   },
   {
+    question: "¿La App tiene costo mensual o suscripción?",
+    answer: "No. Es un pago único de $6.97 y el acceso es de por vida. Sin suscripción, sin cobros mensuales, sin sorpresas. Pagás una vez y la app te acompaña todos los días que quieras."
+  },
+  {
     question: "¿Qué pasa si compro y no me sirve?",
     answer: "Tenés 7 días de garantía total. Si en ese tiempo no sentís ninguna emoción, ninguna claridad, ningún alivio... te devolvemos el 100% de tu dinero sin preguntas y sin trámites. Así de simple."
   },
@@ -161,7 +169,7 @@ export const STACK_ITEMS: StackItem[] = [
     title: "📱 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida", 
     value: 47, 
     image: "https://i.imgur.com/tp3ywRK.png",
-    description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo."
+    description: "💛 Tu acceso a la app es para siempre. Pagás una sola vez y Código Cuerpo te acompaña todos los días de tu vida — sin cobros sorpresa, sin suscripciones, sin letras pequeñas. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio."
   },
   { 
     title: "📚 5 Guías Prácticas en PDF (descargables e imprimibles)", 
