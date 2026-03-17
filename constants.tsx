@@ -10,7 +10,7 @@ export const COLORS = {
 
 export const CONTENT = {
   hero: {
-    upperAlert: "🔔 PRECIO DE LANZAMIENTO: Solo por tiempo limitado a $6.97 USD — puede subir a $47 en cualquier momento",
+    upperAlert: "🚀 LANZAMIENTO OFICIAL DE LA APP — Precio especial de $6.97 solo por 48 horas · Después sube a $47",
     title: "¿Tu cuerpo lleva años enviándote señales que nadie supo leer?",
     subtitle: "Descubre el origen emocional de tus síntomas con el único sistema que combina libro + App interactiva para que entiendas — y sanes — lo que tu cuerpo realmente te está diciendo.",
     cta: "🚀 SÍ, QUIERO ENTENDER MI CUERPO AHORA",
@@ -55,13 +55,13 @@ export const CONTENT = {
   },
   stack: {
     title: "📚 TODO LO QUE RECIBÍS HOY",
-    subtitle: "OFERTA DE LANZAMIENTO — VALOR TOTAL: $299 USD",
+    subtitle: "LANZAMIENTO DE LA APP — VALOR TOTAL: $299 USD",
     mainTitle: "EL SISTEMA COMPLETO DE BIODESCODIFICACIÓN FEMENINA",
     bonusTitle: "🎁 BONOS EXCLUSIVOS — SOLO POR TIEMPO LIMITADO"
   },
   pricing: {
     totalValueLabel: "Valor Total del Pack",
-    launchPriceLabel: "PRECIO DE LANZAMIENTO — SOLO POR TIEMPO LIMITADO",
+    launchPriceLabel: "PRECIO DE LANZAMIENTO DE LA APP — SOLO POR 48 HORAS",
     cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $6.97",
     guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
     paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
@@ -121,6 +121,10 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQS: FAQItem[] = [
   {
+    question: "¿La App tiene cobro mensual o es una suscripción?",
+    answer: "Para nada. Pagas una sola vez y el acceso es tuyo para siempre. Sin cobros automáticos, sin renovaciones, sin sorpresas. Lo que es tuyo, es tuyo — de por vida. 💜"
+  },
+  {
     question: "¿Necesito saber algo de biodescodificación para empezar?",
     answer: "No, para nada. El libro está escrito en un lenguaje claro, sin tecnicismos y con mucho amor. Está pensado para mujeres reales que quieren entender su cuerpo, no para especialistas. Si nunca escuchaste esta palabra antes, estás en el lugar correcto."
   },
@@ -161,7 +165,7 @@ export const STACK_ITEMS: StackItem[] = [
     title: "📱 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida", 
     value: 47, 
     image: "https://i.imgur.com/tp3ywRK.png",
-    description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo."
+    description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo. ✅ Pago único — sin suscripción, sin cobros mensuales."
   },
   { 
     title: "📚 5 Guías Prácticas en PDF (descargables e imprimibles)", 
