@@ -8,12 +8,11 @@ const ThankYou: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const appUrl = "https://codigocuerpo-app.netlify.app"; // Reemplazar con la URL real de la app
-  const accessCode = "BIODESCODIFICA-2025"; // Reemplazar con el código real o hacerlo dinámico
+  const appUrl = "https://codigo-cuerpo.vercel.app";
+  const accessCode = "BIODESCODIFICA-2025";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white font-sans selection:bg-[#8B4B9C]/20">
-      {/* Header / Logo Area */}
       <header className="py-8 text-center">
         <div className="container mx-auto px-6">
           <h1 className="text-2xl font-black text-[#8B4B9C] uppercase tracking-tighter">
@@ -23,7 +22,6 @@ const ThankYou: React.FC = () => {
       </header>
 
       <main className="container mx-auto px-6 max-w-3xl pb-24">
-        {/* Success Message Card */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -53,7 +51,6 @@ const ThankYou: React.FC = () => {
           </div>
 
           <div className="p-4 sm:p-12 space-y-10">
-            {/* Step 1: Access the App */}
             <section className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-[#8B4B9C]">
@@ -111,16 +108,36 @@ const ThankYou: React.FC = () => {
                     <ExternalLink className="w-5 h-5" />
                   </a>
                   
-                  <div className="bg-purple-50 border border-purple-200 rounded-xl px-4 py-3 text-center">
-                    <p className="text-sm text-[#8B4B9C] font-semibold">
-                      📲 Tip importante: Abre el link en Safari (iPhone) o Chrome (Android), toca el ícono de compartir y selecciona "Añadir a pantalla de inicio" para instalarla como app.
+                  {/* Instrucciones de instalación */}
+                  <div className="bg-purple-50 border border-purple-200 rounded-2xl p-4 space-y-4">
+                    <p className="text-sm font-black text-[#8B4B9C] text-center uppercase tracking-widest">
+                      📲 Cómo instalarla en tu celular
                     </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="bg-white rounded-xl p-4 border border-purple-100">
+                        <p className="text-xs font-black text-[#8B4B9C] mb-2">🍎 iPhone (Safari)</p>
+                        <ol className="text-xs text-gray-600 space-y-1 leading-relaxed">
+                          <li>1. Abre el link en <strong>Safari</strong></li>
+                          <li>2. Toca el ícono de compartir <strong>⬆️</strong></li>
+                          <li>3. Selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
+                          <li>4. Toca <strong>"Añadir"</strong> — ¡listo!</li>
+                        </ol>
+                      </div>
+                      <div className="bg-white rounded-xl p-4 border border-purple-100">
+                        <p className="text-xs font-black text-[#8B4B9C] mb-2">🤖 Android (Chrome)</p>
+                        <ol className="text-xs text-gray-600 space-y-1 leading-relaxed">
+                          <li>1. Abre el link en <strong>Chrome</strong></li>
+                          <li>2. Toca los <strong>tres puntitos ⋮</strong> arriba</li>
+                          <li>3. Selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
+                          <li>4. Confirma — ¡listo!</li>
+                        </ol>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Step 2: Join Community */}
             <section className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-[#8B4B9C]">
@@ -148,7 +165,6 @@ const ThankYou: React.FC = () => {
               </div>
             </section>
 
-            {/* Support Info */}
             <div className="pt-8 border-t border-gray-100 text-center">
               <p className="text-sm text-gray-500">
                 ¿Tienes alguna duda con tu acceso? Escríbenos a:
@@ -161,7 +177,6 @@ const ThankYou: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Back to Home Link */}
         <div className="mt-12 text-center">
           <a href="/" className="text-gray-400 hover:text-[#8B4B9C] transition text-sm font-medium">
             Volver a la página principal
@@ -169,7 +184,6 @@ const ThankYou: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="py-12 text-center text-gray-400 text-[10px] border-t border-gray-100 px-6">
         <p>© {new Date().getFullYear()} El Código Secreto de Tu Cuerpo. Todos los derechos reservados.</p>
       </footer>
