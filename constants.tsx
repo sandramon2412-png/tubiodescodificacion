@@ -10,7 +10,7 @@ export const COLORS = {
 
 export const CONTENT = {
   hero: {
-    upperAlert: "🚀 LANZAMIENTO OFICIAL DE LA APP — Precio especial de $6.97 solo por 48 horas · Después sube a $47",
+    upperAlert: "🚀 LANZAMIENTO OFICIAL DE LA APP — Precio especial de $17.97 solo por tiempo limitado · Después sube a $47",
     title: "¿Tu cuerpo lleva años enviándote señales que nadie supo leer?",
     subtitle: "Descubre el origen emocional de tus síntomas con el único sistema que combina libro + App interactiva para que entiendas — y sanes — lo que tu cuerpo realmente te está diciendo.",
     cta: "🚀 SÍ, QUIERO ENTENDER MI CUERPO AHORA",
@@ -61,8 +61,8 @@ export const CONTENT = {
   },
   pricing: {
     totalValueLabel: "Valor Total del Pack",
-    launchPriceLabel: "PRECIO DE LANZAMIENTO DE LA APP — SOLO POR 48 HORAS",
-    cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $6.97",
+    launchPriceLabel: "PRECIO DE LANZAMIENTO DE LA APP — SOLO POR TIEMPO LIMITADO",
+    cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $17.97",
     guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
     paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
   },
@@ -79,7 +79,7 @@ export const CONTENT = {
     reality: "Esto no es un sueño lejano. Es lo que pasa cuando una mujer por fin aprende el idioma de su cuerpo.",
     finalCall: "☀️ EL MOMENTO ES AHORA",
     finalSub: "Tu cuerpo lleva años hablándote. Ya es hora de escucharlo. No mañana. Hoy.",
-    finalCta: "🔥 ACCEDER AL SISTEMA COMPLETO — $6.97 USD",
+    finalCta: "🔥 ACCEDER AL SISTEMA COMPLETO — $17.97 USD",
     signOff: "Con amor y verdad,",
     mentorName: "Tu guía en este camino",
     ps: "P.D.: Tenés 7 días de garantía total. Si no sentís nada — ninguna emoción, ninguna claridad, ningún alivio — te devuelvo el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
