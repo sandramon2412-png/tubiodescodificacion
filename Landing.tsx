@@ -97,7 +97,7 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
                 <div className="border-t border-purple-700 pt-4"><p className="text-purple-400 text-sm font-medium mb-1">Síntomas relacionados:</p><p className="text-purple-200 text-sm">{resultado.sintomas}</p></div>
               </div>
               <p className="text-purple-200 mb-6 leading-relaxed">La biodescodificación te muestra exactamente cómo sanar esta emoción — y liberar el síntoma que carga tu cuerpo.</p>
-              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-3 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $6.97</motion.a>
+              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-3 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $17.97</motion.a>
               <p className="text-purple-400 text-xs mb-4">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
               <button onClick={reiniciar} className="text-purple-400 text-sm underline cursor-pointer bg-transparent border-0">Hacer el quiz de nuevo</button>
             </motion.div>
@@ -426,14 +426,14 @@ const Landing: React.FC = () => {
                 <p className="text-gray-400 line-through text-lg sm:text-2xl font-medium tracking-tight">Valor Total del Pack: $299 USD</p>
                 <div className="flex items-center justify-center gap-1 sm:gap-2">
                   <span className="text-4xl sm:text-6xl font-black text-[#8B4B9C]">$</span>
-                  <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">6.97</span>
+                  <span className="text-7xl sm:text-9xl font-black text-[#8B4B9C] tracking-tighter animate-pulse">17.97</span>
                   <span className="text-xl sm:text-2xl font-black text-[#8B4B9C] self-start mt-2 sm:mt-4">USD</span>
                 </div>
                 <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO DE LA APP — SOLO POR 48 HORAS</p>
               </div>
               {/* SIN SUSCRIPCIÓN — lugar 3, sección pack */}
               <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 max-w-lg mx-auto">
-                <p className="text-green-700 text-sm font-bold">✅ Todo esto es tuyo para siempre con un único pago de $6.97 USD</p>
+                <p className="text-green-700 text-sm font-bold">✅ Todo esto es tuyo para siempre con un único pago de $17.97 USD</p>
                 <p className="text-green-600 text-xs mt-1 font-medium">Sin suscripción · Sin cobros mensuales · Sin sorpresas · Acceso de por vida 💜</p>
               </div>
               <div className="max-w-xl mx-auto space-y-4 px-2">
@@ -532,7 +532,7 @@ const Landing: React.FC = () => {
             <div className="flex items-center gap-3 sm:gap-4 flex-1 sm:flex-initial justify-between sm:justify-end w-full sm:w-auto px-2">
               <div className="text-left sm:text-right leading-none">
                 <p className="text-[10px] text-gray-400 line-through mb-1">$47 USD</p>
-                <div className="flex items-baseline gap-1"><span className="text-xs font-bold text-[#8B4B9C]">$</span><span className="text-xl sm:text-2xl font-black text-[#8B4B9C]">6.97</span></div>
+                <div className="flex items-baseline gap-1"><span className="text-xs font-bold text-[#8B4B9C]">$</span><span className="text-xl sm:text-2xl font-black text-[#8B4B9C]">17.97</span></div>
                 <p className="text-[9px] text-green-600 font-bold">Pago único · Sin suscripción</p>
               </div>
               <button onClick={handlePurchase} className="bg-[#8B4B9C] hover:bg-purple-800 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg transition transform hover:scale-105 active:scale-95 animate-pulse-subtle flex-1 sm:flex-initial text-center">¡ACCESO INMEDIATO! 🚀</button>
