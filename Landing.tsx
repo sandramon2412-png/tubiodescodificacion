@@ -371,7 +371,8 @@ const Landing: React.FC = () => {
                   {mainItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-purple-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center">
-<img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
+                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105" style={{ mixBlendMode: 'multiply' }} />
+                        <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
                         <h4 className="font-bold text-gray-800 leading-tight mb-2 text-sm sm:text-base">{item.title}</h4>
@@ -391,7 +392,7 @@ const Landing: React.FC = () => {
                   {bonusItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-yellow-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105"} />
+                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105" style={{ mixBlendMode: 'multiply' }} />
                         <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">BONUS GRATIS</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
