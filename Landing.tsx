@@ -189,12 +189,13 @@ const Landing: React.FC = () => {
             <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
               <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real — no desde un libro de teoría</p>
               <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Las cicatrices en mi cuello son reales. Y lo que aprendí en ese proceso — sobre el cuerpo, las emociones y la sanación — es lo que hoy comparto contigo."</p>
-              <p className="text-white/60 text-xs font-bold mt-3">— Tu amiga Fortaleza, creadora del sistema</p>
+              <p className="text-white/60 text-xs font-bold mt-3">— Tu amiga Sandra, creadora del sistema</p>
             </div>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
-<div className="relative group max-w-sm mx-auto lg:max-w-md xl:max-w-lg flex flex-col items-center lg:items-end">            <div className="relative w-full sm:w-3/4 lg:w-full">
+          <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
+            <div className="relative w-full sm:w-3/4 lg:w-full">
               <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
               <img src={CONTENT.hero.heroImage} alt="Biodescodificación Femenina" className="relative rounded-2xl shadow-2xl w-full h-auto border-4 border-white/20 z-10" referrerPolicy="no-referrer" />
             </div>
@@ -371,7 +372,7 @@ const Landing: React.FC = () => {
                   {mainItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-purple-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105" style={{ mixBlendMode: 'multiply' }} />
+                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
                         <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
@@ -392,7 +393,7 @@ const Landing: React.FC = () => {
                   {bonusItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-yellow-50">
                       <div className="relative aspect-[4/3] w-full flex items-center justify-center">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-10 transition duration-500 group-hover:scale-105" style={{ mixBlendMode: 'multiply' }} />
+                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
                         <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">BONUS GRATIS</div>
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
