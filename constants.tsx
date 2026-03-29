@@ -170,7 +170,7 @@ export const STACK_ITEMS: StackItem[] = [
   { 
     title: "📚 5 Guías Prácticas en PDF (descargables e imprimibles)", 
     value: 49, 
-    image: "https://i.imgur.com/PVXfooh.png",
+    image: "https://i.imgur.com/5wxt4yO.jpeg",
     description: "Guía de Meditación · Guía de Tapping · 5 Rituales Diarios · 50 Afirmaciones de Alta Vibración · Plantillas de Gratitud. Todo listo para usar desde hoy."
   },
   { 
