@@ -177,7 +177,6 @@ const Landing: React.FC = () => {
       <section className="relative overflow-hidden pt-12 pb-16 lg:pt-24 lg:pb-32 bg-gradient-to-br from-purple-900 via-[#8B4B9C] to-purple-800 text-white">
         <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-7 sm:space-y-9 animate-fade-in text-center lg:text-left">
-            {/* SOCIAL PROOF — nuevo */}
             <div className="flex items-center justify-center lg:justify-start gap-2">
               <span className="text-yellow-400 text-base">⭐⭐⭐⭐⭐</span>
               <span className="text-white/80 text-sm font-medium">127 reseñas verificadas · +1.400 mujeres ya accedieron</span>
@@ -187,7 +186,11 @@ const Landing: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={handlePurchase} className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95">{CONTENT.hero.cta}</button>
             </div>
-            {/* SIN SUSCRIPCIÓN — lugar 1 */}
+            <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
+              <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real — no desde un libro de teoría</p>
+              <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Las cicatrices en mi cuello son reales. Y lo que aprendí en ese proceso — sobre el cuerpo, las emociones y la sanación — es lo que hoy comparto contigo."</p>
+              <p className="text-white/60 text-xs font-bold mt-3">— Sandra Montezuma, creadora del sistema</p>
+            </div>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
@@ -195,10 +198,6 @@ const Landing: React.FC = () => {
             <div className="relative w-full sm:w-3/4 lg:w-full">
               <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
               <img src={CONTENT.hero.heroImage} alt="Biodescodificación Femenina" className="relative rounded-2xl shadow-2xl w-full h-auto border-4 border-white/20 z-10" referrerPolicy="no-referrer" />
-            </div>
-            <div className="relative -mt-16 sm:-mt-24 lg:-mt-32 -mr-8 sm:-mr-12 lg:-mr-16 w-1/2 sm:w-2/5 lg:w-1/2 z-20 animate-bounce-subtle">
-              <div className="absolute -inset-2 bg-purple-500/20 rounded-[2rem] blur-xl"></div>
-              <img src="https://i.imgur.com/tp3ywRK.png" alt="App Interactiva de Biodescodificación" className="relative rounded-[2rem] shadow-2xl w-full border-4 border-white/30" referrerPolicy="no-referrer" />
             </div>
           </div>
         </div>
@@ -310,7 +309,6 @@ const Landing: React.FC = () => {
                 <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">La App <span className="text-[#8B4B9C]">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-gray-600 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
                 <p className="text-gray-600 leading-relaxed text-lg">Mientras otros venden solo un PDF, nosotras creamos una experiencia interactiva que te acompaña en tiempo real.</p>
-                {/* SIN SUSCRIPCIÓN — lugar 2, sección app */}
                 <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-full text-sm font-bold mx-auto lg:mx-0">
                   🔓 Tu acceso es para siempre — pagas una sola vez, sin suscripciones ni cobros sorpresa
                 </div>
@@ -431,7 +429,6 @@ const Landing: React.FC = () => {
                 </div>
                 <p className="text-[#8B4B9C] font-black text-sm sm:text-lg uppercase tracking-widest px-4 text-center">PRECIO DE LANZAMIENTO DE LA APP — SOLO POR 48 HORAS</p>
               </div>
-              {/* SIN SUSCRIPCIÓN — lugar 3, sección pack */}
               <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 max-w-lg mx-auto">
                 <p className="text-green-700 text-sm font-bold">✅ Todo esto es tuyo para siempre con un único pago de $17.97 USD</p>
                 <p className="text-green-600 text-xs mt-1 font-medium">Sin suscripción · Sin cobros mensuales · Sin sorpresas · Acceso de por vida 💜</p>
