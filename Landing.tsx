@@ -194,8 +194,7 @@ const Landing: React.FC = () => {
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
-          <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
-            <div className="relative w-full sm:w-3/4 lg:w-full">
+<div className="relative group max-w-sm mx-auto lg:max-w-md xl:max-w-lg flex flex-col items-center lg:items-end">            <div className="relative w-full sm:w-3/4 lg:w-full">
               <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-2xl group-hover:bg-white/20 transition duration-500"></div>
               <img src={CONTENT.hero.heroImage} alt="Biodescodificación Femenina" className="relative rounded-2xl shadow-2xl w-full h-auto border-4 border-white/20 z-10" referrerPolicy="no-referrer" />
             </div>
