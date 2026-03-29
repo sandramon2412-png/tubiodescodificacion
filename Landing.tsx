@@ -188,11 +188,6 @@ const Landing: React.FC = () => {
               <button onClick={handlePurchase} className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95">{CONTENT.hero.cta}</button>
             </div>
             {/* SIN SUSCRIPCIÓN — lugar 1 */}
-            <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
-  <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">{CONTENT.hero.storyBadge}</p>
-  <p className="text-white/90 text-sm leading-relaxed italic">"{CONTENT.hero.storyText}"</p>
-  <p className="text-white/60 text-xs font-bold mt-3">{CONTENT.hero.storyName}</p>
-</div>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
