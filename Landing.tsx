@@ -189,7 +189,7 @@ const Landing: React.FC = () => {
             <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
               <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real — no desde un libro de teoría</p>
               <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Las cicatrices en mi cuello son reales. Y lo que aprendí en ese proceso — sobre el cuerpo, las emociones y la sanación — es lo que hoy comparto contigo."</p>
-              <p className="text-white/60 text-xs font-bold mt-3">— Sandra Montezuma, creadora del sistema</p>
+              <p className="text-white/60 text-xs font-bold mt-3">— Tu amiga Fortaleza, creadora del sistema</p>
             </div>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
