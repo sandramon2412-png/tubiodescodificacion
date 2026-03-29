@@ -189,7 +189,7 @@ const Landing: React.FC = () => {
             <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
               <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real — no desde un libro de teoría</p>
               <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Las cicatrices en mi cuello son reales. Y lo que aprendí en ese proceso — sobre el cuerpo, las emociones y la sanación — es lo que hoy comparto contigo."</p>
-              <p className="text-white/60 text-xs font-bold mt-3">— Tu amiga Sandra, creadora del sistema</p>
+              <p className="text-white/60 text-xs font-bold mt-3">— Sandra,Tu amiga!, creadora del sistema</p>
             </div>
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
@@ -371,7 +371,7 @@ const Landing: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {mainItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-purple-50">
-                      <div className="relative aspect-[4/3] w-full flex items-center justify-center">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden">
                         <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
                         <div className="absolute top-2 right-2 bg-[#8B4B9C] text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
                       </div>
@@ -392,7 +392,7 @@ const Landing: React.FC = () => {
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
                   {bonusItems.map((item, idx) => (
                     <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] bg-white rounded-2xl overflow-hidden flex flex-col group transition transform hover:-translate-y-1 shadow-sm border border-yellow-50">
-                      <div className="relative aspect-[4/3] w-full flex items-center justify-center">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden">
                         <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
                         <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">BONUS GRATIS</div>
                       </div>
