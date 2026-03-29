@@ -188,7 +188,19 @@ const Landing: React.FC = () => {
               <button onClick={handlePurchase} className="bg-[#E0C4C3] hover:bg-[#D1B2B1] text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-xl transition transform hover:scale-105 active:scale-95">{CONTENT.hero.cta}</button>
             </div>
             {/* SIN SUSCRIPCIÓN — lugar 1 */}
-     <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
+     <div className="bg-white/10 border border-white/20 rounded-2xl px-6 py-5 max-w-xl mx-auto lg:mx-0 text-left">
+  <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real — no desde un libro de teoría</p>
+  <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Las cicatrices en mi cuello son reales. Y lo que aprendí en ese proceso — sobre el cuerpo, las emociones y la sanación — es lo que hoy comparto contigo."</p>
+  <p className="text-white/60 text-xs font-bold mt-3">— Sandra Montezuma, creadora del sistema</p>
+</div>
+```
+
+**Paso 5 — Verifica**
+Debe quedar así en orden:
+```
+[bloque nuevo de tu historia]
+<p className="text-white/60...">🔓 Pago único...
+            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Sin cobros mensuales · Acceso de por vida</p>
             <p className="text-sm sm:text-base italic opacity-75">{CONTENT.hero.footer}</p>
           </div>
           <div className="relative group max-w-sm mx-auto lg:max-w-xs xl:max-w-sm flex flex-col items-center lg:items-end">
