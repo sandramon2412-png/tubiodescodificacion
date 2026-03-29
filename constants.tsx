@@ -11,11 +11,11 @@ export const COLORS = {
 export const CONTENT = {
   hero: {
     upperAlert: "🚀 LANZAMIENTO OFICIAL DE LA APP — Precio especial de $17.97 solo por tiempo limitado · Después sube a $47",
-    title: "¿Tu cuerpo lleva años enviándote señales que nadie supo leer?",
-    subtitle: "Descubre el origen emocional de tus síntomas con el único sistema que combina libro + App interactiva para que entiendas — y sanes — lo que tu cuerpo realmente te está diciendo.",
-    cta: "🚀 SÍ, QUIERO ENTENDER MI CUERPO AHORA",
+    title: "Vuelve a sentirte tú — con energía, con paz, sin cargar lo que nunca fue tuyo",
+    subtitle: "Aprende el idioma de tu cuerpo y sana desde adentro con el único sistema que combina libro + App interactiva de biodescodificación femenina.",
+    cta: "🚀 SÍ, QUIERO VOLVER A SENTIRME YO",
     footer: "✅ Acceso inmediato · Descarga en 2 minutos · Garantía 7 días",
-    heroImage: "https://i.imgur.com/hD7pK5a.png"
+    heroImage: "https://i.imgur.com/wetlLWW.jpeg"
   },
   identification: {
     title: "Antes de seguir, respóndete esto con honestidad:",
@@ -82,7 +82,7 @@ export const CONTENT = {
     finalCta: "🔥 ACCEDER AL SISTEMA COMPLETO — $17.97 USD",
     signOff: "Con amor y verdad,",
     mentorName: "Tu guía en este camino",
-    ps: "P.D.: Tenés 7 días de garantía total. Si no sentís nada — ninguna emoción, ninguna claridad, ningún alivio — te devuelvo el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
+    ps: "P.D.: Tenés 7 días de garantía total. Si no sentís nada — ninguna emoción, ninguna claridad, ningún alivio — te devolvemos el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
   }
 };
 
@@ -158,7 +158,7 @@ export const STACK_ITEMS: StackItem[] = [
   { 
     title: "📖 Libro Principal: \"Biodescodificación Femenina — El Código Secreto de Tu Cuerpo\" (130 págs.)", 
     value: 27, 
-    image: "https://i.imgur.com/hD7pK5a.png",
+    image: "https://i.imgur.com/wetlLWW.jpeg",
     description: "El método RE-CONECT completo. Diccionario de 60 señales corporales con su mensaje emocional. Casos guiados, ejercicios prácticos y frases sanadoras. La base de todo tu proceso."
   },
   { 
