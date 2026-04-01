@@ -5,6 +5,19 @@ import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
 
+// Genera un ID único para deduplicación de eventos Meta
+function generateEventId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+// Helper para disparar eventos fbq con eventID
+function trackFbEvent(eventName: string, params?: Record<string, any>) {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    const eventId = generateEventId();
+    (window as any).fbq('track', eventName, params || {}, { eventID: eventId });
+  }
+}
+
 function useCountdown(minutes: number) {
   const [seconds, setSeconds] = useState(minutes * 60);
   useEffect(() => {
@@ -48,9 +61,7 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
     setRespuestas(nuevasRespuestas);
     if (preguntaActual + 1 >= preguntas.length) {
       setPaso("resultado");
-      if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead');
-      }
+      trackFbEvent('Lead');
     } else {
       setPreguntaActual(preguntaActual + 1);
     }
@@ -97,7 +108,7 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
                 <div className="border-t border-purple-700 pt-4"><p className="text-purple-400 text-sm font-medium mb-1">Síntomas relacionados:</p><p className="text-purple-200 text-sm">{resultado.sintomas}</p></div>
               </div>
               <p className="text-purple-200 mb-6 leading-relaxed">La biodescodificación te muestra exactamente cómo sanar esta emoción — y liberar el síntoma que carga tu cuerpo.</p>
-              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-3 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $17.97</motion.a>
+              <motion.a href={paymentUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} onClick={() => trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' })} className="block bg-white text-purple-900 font-bold text-lg px-10 py-4 rounded-full mb-3 cursor-pointer">🔥 Quiero entender mi cuerpo completo — $17.97</motion.a>
               <p className="text-purple-400 text-xs mb-4">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
               <button onClick={reiniciar} className="text-purple-400 text-sm underline cursor-pointer bg-transparent border-0">Hacer el quiz de nuevo</button>
             </motion.div>
@@ -123,7 +134,10 @@ const Landing: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handlePurchase = () => { window.open(CONTENT.pricing.paymentUrl, '_blank'); };
+  const handlePurchase = () => {
+    trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' });
+    window.open(CONTENT.pricing.paymentUrl, '_blank');
+  };
 
   const handleAnalyze = async () => {
     if (!symptomInput.trim()) return;
