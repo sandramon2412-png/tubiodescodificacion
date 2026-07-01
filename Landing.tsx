@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, CheckCircle } from 'lucide-react';
+import { ShoppingBag, CheckCircle, Sparkles, Heart, Zap, BookOpen, Smartphone, Users } from 'lucide-react';
 import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
@@ -90,7 +90,7 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
         <AnimatePresence mode="wait">
           {paso === "intro" && (
             <motion.div key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="text-center">
-              <motion.div className="text-7xl mb-6 animate-float">🔮</motion.div>
+              <motion.div className="text-7xl mb-6 animate-float">✨</motion.div>
               <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight text-gradient-white">¿Qué emoción está cargando tu cuerpo?</h2>
               <p className="text-purple-200 text-lg mb-10 leading-relaxed">Respondé 4 preguntas y descubrí el origen emocional de tus síntomas</p>
               <motion.button 
@@ -137,13 +137,13 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
           )}
           {paso === "resultado" && resultado && (
             <motion.div key="resultado" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="text-center">
-              <motion.div className="text-7xl mb-8 animate-glow">✨</motion.div>
+              <motion.div className="text-7xl mb-8 animate-glow">💫</motion.div>
               <p className="text-pink-400 text-sm uppercase tracking-widest mb-3 font-bold">Tu resultado</p>
               <h3 className="text-3xl font-bold text-white mb-10 leading-tight text-gradient-white">{resultado.titulo}</h3>
               <div className="rounded-3xl p-8 mb-10 text-left glass-intense border-l-4 border-pink-500">
                 <p className="text-purple-100 leading-relaxed mb-8 text-lg">{resultado.descripcion}</p>
                 <div className="border-t border-purple-700 pt-6">
-                  <p className="text-pink-400 text-sm font-bold mb-3 uppercase">🔍 Síntomas relacionados:</p>
+                  <p className="text-pink-400 text-sm font-bold mb-3 uppercase">Síntomas relacionados:</p>
                   <p className="text-purple-200 text-sm leading-relaxed">{resultado.sintomas}</p>
                 </div>
               </div>
@@ -157,9 +157,9 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
                 onClick={() => trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' })}
                 className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black px-12 py-4 rounded-full shadow-glow hover-lift mb-6 glass-intense"
               >
-                🔥 Acceder ahora por $17.97 USD
+                Acceder ahora por $17.97 USD
               </motion.a>
-              <p className="text-purple-400 text-xs mb-8">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
+              <p className="text-purple-400 text-xs mb-8">Pago único · Sin suscripción · Acceso de por vida</p>
               <motion.button 
                 onClick={reiniciar} 
                 className="text-pink-400 text-sm underline cursor-pointer bg-transparent border-0 hover:text-pink-300 transition"
@@ -234,7 +234,7 @@ const Landing: React.FC = () => {
             className="fixed bottom-24 left-4 sm:bottom-8 sm:left-8 z-40"
           >
             <div className="glass-intense p-5 rounded-2xl flex items-center gap-4 max-w-xs">
-              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><ShoppingBag className="w-5 h-5 text-green-400" /></div>
+              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><CheckCircle className="w-5 h-5 text-green-400" /></div>
               <div className="flex-1">
                 <p className="text-xs sm:text-sm text-white leading-tight"><span className="font-bold text-pink-400">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
                 <div className="flex items-center gap-1 mt-2"><CheckCircle className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
@@ -249,8 +249,49 @@ const Landing: React.FC = () => {
         {CONTENT.hero.upperAlert}
       </div>
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-16 pb-20 lg:pt-32 lg:pb-40 video-hero">
+      {/* HERO SECTION WITH ANIMATED VIDEO BACKGROUND */}
+      <section className="relative overflow-hidden pt-16 pb-20 lg:pt-32 lg:pb-40">
+        {/* Animated Video Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1a0a2e]">
+          {/* Animated Grid Pattern */}
+          <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.1 }}>
+            <defs>
+              <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+          </svg>
+
+          {/* Animated Grid Lines */}
+          <motion.div 
+            className="absolute inset-0"
+            animate={{ 
+              backgroundPosition: ['0px 0px', '40px 40px'],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            style={{
+              backgroundImage: `linear-gradient(45deg, transparent 24%, rgba(168, 85, 247, 0.05) 25%, rgba(168, 85, 247, 0.05) 26%, transparent 27%, transparent 74%, rgba(168, 85, 247, 0.05) 75%, rgba(168, 85, 247, 0.05) 76%, transparent 77%, transparent), linear-gradient(-45deg, transparent 24%, rgba(168, 85, 247, 0.05) 25%, rgba(168, 85, 247, 0.05) 26%, transparent 27%, transparent 74%, rgba(168, 85, 247, 0.05) 75%, rgba(168, 85, 247, 0.05) 76%, transparent 77%, transparent)`,
+              backgroundSize: '60px 60px',
+              backgroundPosition: '0px 0px'
+            }}
+          />
+
+          {/* Floating Orbs */}
+          <motion.div 
+            className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl"
+            animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
+            transition={{ duration: 20, repeat: Infinity }}
+            style={{ top: -100, right: -100 }}
+          />
+          <motion.div 
+            className="absolute w-80 h-80 rounded-full bg-pink-600/15 blur-3xl"
+            animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
+            transition={{ duration: 25, repeat: Infinity }}
+            style={{ bottom: -100, left: -100 }}
+          />
+        </div>
+
         <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
           <motion.div 
             className="space-y-8 animate-fade-in text-center lg:text-left"
@@ -278,7 +319,7 @@ const Landing: React.FC = () => {
                 whileTap={{ scale: 0.96 }}
                 className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white px-12 py-5 rounded-full font-black text-lg shadow-glow hover-lift transition btn-premium"
               >
-                🚀 SÍ, QUIERO VOLVER A SENTIRME YO
+                SÍ, QUIERO VOLVER A SENTIRME YO
               </motion.button>
             </div>
 
@@ -286,17 +327,17 @@ const Landing: React.FC = () => {
               className="glass-intense p-8 rounded-2xl max-w-xl mx-auto lg:mx-0 text-left border-l-4 border-pink-500"
               whileHover={{ y: -4 }}
             >
-              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4">💜 Creado desde la experiencia real</p>
+              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4">Creado desde la experiencia real</p>
               <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo. Hoy sano ese dolor enseñándole a otras mujeres."</p>
               <p className="text-white/60 text-xs font-bold mt-4">— Sandra, tu amiga, creadora</p>
             </motion.div>
 
-            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
+            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Pago único · Sin suscripción · Acceso de por vida</p>
           </motion.div>
 
-          {/* HERO IMAGE */}
+          {/* HERO IMAGE - SIN TEXTO FLOTANTE */}
           <motion.div 
-            className="relative flex justify-center"
+            className="relative flex justify-center max-w-md mx-auto lg:mx-0"
             initial={{ opacity: 0, x: 60, scale: 0.8 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -306,7 +347,6 @@ const Landing: React.FC = () => {
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 6, repeat: Infinity }}
             >
-              <div className="absolute -inset-8 bg-gradient-to-r from-pink-600/30 to-purple-600/30 rounded-3xl blur-3xl animate-pulse-intense" />
               <img 
                 src={CONTENT.hero.heroImage} 
                 alt="Biodescodificación Femenina" 
@@ -340,7 +380,7 @@ const Landing: React.FC = () => {
               >
                 <div className="flex items-start gap-4">
                   <motion.span 
-                    className="text-pink-400 text-2xl font-black flex-shrink-0 mt-1"
+                    className="text-pink-400 text-2xl flex-shrink-0 mt-1"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ delay: idx * 0.1, duration: 2 }}
                   >
@@ -400,7 +440,7 @@ const Landing: React.FC = () => {
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                🔍 Herramienta IA Gratuita
+                <Sparkles className="inline-block w-4 h-4 mr-2" />Herramienta IA Gratuita
               </motion.div>
               <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">¿Qué te está diciendo tu cuerpo?</h2>
               <p className="text-purple-200 mt-3 text-sm sm:text-base">Escribí tu síntoma y recibí el mensaje emocional</p>
@@ -420,9 +460,15 @@ const Landing: React.FC = () => {
                 disabled={isAnalyzing}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap flex items-center justify-center gap-2"
               >
-                {isAnalyzing ? '⏳ Analizando...' : '✨ Descubrir'}
+                {isAnalyzing ? (
+                  <>⏳ Analizando...</>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" /> Descubrir
+                  </>
+                )}
               </motion.button>
             </div>
 
@@ -468,26 +514,36 @@ const Landing: React.FC = () => {
             <div className="h-1 w-24 bg-pink-300 mx-auto"></div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-            {CONTENT.benefits.items.map((benefit, idx) => (
-              <motion.div 
-                key={idx} 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass-dark p-8 rounded-2xl hover-lift group border border-white/20 interactive-card"
-              >
+            {CONTENT.benefits.items.map((benefit, idx) => {
+              const iconMap: Record<string, React.ReactNode> = {
+                '🔓': <Heart className="w-8 h-8" />,
+                '📱': <Smartphone className="w-8 h-8" />,
+                '🧘‍♀️': <Sparkles className="w-8 h-8" />,
+                '💫': <Zap className="w-8 h-8" />,
+                '✨': <Heart className="w-8 h-8" />,
+                '💖': <Heart className="w-8 h-8" />,
+              };
+              return (
                 <motion.div 
-                  className="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ delay: idx * 0.2, duration: 2, repeat: Infinity }}
+                  key={idx} 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass-dark p-8 rounded-2xl hover-lift group border border-white/20 interactive-card"
                 >
-                  {benefit.icon}
+                  <motion.div 
+                    className="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300 text-pink-400"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ delay: idx * 0.2, duration: 2, repeat: Infinity }}
+                  >
+                    {iconMap[benefit.icon] || benefit.icon}
+                  </motion.div>
+                  <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
+                  <p className="text-purple-100 text-sm leading-relaxed">{benefit.desc}</p>
                 </motion.div>
-                <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-                <p className="text-purple-100 text-sm leading-relaxed">{benefit.desc}</p>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -550,7 +606,7 @@ const Landing: React.FC = () => {
                   <img 
                     src="https://i.imgur.com/tp3ywRK.png" 
                     alt="App Código Cuerpo" 
-                    className="w-full rounded-2xl shadow-elevated border-4 border-white/30 object-cover"
+                    className="w-full rounded-2xl shadow-elevated border-4 border-white/30 object-contain"
                   />
                 </motion.div>
                 <motion.div 
@@ -561,7 +617,7 @@ const Landing: React.FC = () => {
                   <img 
                     src="https://i.imgur.com/LQKLnWY.png" 
                     alt="App Preview" 
-                    className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-cover"
+                    className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-contain"
                   />
                 </motion.div>
               </div>
@@ -573,19 +629,19 @@ const Landing: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
             >
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0">📱 Solo en este pack</div>
+                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0"><Smartphone className="w-4 h-4" /> Solo en este pack</div>
                 <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight text-gradient-white">La App <span className="text-pink-400">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-purple-200 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
               </div>
 
               <div className="grid gap-6">
                 {[
-                  { icon: "🗺️", title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
-                  { icon: "💬", title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
-                  { icon: "📝", title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
-                  { icon: "🎯", title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
-                  { icon: "🎧", title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad — listos para escuchar" },
-                  { icon: "📊", title: "Detecta patrones", desc: "La app analiza tu historial de síntomas" }
+                  { Icon: Heart, title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
+                  { Icon: Zap, title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
+                  { Icon: BookOpen, title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
+                  { Icon: Sparkles, title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
+                  { Icon: Heart, title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad — listos para escuchar" },
+                  { Icon: Users, title: "Detecta patrones", desc: "La app analiza tu historial de síntomas" }
                 ].map((feature, i) => (
                   <motion.div 
                     key={i} 
@@ -594,7 +650,7 @@ const Landing: React.FC = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <div className="flex-shrink-0 w-12 h-12 glass-intense rounded-2xl shadow-soft border border-purple-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+                    <div className="flex-shrink-0 w-12 h-12 glass-intense rounded-2xl shadow-soft border border-purple-500/40 flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform duration-300"><feature.Icon className="w-6 h-6" /></div>
                     <div><h4 className="font-bold text-white mb-1">{feature.title}</h4><p className="text-purple-200 text-sm leading-relaxed">{feature.desc}</p></div>
                   </motion.div>
                 ))}
@@ -618,7 +674,7 @@ const Landing: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
           <div className="glass-intense p-10 sm:p-16 rounded-3xl shadow-elevated">
             <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-gradient-white">📚 TODO LO QUE RECIBÍS HOY</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-gradient-white">TODO LO QUE RECIBÍS HOY</h2>
               <p className="text-purple-300 font-bold uppercase tracking-widest text-sm">Valor total: $299 USD</p>
             </div>
 
@@ -638,8 +694,8 @@ const Landing: React.FC = () => {
                       whileHover={{ y: -12 }}
                       className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
                     >
-                      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-purple-600/30 to-pink-600/30">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                      <div className="relative w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 overflow-hidden flex items-center justify-center">
+                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
                         <div className="absolute top-3 right-3 bg-purple-600 text-white text-[9px] font-bold px-3 py-1 rounded-full shadow-glow uppercase tracking-wider">INCLUIDO</div>
                       </div>
                       <div className="p-6 flex-1 flex flex-col">
@@ -658,7 +714,7 @@ const Landing: React.FC = () => {
               {/* BONUS ITEMS */}
               <div>
                 <div className="text-center mb-12">
-                  <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-yellow-500 pb-3">🎁 BONOS EXCLUSIVOS</h3>
+                  <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-yellow-500 pb-3">BONOS EXCLUSIVOS</h3>
                 </div>
                 <div className="flex flex-wrap justify-center gap-6">
                   {bonusItems.map((item, idx) => (
@@ -670,8 +726,8 @@ const Landing: React.FC = () => {
                       whileHover={{ y: -12 }}
                       className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
                     >
-                      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-yellow-600/30 to-orange-600/30">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                      <div className="relative w-full h-48 bg-gradient-to-br from-yellow-600/30 to-orange-600/30 overflow-hidden flex items-center justify-center">
+                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
                         <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full shadow-glow uppercase">REGALO</div>
                       </div>
                       <div className="p-6 flex-1 flex flex-col">
@@ -691,7 +747,7 @@ const Landing: React.FC = () => {
             {/* PRICE SECTION */}
             <div className="mt-20 border-t-2 border-dashed border-purple-600 pt-16 text-center space-y-10">
               <div className="glass-dark border-2 border-purple-500 rounded-2xl px-10 py-6 max-w-sm mx-auto shadow-soft">
-                <p className="text-xs font-bold text-purple-300 uppercase tracking-widest mb-4">⏰ PRECIO ESPECIAL VENCE EN:</p>
+                <p className="text-xs font-bold text-purple-300 uppercase tracking-widest mb-4">PRECIO ESPECIAL VENCE EN:</p>
                 <div className="flex items-center justify-center gap-4">
                   <div className="text-center">
                     <div className="text-5xl font-black text-pink-400 animate-glow">{m}</div>
@@ -706,7 +762,7 @@ const Landing: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <p className="text-purple-300 font-bold text-sm uppercase tracking-widest">💰 TU INVERSIÓN HOY</p>
+                <p className="text-purple-300 font-bold text-sm uppercase tracking-widest">TU INVERSIÓN HOY</p>
                 <p className="text-gray-500 line-through text-xl font-semibold">Valor Total: $299 USD</p>
                 <div className="flex items-center justify-center gap-1">
                   <span className="text-5xl font-black text-pink-500">$</span>
@@ -723,7 +779,7 @@ const Landing: React.FC = () => {
               </div>
 
               <div className="glass-purple rounded-2xl px-8 py-5 max-w-lg mx-auto border-2 border-pink-500">
-                <p className="text-white text-sm font-bold">✅ Pago único, acceso de por vida</p>
+                <p className="text-white text-sm font-bold">Pago único, acceso de por vida</p>
                 <p className="text-purple-200 text-xs mt-2 font-medium">Sin suscripción · Sin cobros mensuales · Sin sorpresas</p>
               </div>
 
@@ -734,9 +790,9 @@ const Landing: React.FC = () => {
                   whileTap={{ scale: 0.96 }}
                   className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-7 px-6 rounded-2xl text-2xl font-black shadow-glow hover-lift transition btn-premium"
                 >
-                  <span className="animate-bounce inline-block mr-3">🔥</span>SÍ, QUIERO MI ACCESO<span className="animate-bounce inline-block ml-3">🔥</span>
+                  SÍ, QUIERO MI ACCESO
                 </motion.button>
-                <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía total</p>
+                <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">100% segura · 7 días de garantía total</p>
               </div>
             </div>
           </div>
@@ -746,7 +802,7 @@ const Landing: React.FC = () => {
       {/* FAQ SECTION */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="container mx-auto px-6 max-w-3xl">
-          <h2 className="text-4xl font-bold text-center mb-14 uppercase tracking-tight text-white">❓ Preguntas Frecuentes</h2>
+          <h2 className="text-4xl font-bold text-center mb-14 uppercase tracking-tight text-white">Preguntas Frecuentes</h2>
           <div className="space-y-4">
             {FAQS.map((faq, idx) => (
               <motion.div 
