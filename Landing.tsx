@@ -260,14 +260,14 @@ const Landing: React.FC = () => {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
           >
             <source src="/video-hero.mp4" type="video/mp4" />
             Su navegador no soporta videos HTML5
           </video>
 
           {/* Gradient Overlay para mejorar legibilidad */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/60 via-[#2d1b4e]/50 to-[#1a0a2e]/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/35 via-[#2d1b4e]/25 to-[#1a0a2e]/35"></div>
 
           {/* Floating Orbs */}
           <motion.div 
@@ -291,7 +291,7 @@ const Landing: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="glass-intense px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full">
               <span className="text-yellow-300 text-base">⭐⭐⭐⭐⭐</span>
               <span className="text-white/90 text-sm font-semibold ml-3">127 reseñas · +1.400 mujeres</span>
             </div>
@@ -328,8 +328,8 @@ const Landing: React.FC = () => {
           </motion.div>
 
           {/* HERO IMAGE */}
-          <motion.div 
-            className="relative flex justify-center max-w-md mx-auto lg:mx-0"
+          <motion.div
+            className="relative flex justify-end max-w-md mx-auto lg:ml-auto lg:mr-0"
             initial={{ opacity: 0, x: 60, scale: 0.8 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
