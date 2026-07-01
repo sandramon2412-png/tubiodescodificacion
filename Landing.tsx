@@ -5,12 +5,10 @@ import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
 
-// Genera un ID único para deduplicación de eventos Meta
 function generateEventId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
-// Helper para disparar eventos fbq con eventID
 function trackFbEvent(eventName: string, params?: Record<string, any>) {
   if (typeof window !== 'undefined' && (window as any).fbq) {
     const eventId = generateEventId();
@@ -72,20 +70,19 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
   const progreso = (preguntaActual / preguntas.length) * 100;
 
   return (
-    <section className="py-16 px-4 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%)" }}>
-      {/* Animated background elements */}
+    <section className="py-20 px-4 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #0f0a1a 0%, #1a0f2e 100%)" }}>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
-          className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-3xl"
+          className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl"
           animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
           transition={{ duration: 20, repeat: Infinity }}
-          style={{ top: -100, right: -100 }}
+          style={{ top: -50, right: -50 }}
         />
         <motion.div 
-          className="absolute w-96 h-96 rounded-full bg-pink-500/10 blur-3xl"
+          className="absolute w-80 h-80 rounded-full bg-pink-600/15 blur-3xl"
           animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
           transition={{ duration: 25, repeat: Infinity }}
-          style={{ bottom: -100, left: -100 }}
+          style={{ bottom: -50, left: -50 }}
         />
       </div>
 
@@ -93,45 +90,44 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
         <AnimatePresence mode="wait">
           {paso === "intro" && (
             <motion.div key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="text-center">
-              <motion.div className="text-6xl sm:text-7xl mb-6 animate-float">🔮</motion.div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight text-gradient-white">¿Qué emoción está cargando tu cuerpo?</h2>
-              <p className="text-purple-200 text-lg mb-8 leading-relaxed">Respondé 4 preguntas y descubrí el origen emocional de tus síntomas — personalizado para vos.</p>
+              <motion.div className="text-7xl mb-6 animate-float">🔮</motion.div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight text-gradient-white">¿Qué emoción está cargando tu cuerpo?</h2>
+              <p className="text-purple-200 text-lg mb-10 leading-relaxed">Respondé 4 preguntas y descubrí el origen emocional de tus síntomas</p>
               <motion.button 
                 whileHover={{ scale: 1.08, y: -4 }} 
                 whileTap={{ scale: 0.96 }} 
                 onClick={() => setPaso("preguntas")} 
-                className="bg-gradient-to-r from-white to-purple-50 text-purple-900 font-bold text-lg px-10 py-4 rounded-full shadow-glow hover-lift"
+                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg px-12 py-4 rounded-full shadow-glow hover-lift glass-intense"
               >
                 Empezar Quiz
               </motion.button>
-              <p className="text-purple-400 text-sm mt-4 font-medium">⏱️ Solo 4 preguntas — menos de 1 minuto</p>
             </motion.div>
           )}
           {paso === "preguntas" && (
             <motion.div key={`pregunta-${preguntaActual}`} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-              <div className="mb-8">
-                <div className="flex justify-between text-purple-300 text-sm mb-3 font-medium"><span>Pregunta {preguntaActual + 1} de {preguntas.length}</span><span className="text-purple-400">{Math.round(progreso)}%</span></div>
-                <div className="w-full bg-purple-900/50 rounded-full h-2 backdrop-blur-sm">
+              <div className="mb-10">
+                <div className="flex justify-between text-purple-300 text-sm mb-4 font-bold"><span>Pregunta {preguntaActual + 1}/{preguntas.length}</span><span className="text-pink-400">{Math.round(progreso)}%</span></div>
+                <div className="w-full bg-purple-900/30 rounded-full h-3 glass backdrop-blur-md">
                   <motion.div 
-                    className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full shadow-glow" 
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 h-3 rounded-full shadow-glow" 
                     initial={{ width: 0 }} 
                     animate={{ width: `${progreso}%` }} 
                     transition={{ type: "spring", stiffness: 100, damping: 20 }}
                   />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-8 text-center leading-tight">{preguntas[preguntaActual].pregunta}</h3>
+              <h3 className="text-2xl font-bold text-white mb-10 text-center leading-tight">{preguntas[preguntaActual].pregunta}</h3>
               <div className="flex flex-col gap-4">
                 {preguntas[preguntaActual].opciones.map((opcion, i) => (
                   <motion.button 
                     key={i} 
-                    whileHover={{ scale: 1.03, x: 10 }} 
+                    whileHover={{ scale: 1.05, x: 10 }} 
                     whileTap={{ scale: 0.98 }} 
                     initial={{ opacity: 0, y: 10 }} 
                     animate={{ opacity: 1, y: 0 }} 
                     transition={{ delay: i * 0.1 }} 
                     onClick={() => responder(opcion.emocion)}
-                    className="glass-purple p-4 rounded-2xl text-left text-white font-medium hover-lift transition-all border border-purple-400/30 hover:border-purple-400/60"
+                    className="glass-purple p-6 rounded-2xl text-left text-white font-semibold hover-lift transition-all border border-purple-500/40 hover:border-pink-500/60 interactive-card"
                   >
                     {opcion.texto}
                   </motion.button>
@@ -141,17 +137,17 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
           )}
           {paso === "resultado" && resultado && (
             <motion.div key="resultado" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="text-center">
-              <motion.div className="text-6xl mb-6 animate-float">✨</motion.div>
-              <p className="text-purple-300 text-sm uppercase tracking-widest mb-3 font-bold">Tu resultado</p>
-              <h3 className="text-2xl font-bold text-white mb-8 leading-tight">{resultado.titulo}</h3>
-              <div className="rounded-2xl p-8 mb-8 text-left glass-dark border-l-4 border-pink-400">
-                <p className="text-purple-100 leading-relaxed mb-6 text-lg">{resultado.descripcion}</p>
+              <motion.div className="text-7xl mb-8 animate-glow">✨</motion.div>
+              <p className="text-pink-400 text-sm uppercase tracking-widest mb-3 font-bold">Tu resultado</p>
+              <h3 className="text-3xl font-bold text-white mb-10 leading-tight text-gradient-white">{resultado.titulo}</h3>
+              <div className="rounded-3xl p-8 mb-10 text-left glass-intense border-l-4 border-pink-500">
+                <p className="text-purple-100 leading-relaxed mb-8 text-lg">{resultado.descripcion}</p>
                 <div className="border-t border-purple-700 pt-6">
-                  <p className="text-purple-300 text-sm font-bold mb-2 uppercase">🔍 Síntomas relacionados:</p>
+                  <p className="text-pink-400 text-sm font-bold mb-3 uppercase">🔍 Síntomas relacionados:</p>
                   <p className="text-purple-200 text-sm leading-relaxed">{resultado.sintomas}</p>
                 </div>
               </div>
-              <p className="text-purple-200 mb-8 leading-relaxed text-lg">La biodescodificación te muestra exactamente cómo sanar esta emoción — y liberar el síntoma que carga tu cuerpo.</p>
+              <p className="text-purple-200 mb-10 leading-relaxed text-lg">La biodescodificación te muestra exactamente cómo sanar esta emoción</p>
               <motion.a 
                 href={paymentUrl} 
                 target="_blank" 
@@ -159,14 +155,14 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
                 whileHover={{ scale: 1.08, y: -4 }} 
                 whileTap={{ scale: 0.96 }} 
                 onClick={() => trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' })}
-                className="inline-block bg-gradient-to-r from-pink-400 to-pink-300 text-purple-900 font-black px-10 py-4 rounded-full shadow-glow hover-lift mb-4"
+                className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black px-12 py-4 rounded-full shadow-glow hover-lift mb-6 glass-intense"
               >
                 🔥 Acceder ahora por $17.97 USD
               </motion.a>
-              <p className="text-purple-400 text-xs mb-6">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
+              <p className="text-purple-400 text-xs mb-8">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
               <motion.button 
                 onClick={reiniciar} 
-                className="text-purple-300 text-sm underline cursor-pointer bg-transparent border-0 hover:text-purple-100 transition"
+                className="text-pink-400 text-sm underline cursor-pointer bg-transparent border-0 hover:text-pink-300 transition"
               >
                 ↻ Hacer el quiz de nuevo
               </motion.button>
@@ -184,7 +180,6 @@ const Landing: React.FC = () => {
   const [analysis, setAnalysis] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const analysisRef = useRef<HTMLDivElement>(null);
   const { m, s } = useCountdown(17);
 
@@ -192,14 +187,6 @@ const Landing: React.FC = () => {
     const handleScroll = () => { setShowStickyCta(window.scrollY > 600); };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const handlePurchase = () => {
@@ -227,8 +214,6 @@ const Landing: React.FC = () => {
     { name: "Luciana", city: "Santiago", action: "activó su acceso a la App" },
     { name: "Marcela", city: "Bogotá", action: "se unió a la comunidad" },
     { name: "Carolina", city: "Lima", action: "adquirió la oferta de lanzamiento" },
-    { name: "Fernanda", city: "Madrid", action: "empezó su transformación" },
-    { name: "Natalia", city: "Montevideo", action: "ya tiene su acceso activado" }
   ];
 
   useEffect(() => {
@@ -239,7 +224,7 @@ const Landing: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-dark-premium overflow-x-hidden">
       <AnimatePresence>
         {currentPurchase !== null && (
           <motion.div 
@@ -248,90 +233,84 @@ const Landing: React.FC = () => {
             exit={{ opacity: 0, x: -50, scale: 0.95 }} 
             className="fixed bottom-24 left-4 sm:bottom-8 sm:left-8 z-40"
           >
-            <div className="glass p-4 rounded-2xl flex items-center gap-4 max-w-xs shadow-elevated">
-              <div className="bg-green-100 p-2 rounded-full flex-shrink-0"><ShoppingBag className="w-5 h-5 text-green-600" /></div>
+            <div className="glass-intense p-5 rounded-2xl flex items-center gap-4 max-w-xs">
+              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><ShoppingBag className="w-5 h-5 text-green-400" /></div>
               <div className="flex-1">
-                <p className="text-xs sm:text-sm text-gray-800 leading-tight"><span className="font-bold text-[#8B4B9C]">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
-                <div className="flex items-center gap-1 mt-1"><CheckCircle className="w-3 h-3 text-green-500" /><span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Compra confirmada</span></div>
+                <p className="text-xs sm:text-sm text-white leading-tight"><span className="font-bold text-pink-400">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
+                <div className="flex items-center gap-1 mt-2"><CheckCircle className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="bg-gradient-to-r from-pink-300 to-purple-400 text-purple-900 text-center py-3 px-4 text-xs font-bold uppercase tracking-widest shadow-soft">{CONTENT.hero.upperAlert}</div>
+      {/* TOP ALERT */}
+      <div className="bg-gradient-to-r from-pink-600 to-purple-600 text-white text-center py-3 px-4 text-xs font-bold uppercase tracking-widest shadow-glow">
+        {CONTENT.hero.upperAlert}
+      </div>
 
-      {/* HERO SECTION WITH VIDEO BACKGROUND */}
-      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-24 lg:pb-32 gradient-hero text-white">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0">
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden pt-16 pb-20 lg:pt-32 lg:pb-40 video-hero">
+        <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
           <motion.div 
-            className="absolute inset-0 opacity-30"
-            animate={{
-              backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
-            }}
-            transition={{ duration: 15, repeat: Infinity }}
-            style={{
-              background: 'linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent)',
-              backgroundSize: '60px 60px'
-            }}
-          />
-        </div>
-
-        <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center relative z-10">
-          <motion.div 
-            className="space-y-7 sm:space-y-9 animate-fade-in text-center lg:text-left"
-            initial={{ opacity: 0, x: -50 }}
+            className="space-y-8 animate-fade-in text-center lg:text-left"
+            initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex items-center justify-center lg:justify-start gap-2 glass px-4 py-2 w-fit mx-auto lg:mx-0 rounded-full">
+            <div className="glass-intense px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full">
               <span className="text-yellow-300 text-base">⭐⭐⭐⭐⭐</span>
-              <span className="text-white/90 text-sm font-medium">127 reseñas · +1.400 mujeres</span>
+              <span className="text-white/90 text-sm font-semibold ml-3">127 reseñas · +1.400 mujeres</span>
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-gradient-white">{CONTENT.hero.title}</h1>
-            <p className="text-xl lg:text-2xl opacity-90 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">{CONTENT.hero.subtitle}</p>
+
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-gradient-white">
+              {CONTENT.hero.title}
+            </h1>
+
+            <p className="text-xl lg:text-2xl text-purple-200 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              {CONTENT.hero.subtitle}
+            </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <motion.button 
                 onClick={handlePurchase} 
                 whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.96 }}
-                className="bg-gradient-to-r from-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-200 text-gray-800 px-10 py-5 rounded-full font-black text-xl shadow-elevated hover-lift transition"
+                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white px-12 py-5 rounded-full font-black text-lg shadow-glow hover-lift transition btn-premium"
               >
                 🚀 SÍ, QUIERO VOLVER A SENTIRME YO
               </motion.button>
             </div>
+
             <motion.div 
-              className="glass-dark p-6 rounded-2xl max-w-xl mx-auto lg:mx-0 text-left border-l-4 border-pink-400"
+              className="glass-intense p-8 rounded-2xl max-w-xl mx-auto lg:mx-0 text-left border-l-4 border-pink-500"
               whileHover={{ y: -4 }}
             >
-              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-3">💜 Creado desde la experiencia real</p>
-              <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo lo que nunca pude decir. Hoy sano ese dolor enseñándole a otras mujeres el idioma de sus cuerpos."</p>
-              <p className="text-white/60 text-xs font-bold mt-3">— Sandra, tu amiga, creadora del sistema</p>
+              <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4">💜 Creado desde la experiencia real</p>
+              <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo. Hoy sano ese dolor enseñándole a otras mujeres."</p>
+              <p className="text-white/60 text-xs font-bold mt-4">— Sandra, tu amiga, creadora</p>
             </motion.div>
+
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">🔓 Pago único · Sin suscripción · Acceso de por vida</p>
           </motion.div>
 
+          {/* HERO IMAGE */}
           <motion.div 
-            className="relative group max-w-sm mx-auto lg:max-w-md xl:max-w-lg flex flex-col items-center lg:items-end"
-            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+            className="relative flex justify-center"
+            initial={{ opacity: 0, x: 60, scale: 0.8 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <motion.div 
-              className="relative w-full sm:w-3/4 lg:w-full animate-float"
-              whileHover={{ scale: 1.05 }}
+              className="relative w-full"
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 6, repeat: Infinity }}
             >
-              <motion.div 
-                className="absolute -inset-6 rounded-3xl opacity-30 blur-3xl group-hover:opacity-50 transition duration-500"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,182,193,0.8), rgba(139,75,156,0.8))'
-                }}
-              />
+              <div className="absolute -inset-8 bg-gradient-to-r from-pink-600/30 to-purple-600/30 rounded-3xl blur-3xl animate-pulse-intense" />
               <img 
                 src={CONTENT.hero.heroImage} 
                 alt="Biodescodificación Femenina" 
-                className="relative rounded-3xl shadow-elevated w-full h-auto border-4 border-white/30 z-10 object-cover hover-scale" 
+                className="relative rounded-3xl shadow-elevated w-full h-auto border-2 border-white/20 z-10 object-cover hover-scale"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
@@ -340,42 +319,40 @@ const Landing: React.FC = () => {
       </section>
 
       {/* IDENTIFICATION SECTION */}
-      <section className="py-16 sm:py-20 bg-gradient-subtle relative overflow-hidden">
+      <section className="py-20 px-4 relative overflow-hidden gradient-dark-premium">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
-            className="absolute w-80 h-80 rounded-full bg-purple-200/20 blur-3xl"
-            animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-            transition={{ duration: 30, repeat: Infinity }}
+            className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl animate-orb"
             style={{ top: -100, right: -100 }}
           />
         </div>
 
         <div className="container mx-auto px-6 max-w-3xl relative z-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-10 leading-snug">Antes de seguir, respóndete esto con honestidad:</h2>
-          <div className="space-y-4 mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-14 leading-snug">Antes de seguir, respóndete con honestidad:</h2>
+          <div className="space-y-5 mb-12">
             {CONTENT.identification.questions.map((q, idx) => (
               <motion.div 
                 key={idx} 
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="glass hover-lift p-6 rounded-2xl border-l-4 border-purple-400"
+                className="glass-purple p-6 rounded-2xl border-l-4 border-pink-500 interactive-card"
               >
                 <div className="flex items-start gap-4">
                   <motion.span 
-                    className="text-[#8B4B9C] text-2xl font-black flex-shrink-0 mt-0.5"
+                    className="text-pink-400 text-2xl font-black flex-shrink-0 mt-1"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ delay: idx * 0.1, duration: 2 }}
                   >
                     ✓
                   </motion.span>
-                  <p className="text-gray-800 font-medium text-sm sm:text-base leading-relaxed">{q}</p>
+                  <p className="text-white font-medium text-sm sm:text-base leading-relaxed">{q}</p>
                 </div>
               </motion.div>
             ))}
           </div>
           <motion.div 
-            className="gradient-premium text-white rounded-2xl px-8 py-6 text-center shadow-glow hover-lift"
+            className="gradient-premium text-white rounded-2xl px-10 py-8 text-center shadow-glow hover-lift"
             whileHover={{ scale: 1.02 }}
           >
             <p className="text-base sm:text-lg font-bold leading-relaxed">{CONTENT.identification.conclusion}</p>
@@ -383,58 +360,59 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
+      {/* QUIZ */}
       <QuizSection paymentUrl={CONTENT.pricing.paymentUrl} />
 
       {/* PAIN SECTION */}
-      <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
-        <motion.div 
-          className="absolute inset-0 opacity-20"
-          animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
-          transition={{ duration: 20, repeat: Infinity }}
-          style={{
-            background: 'radial-gradient(circle at 20% 50%, rgba(139,75,156,0.1), transparent 50%)',
-            backgroundSize: '200% 200%'
-          }}
-        />
-        <div className="container mx-auto px-6 max-w-3xl text-center space-y-6 sm:space-y-8 relative z-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">No estás exagerando. No estás loca.</h2>
-          <p className="text-xl sm:text-2xl text-[#8B4B9C] italic font-semibold leading-relaxed">Estás ignorando el idioma más importante que existe.</p>
-          <div className="h-1 w-20 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
-          <p className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">Cada síntoma es una emoción que no encontró otra salida.</p>
-          <p className="text-gray-700 leading-relaxed text-base sm:text-lg">La biodescodificación dice que el cuerpo no miente. Ese dolor que aparece, esa contractura que nunca termina de irse, esa ansiedad que te despierta en la noche...</p>
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute w-96 h-96 rounded-full bg-pink-600/15 blur-3xl"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 8, repeat: Infinity }}
+            style={{ bottom: -100, left: -100 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-6 max-w-3xl text-center space-y-8 relative z-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">No estás exagerando. No estás loca.</h2>
+          <p className="text-2xl text-pink-400 italic font-semibold">Estás ignorando el idioma más importante que existe.</p>
+          <div className="h-1 w-24 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto"></div>
+          <p className="text-2xl font-bold text-white">Cada síntoma es una emoción que no encontró otra salida.</p>
+          <p className="text-purple-200 leading-relaxed text-lg">La biodescodificación dice que el cuerpo no miente. Ese dolor que aparece, esa contractura que nunca termina de irse...</p>
         </div>
       </section>
 
       {/* ANALYZER SECTION */}
-      <section id="analyzer" className="py-12 sm:py-16 bg-purple-50 relative overflow-hidden">
-        <motion.div 
-          className="absolute inset-0 opacity-30"
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{ duration: 20, repeat: Infinity }}
-          style={{
-            background: 'radial-gradient(circle at 50% 50%, rgba(139,75,156,0.15), transparent 70%)',
-          }}
-        />
+      <section id="analyzer" className="py-16 sm:py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl animate-orb"
+            style={{ top: -100, right: -100 }}
+          />
+        </div>
+
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
-          <div className="glass p-6 sm:p-10 rounded-3xl shadow-elevated hover-lift border-2 border-purple-200">
-            <div className="text-center mb-8 flex flex-col items-center">
+          <div className="glass-intense p-8 sm:p-12 rounded-3xl shadow-elevated">
+            <div className="text-center mb-10 flex flex-col items-center">
               <motion.div 
-                className="w-fit mx-auto bg-gradient-to-r from-purple-100 to-pink-100 text-[#8B4B9C] px-4 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest"
+                className="glass-dark px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-4"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 🔍 Herramienta IA Gratuita
               </motion.div>
-              <h2 className="text-2xl sm:text-3xl font-bold mt-4 text-gray-900">¿Qué te está diciendo tu cuerpo HOY?</h2>
-              <p className="text-gray-600 mt-2 text-sm sm:text-base">Escribí el síntoma que más te preocupa</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">¿Qué te está diciendo tu cuerpo?</h2>
+              <p className="text-purple-200 mt-3 text-sm sm:text-base">Escribí tu síntoma y recibí el mensaje emocional</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 mb-6">
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
               <input 
                 type="text" 
                 value={symptomInput} 
                 onChange={(e) => setSymptomInput(e.target.value)} 
-                placeholder="Ej: dolor de espalda baja, migraña, nudo en la garganta..." 
-                className="flex-1 px-6 py-4 rounded-full border-2 border-purple-200 focus:border-purple-400 focus:outline-none glass transition text-gray-800 placeholder-gray-500"
+                placeholder="Ej: dolor de espalda, migraña, nudo en la garganta..." 
+                className="flex-1 px-6 py-4 rounded-full border-2 border-purple-500/50 focus:border-pink-500 focus:outline-none glass text-white placeholder-purple-300/50 transition"
                 onKeyPress={(e) => e.key === 'Enter' && handleAnalyze()}
               />
               <motion.button 
@@ -442,28 +420,29 @@ const Landing: React.FC = () => {
                 disabled={isAnalyzing}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-4 rounded-full font-bold hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
               >
                 {isAnalyzing ? '⏳ Analizando...' : '✨ Descubrir'}
               </motion.button>
             </div>
+
             {analysis && (
               <motion.div 
                 ref={analysisRef} 
-                className="mt-8 p-6 glass-purple rounded-2xl border-l-4 border-[#8B4B9C] animate-fade-in-up shadow-soft"
+                className="mt-10 p-8 glass-purple rounded-2xl border-l-4 border-pink-500 animate-fade-in-up shadow-soft"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <p className="text-gray-800 leading-relaxed whitespace-pre-wrap text-sm sm:text-base italic">"{analysis}"</p>
-                <div className="mt-6 text-center">
-                  <p className="text-sm text-gray-600 mb-3">¿Querés explorar esto más en profundidad?</p>
+                <p className="text-white leading-relaxed whitespace-pre-wrap text-sm sm:text-base italic">"{analysis}"</p>
+                <div className="mt-8 text-center">
+                  <p className="text-purple-200 text-sm mb-4">¿Querés explorar más?</p>
                   <motion.button 
                     onClick={handlePurchase}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-8 py-3 rounded-full font-bold text-sm hover:shadow-glow transition"
+                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-3 rounded-full font-bold text-sm hover:shadow-glow transition"
                   >
-                    Sí, quiero acceder al sistema completo
+                    Acceder al sistema completo
                   </motion.button>
                 </div>
               </motion.div>
@@ -473,19 +452,19 @@ const Landing: React.FC = () => {
       </section>
 
       {/* BENEFITS SECTION */}
-      <section className="py-16 sm:py-20 gradient-premium text-white relative overflow-hidden">
+      <section className="py-20 px-4 gradient-premium text-white relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
-            className="absolute w-96 h-96 rounded-full bg-white/5 blur-3xl"
-            animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }}
-            transition={{ duration: 25, repeat: Infinity }}
+            className="absolute w-96 h-96 rounded-full bg-white/10 blur-3xl"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 8, repeat: Infinity }}
             style={{ bottom: -100, right: -100 }}
           />
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-bold">Con el Sistema de Biodescodificación Femenina vas a:</h2>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl sm:text-5xl font-bold">Con el Sistema vas a:</h2>
             <div className="h-1 w-24 bg-pink-300 mx-auto"></div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
@@ -495,18 +474,18 @@ const Landing: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ scale: 1.05, y: -8 }}
-                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass-dark p-6 sm:p-8 rounded-2xl hover-lift group border border-white/20"
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass-dark p-8 rounded-2xl hover-lift group border border-white/20 interactive-card"
               >
                 <motion.div 
-                  className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300"
+                  className="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300"
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ delay: idx * 0.2, duration: 2, repeat: Infinity }}
                 >
                   {benefit.icon}
                 </motion.div>
-                <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
-                <p className="text-purple-100 text-sm sm:text-base leading-relaxed">{benefit.desc}</p>
+                <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
+                <p className="text-purple-100 text-sm leading-relaxed">{benefit.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -514,10 +493,10 @@ const Landing: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
+      <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <motion.div 
-            className="absolute w-96 h-96 rounded-full bg-purple-200/20 blur-3xl"
+            className="absolute w-96 h-96 rounded-full bg-purple-600/30 blur-3xl"
             animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
             transition={{ duration: 25, repeat: Infinity }}
             style={{ top: -100, left: -100 }}
@@ -525,9 +504,9 @@ const Landing: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 px-4">Mujeres que aprendieron a escuchar su cuerpo</h2>
-            <p className="text-gray-500 mt-2 max-w-lg mx-auto italic">"Resultados reales de mujeres reales"</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white px-4">Mujeres que aprendieron a escuchar su cuerpo</h2>
+            <p className="text-purple-300 mt-3 max-w-lg mx-auto italic">"Resultados reales de mujeres reales"</p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {TESTIMONIALS.map((t, idx) => (
@@ -536,12 +515,12 @@ const Landing: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass p-6 sm:p-8 rounded-2xl shadow-soft hover-lift flex flex-col h-full border-t-4 border-purple-400"
+                whileHover={{ y: -10 }}
+                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass p-8 rounded-2xl shadow-soft hover-lift flex flex-col h-full border-t-4 border-pink-500 interactive-card"
               >
-                <div className="flex text-yellow-400 mb-4 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1.5 }}>★</motion.span>)}</div>
-                <p className="text-gray-700 italic mb-6 text-sm sm:text-base flex-1">"{t.text}"</p>
-                <div className="font-bold text-[#8B4B9C] mt-auto text-sm sm:text-base">{t.name}, {t.age} años</div>
+                <div className="flex text-yellow-400 mb-5 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1.5 }}>★</motion.span>)}</div>
+                <p className="text-purple-100 italic mb-8 text-sm sm:text-base flex-1">"{t.text}"</p>
+                <div className="font-bold text-pink-400 mt-auto text-sm">{t.name}, {t.age} años</div>
               </motion.div>
             ))}
           </div>
@@ -549,74 +528,74 @@ const Landing: React.FC = () => {
       </section>
 
       {/* APP SECTION */}
-      <section className="py-16 sm:py-24 bg-gradient-subtle overflow-hidden relative">
+      <section className="py-24 px-4 relative overflow-hidden">
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <motion.div 
               className="w-full lg:w-1/2 relative"
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
             >
               <motion.div 
-                className="absolute -inset-8 rounded-[3rem] bg-gradient-to-r from-purple-300/30 to-pink-300/30 blur-3xl"
+                className="absolute -inset-10 rounded-3xl bg-gradient-to-r from-purple-600/30 to-pink-600/30 blur-3xl"
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 4, repeat: Infinity }}
               />
-              <div className="relative flex justify-center items-center gap-4 sm:gap-6">
+              <div className="relative flex justify-center items-center gap-6">
                 <motion.div 
-                  className="w-2/3 sm:w-3/5 z-20 hover-scale"
-                  animate={{ y: [0, -20, 0] }}
+                  className="w-2/3 z-20 hover-scale"
+                  animate={{ y: [0, -25, 0] }}
                   transition={{ duration: 6, repeat: Infinity }}
                 >
                   <img 
                     src="https://i.imgur.com/tp3ywRK.png" 
                     alt="App Código Cuerpo" 
-                    className="w-full rounded-2xl shadow-elevated border-4 border-white/50"
+                    className="w-full rounded-2xl shadow-elevated border-4 border-white/30 object-cover"
                   />
                 </motion.div>
                 <motion.div 
-                  className="w-1/2 sm:w-2/5 absolute -right-4 sm:-right-8 top-1/2 -translate-y-1/2 z-10 opacity-80 hover:opacity-100 transition hover-scale"
-                  animate={{ y: [0, 20, 0] }}
+                  className="w-1/2 absolute -right-6 top-1/2 -translate-y-1/2 z-10 opacity-70 hover:opacity-100 transition hover-scale"
+                  animate={{ y: [0, 25, 0] }}
                   transition={{ duration: 6, repeat: Infinity, delay: 0.3 }}
                 >
                   <img 
                     src="https://i.imgur.com/LQKLnWY.png" 
                     alt="App Preview" 
-                    className="w-full rounded-2xl shadow-elevated border-4 border-white/30"
+                    className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-cover"
                   />
                 </motion.div>
               </div>
             </motion.div>
 
             <motion.div 
-              className="w-full lg:w-1/2 space-y-8 text-center lg:text-left"
-              initial={{ opacity: 0, x: 50 }}
+              className="w-full lg:w-1/2 space-y-10 text-center lg:text-left"
+              initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
             >
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0">📱 Solo en este pack</div>
-                <h2 className="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">La App <span className="text-gradient">"Código Cuerpo"</span></h2>
-                <p className="text-xl text-gray-600 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
+                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0">📱 Solo en este pack</div>
+                <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight text-gradient-white">La App <span className="text-pink-400">"Código Cuerpo"</span></h2>
+                <p className="text-xl text-purple-200 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
               </div>
 
               <div className="grid gap-6">
                 {[
                   { icon: "🗺️", title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
-                  { icon: "💬", title: "Interpretación en segundos", desc: "Mensaje simbólico del síntoma + reparación emocional" },
-                  { icon: "📝", title: "Ejercicios digitales", desc: "Lo que no dije, Mi verdad hoy, interactivos y guardados" },
-                  { icon: "🎯", title: "Reto 7 Días guiado", desc: "Día a día con checks de progreso y reflexiones" },
-                  { icon: "🎧", title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad y más — listos para escuchar" },
-                  { icon: "📊", title: "Detecta patrones", desc: "La app analiza tu historial y avisa de repeticiones" }
+                  { icon: "💬", title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
+                  { icon: "📝", title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
+                  { icon: "🎯", title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
+                  { icon: "🎧", title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad — listos para escuchar" },
+                  { icon: "📊", title: "Detecta patrones", desc: "La app analiza tu historial de síntomas" }
                 ].map((feature, i) => (
                   <motion.div 
                     key={i} 
                     className="flex gap-4 group"
-                    initial={{ opacity: 0, x: -30 }}
+                    initial={{ opacity: 0, x: -40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <div className="flex-shrink-0 w-12 h-12 glass rounded-2xl shadow-soft border border-purple-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
-                    <div><h4 className="font-bold text-gray-900 mb-1">{feature.title}</h4><p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p></div>
+                    <div className="flex-shrink-0 w-12 h-12 glass-intense rounded-2xl shadow-soft border border-purple-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+                    <div><h4 className="font-bold text-white mb-1">{feature.title}</h4><p className="text-purple-200 text-sm leading-relaxed">{feature.desc}</p></div>
                   </motion.div>
                 ))}
               </div>
@@ -625,48 +604,11 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* IS/ISN'T SECTION */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
-            <motion.div 
-              className="glass p-6 sm:p-8 rounded-2xl border-t-4 border-red-400 shadow-soft hover-lift"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-            >
-              <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-6 uppercase tracking-tight">❌ Este sistema NO es para vos si...</h3>
-              <ul className="space-y-4 text-gray-600 text-sm sm:text-base">
-                {["Buscás una pastilla mágica", "No querés dedicar 15-20 minutos diarios", "Querés quedarte en zona de confort", "No tenés apertura al autoconocimiento"].map((item, i) => (
-                  <motion.li key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="flex items-start">
-                    <span className="mr-3">•</span> {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div 
-              className="glass p-6 sm:p-8 rounded-2xl border-t-4 border-green-400 shadow-soft hover-lift"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-            >
-              <h3 className="text-lg sm:text-xl font-bold text-green-500 mb-6 uppercase tracking-tight">✅ Este sistema SÍ es para vos si:</h3>
-              <ul className="space-y-4 text-gray-600 text-sm sm:text-base">
-                {["Estás lista para entender lo que tu cuerpo dice", "Querés sanar desde la raíz", "Sentís que hay algo emocional", "Buscás transformación real"].map((item, i) => (
-                  <motion.li key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="flex items-start">
-                    <span className="mr-3">•</span> {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* OFFER SECTION */}
-      <section id="offer" className="py-16 sm:py-24 bg-gradient-subtle relative overflow-hidden">
+      <section id="offer" className="py-24 px-4 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
-            className="absolute w-96 h-96 rounded-full bg-purple-400/10 blur-3xl"
+            className="absolute w-96 h-96 rounded-full bg-pink-600/20 blur-3xl"
             animate={{ x: [0, 100, -100, 0], y: [0, 50, -50, 0] }}
             transition={{ duration: 20, repeat: Infinity }}
             style={{ top: -100, right: -100 }}
@@ -674,37 +616,38 @@ const Landing: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
-          <div className="glass-dark p-6 sm:p-12 rounded-[2rem] sm:rounded-[3rem] shadow-elevated border-2 border-purple-300">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">📚 TODO LO QUE RECIBÍS HOY</h2>
-              <p className="text-purple-300 font-bold uppercase tracking-widest text-xs sm:text-sm">Valor total: $299 USD</p>
+          <div className="glass-intense p-10 sm:p-16 rounded-3xl shadow-elevated">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-gradient-white">📚 TODO LO QUE RECIBÍS HOY</h2>
+              <p className="text-purple-300 font-bold uppercase tracking-widest text-sm">Valor total: $299 USD</p>
             </div>
 
-            <div className="space-y-16 sm:space-y-20">
+            <div className="space-y-20">
+              {/* MAIN ITEMS */}
               <div>
-                <div className="text-center mb-8 sm:mb-12">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white inline-block border-b-4 border-purple-400 pb-2">EL SISTEMA COMPLETO</h3>
+                <div className="text-center mb-12">
+                  <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-purple-500 pb-3">EL SISTEMA COMPLETO</h3>
                 </div>
-                <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+                <div className="flex flex-wrap justify-center gap-6">
                   {mainItems.map((item, idx) => (
                     <motion.div 
                       key={idx} 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      whileHover={{ y: -8 }}
-                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass bg-white rounded-2xl overflow-hidden flex flex-col group hover-lift"
+                      whileHover={{ y: -12 }}
+                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
                     >
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-purple-200 to-pink-200">
+                      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-purple-600/30 to-pink-600/30">
                         <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
-                        <div className="absolute top-2 right-2 bg-purple-600 text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">INCLUIDO</div>
+                        <div className="absolute top-3 right-3 bg-purple-600 text-white text-[9px] font-bold px-3 py-1 rounded-full shadow-glow uppercase tracking-wider">INCLUIDO</div>
                       </div>
-                      <div className="p-5 flex-1 flex flex-col">
-                        <h4 className="font-bold text-gray-800 leading-tight mb-2 text-sm sm:text-base">{item.title}</h4>
-                        {item.description && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">{item.description}</p>}
-                        <div className="flex justify-between items-center pt-2 mt-auto border-t border-gray-100">
-                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value} USD</span>
-                          <span className="text-purple-600 text-[10px] font-black uppercase">HOY: $0.00</span>
+                      <div className="p-6 flex-1 flex flex-col">
+                        <h4 className="font-bold text-white leading-tight mb-3 text-sm">{item.title}</h4>
+                        {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
+                        <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
+                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
+                          <span className="text-pink-400 text-[10px] font-black">HOY: $0.00</span>
                         </div>
                       </div>
                     </motion.div>
@@ -712,30 +655,31 @@ const Landing: React.FC = () => {
                 </div>
               </div>
 
+              {/* BONUS ITEMS */}
               <div>
-                <div className="text-center mb-8 sm:mb-12">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white inline-block border-b-4 border-yellow-400 pb-2">🎁 BONOS EXCLUSIVOS</h3>
+                <div className="text-center mb-12">
+                  <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-yellow-500 pb-3">🎁 BONOS EXCLUSIVOS</h3>
                 </div>
-                <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+                <div className="flex flex-wrap justify-center gap-6">
                   {bonusItems.map((item, idx) => (
                     <motion.div 
                       key={idx} 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      whileHover={{ y: -8 }}
-                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass bg-white rounded-2xl overflow-hidden flex flex-col group hover-lift"
+                      whileHover={{ y: -12 }}
+                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
                     >
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-yellow-200 to-orange-200">
+                      <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-yellow-600/30 to-orange-600/30">
                         <img src={item.image} alt={item.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
-                        <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[9px] font-black px-2 py-1 rounded-full shadow-md z-20 uppercase tracking-wider">REGALO</div>
+                        <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full shadow-glow uppercase">REGALO</div>
                       </div>
-                      <div className="p-5 flex-1 flex flex-col">
-                        <h4 className="font-bold text-purple-700 leading-tight mb-2 text-sm sm:text-base">{item.title}</h4>
-                        {item.description && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">{item.description}</p>}
-                        <div className="flex justify-between items-center pt-2 mt-auto border-t border-gray-100">
-                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value} USD</span>
-                          <span className="text-green-600 text-[10px] font-black uppercase tracking-widest">REGALO</span>
+                      <div className="p-6 flex-1 flex flex-col">
+                        <h4 className="font-bold text-pink-400 leading-tight mb-3 text-sm">{item.title}</h4>
+                        {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
+                        <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
+                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
+                          <span className="text-green-400 text-[10px] font-black">REGALO</span>
                         </div>
                       </div>
                     </motion.div>
@@ -744,54 +688,55 @@ const Landing: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-16 sm:mt-24 border-t-2 border-dashed border-purple-400 pt-12 text-center space-y-8">
-              <div className="glass bg-white border-2 border-purple-300 rounded-2xl px-8 py-5 max-w-sm mx-auto shadow-soft">
-                <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-3">⏰ PRECIO ESPECIAL VENCE EN:</p>
-                <div className="flex items-center justify-center gap-3">
+            {/* PRICE SECTION */}
+            <div className="mt-20 border-t-2 border-dashed border-purple-600 pt-16 text-center space-y-10">
+              <div className="glass-dark border-2 border-purple-500 rounded-2xl px-10 py-6 max-w-sm mx-auto shadow-soft">
+                <p className="text-xs font-bold text-purple-300 uppercase tracking-widest mb-4">⏰ PRECIO ESPECIAL VENCE EN:</p>
+                <div className="flex items-center justify-center gap-4">
                   <div className="text-center">
-                    <div className="text-4xl font-black text-purple-600 animate-glow">{m}</div>
-                    <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">min</div>
+                    <div className="text-5xl font-black text-pink-400 animate-glow">{m}</div>
+                    <div className="text-xs text-gray-400 uppercase font-bold tracking-widest mt-1">min</div>
                   </div>
-                  <div className="text-3xl font-black text-purple-600">:</div>
+                  <div className="text-4xl font-black text-pink-400">:</div>
                   <div className="text-center">
-                    <div className="text-4xl font-black text-purple-600 animate-glow">{s}</div>
-                    <div className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">seg</div>
+                    <div className="text-5xl font-black text-pink-400 animate-glow">{s}</div>
+                    <div className="text-xs text-gray-400 uppercase font-bold tracking-widest mt-1">seg</div>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <p className="text-gray-400 font-bold text-sm sm:text-base uppercase tracking-widest">💰 TU INVERSIÓN HOY</p>
-                <p className="text-gray-500 line-through text-lg sm:text-2xl font-medium">Valor Total: $299 USD</p>
-                <div className="flex items-center justify-center gap-1 sm:gap-2">
-                  <span className="text-4xl sm:text-6xl font-black text-purple-400">$</span>
+              <div className="space-y-4">
+                <p className="text-purple-300 font-bold text-sm uppercase tracking-widest">💰 TU INVERSIÓN HOY</p>
+                <p className="text-gray-500 line-through text-xl font-semibold">Valor Total: $299 USD</p>
+                <div className="flex items-center justify-center gap-1">
+                  <span className="text-5xl font-black text-pink-500">$</span>
                   <motion.span 
-                    className="text-6xl sm:text-8xl font-black text-purple-400 animate-glow"
+                    className="text-7xl font-black text-pink-500 animate-glow"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   >
                     17.97
                   </motion.span>
-                  <span className="text-xl sm:text-2xl font-black text-purple-400 self-start mt-2 sm:mt-4">USD</span>
+                  <span className="text-2xl font-black text-pink-500 self-start mt-4">USD</span>
                 </div>
-                <p className="text-white font-black text-sm sm:text-lg uppercase tracking-widest">Precio de lanzamiento — Solo por 48 horas</p>
+                <p className="text-white font-black text-lg uppercase tracking-widest">Precio de lanzamiento — Solo 48 horas</p>
               </div>
 
-              <div className="glass-purple rounded-2xl px-6 py-4 max-w-lg mx-auto border border-purple-300">
+              <div className="glass-purple rounded-2xl px-8 py-5 max-w-lg mx-auto border-2 border-pink-500">
                 <p className="text-white text-sm font-bold">✅ Pago único, acceso de por vida</p>
                 <p className="text-purple-200 text-xs mt-2 font-medium">Sin suscripción · Sin cobros mensuales · Sin sorpresas</p>
               </div>
 
-              <div className="max-w-xl mx-auto space-y-4 px-2">
+              <div className="max-w-xl mx-auto space-y-4">
                 <motion.button 
                   onClick={handlePurchase}
                   whileHover={{ scale: 1.08, y: -4 }}
                   whileTap={{ scale: 0.96 }}
-                  className="w-full bg-gradient-to-r from-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-200 text-gray-800 py-6 px-4 rounded-2xl text-2xl font-black shadow-elevated hover-lift transition btn-premium"
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-7 px-6 rounded-2xl text-2xl font-black shadow-glow hover-lift transition btn-premium"
                 >
-                  <span className="animate-bounce inline-block mr-2">🔥</span>SÍ, QUIERO MI ACCESO<span className="animate-bounce inline-block ml-2">🔥</span>
+                  <span className="animate-bounce inline-block mr-3">🔥</span>SÍ, QUIERO MI ACCESO<span className="animate-bounce inline-block ml-3">🔥</span>
                 </motion.button>
-                <p className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía total</p>
+                <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía total</p>
               </div>
             </div>
           </div>
@@ -799,26 +744,26 @@ const Landing: React.FC = () => {
       </section>
 
       {/* FAQ SECTION */}
-      <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
+      <section className="py-20 px-4 relative overflow-hidden">
         <div className="container mx-auto px-6 max-w-3xl">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10 sm:mb-12 uppercase tracking-tight text-gray-900">❓ Preguntas frecuentes</h2>
-          <div className="space-y-3 sm:space-y-4">
+          <h2 className="text-4xl font-bold text-center mb-14 uppercase tracking-tight text-white">❓ Preguntas Frecuentes</h2>
+          <div className="space-y-4">
             {FAQS.map((faq, idx) => (
               <motion.div 
                 key={idx} 
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className="glass rounded-2xl overflow-hidden shadow-soft border-2 border-purple-200 hover-lift"
+                className="glass-dark rounded-2xl overflow-hidden shadow-soft border-2 border-purple-500/40 hover-lift"
               >
                 <motion.button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full text-left p-5 flex justify-between items-center hover:bg-purple-50/50 transition"
+                  className="w-full text-left p-6 flex justify-between items-center hover:bg-purple-600/20 transition"
                   whileHover={{ x: 4 }}
                 >
-                  <span className="font-bold text-gray-800 text-sm sm:text-base pr-4 leading-snug">{faq.question}</span>
+                  <span className="font-bold text-white text-base leading-snug pr-4">{faq.question}</span>
                   <motion.span 
-                    className="text-[#8B4B9C] text-2xl transition-transform duration-300"
+                    className="text-pink-400 text-2xl transition-transform duration-300 flex-shrink-0"
                     animate={{ rotate: openFaq === idx ? 45 : 0 }}
                   >
                     +
@@ -830,7 +775,7 @@ const Landing: React.FC = () => {
                   animate={{ height: openFaq === idx ? 'auto' : 0, opacity: openFaq === idx ? 1 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="p-5 pt-0 text-gray-700 border-t border-purple-200 text-sm sm:text-base leading-relaxed">{faq.answer}</div>
+                  <div className="p-6 pt-0 text-purple-200 border-t border-purple-600/40 text-sm leading-relaxed">{faq.answer}</div>
                 </motion.div>
               </motion.div>
             ))}
@@ -838,108 +783,34 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* CLOSING SECTION */}
-      <section className="py-20 sm:py-24 bg-white text-center relative overflow-hidden">
-        <div className="container mx-auto px-6 max-w-4xl space-y-8 sm:space-y-10 relative z-10">
-          <motion.h2 
-            className="text-3xl sm:text-4xl font-bold italic text-gray-800 leading-tight px-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-          >
-            "Imaginá cómo te vas a sentir en 7 días..."
-          </motion.h2>
-          <div className="space-y-6 text-base sm:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            {CONTENT.closing.points.map((point, idx) => (
-              <motion.p 
-                key={idx}
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className={idx === CONTENT.closing.points.length - 1 ? "font-bold text-gray-900" : ""}
-              >
-                {point}
-              </motion.p>
-            ))}
-          </div>
-          <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
-          <p className="text-xl sm:text-2xl font-bold text-purple-600 px-4 leading-snug">Esto no es un sueño lejano.</p>
-        </div>
-      </section>
-
-      {/* FINAL CTA SECTION */}
-      <section className="py-20 bg-gradient-to-t from-purple-900 via-purple-800 to-purple-700 text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            className="absolute inset-0"
-            animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
-            transition={{ duration: 20, repeat: Infinity }}
-            style={{
-              background: 'radial-gradient(circle at 20% 50%, rgba(255,182,193,0.1), transparent 50%)',
-              backgroundSize: '200% 200%'
-            }}
-          />
-        </div>
-
-        <div className="container mx-auto px-6 max-w-4xl space-y-8 sm:space-y-10 relative z-10">
-          <motion.h2 
-            className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tighter leading-none px-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-          >
-            ☀️ El momento es ahora
-          </motion.h2>
-          <p className="text-lg sm:text-xl opacity-90 max-w-2xl mx-auto italic px-4 leading-relaxed">Tu cuerpo lleva años hablándote. Ya es hora de escucharlo. No mañana. Hoy.</p>
-          <div className="flex flex-col items-center gap-4 pt-4">
-            <motion.button 
-              onClick={handlePurchase}
-              whileHover={{ scale: 1.1, y: -4 }}
-              whileTap={{ scale: 0.94 }}
-              className="bg-gradient-to-r from-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-200 text-gray-800 px-8 sm:px-12 py-6 sm:py-7 rounded-full font-black text-xl sm:text-2xl shadow-elevated hover-lift transition btn-premium"
-            >
-              <span className="animate-bounce inline-block mr-2">🔥</span>SÍ, QUIERO EMPEZAR AHORA<span className="animate-bounce inline-block ml-2">🔥</span>
-            </motion.button>
-            <div className="space-y-1">
-              <p className="text-[10px] sm:text-xs text-white/70 font-bold uppercase tracking-widest">Acceso inmediato · Descarga en 2 minutos</p>
-              <p className="text-[10px] sm:text-xs text-white/50 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía · 🔓 Pago único</p>
-            </div>
-          </div>
-          <div className="space-y-4 mt-12 sm:mt-16 border-t border-white/20 pt-10">
-            <p className="text-purple-200 text-sm uppercase tracking-widest font-bold opacity-70">Con amor y verdad,</p>
-            <p className="font-bold text-3xl sm:text-4xl italic tracking-tight">Sandra</p>
-            <p className="text-xs sm:text-sm opacity-40 max-w-md mx-auto">Tu guía en este camino de sanación</p>
-          </div>
-        </div>
-      </section>
-
       {/* STICKY CTA */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 p-2 sm:p-4 transition-all duration-500 transform pointer-events-none ${showStickyCta ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0'}`}>
+      <div className={`fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all duration-500 transform pointer-events-none ${showStickyCta ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0'}`}>
         <div className="container mx-auto max-w-3xl">
           <motion.div 
-            className="glass shadow-elevated rounded-2xl p-3 sm:p-4 flex items-center justify-between border-2 border-purple-300"
+            className="glass-intense shadow-elevated rounded-2xl p-4 flex items-center justify-between border-2 border-purple-500"
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: showStickyCta ? 0 : 100, opacity: showStickyCta ? 1 : 0 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
             <div className="hidden sm:block ml-4">
-              <p className="text-[10px] font-bold text-purple-600 uppercase tracking-tighter">Oferta limitada</p>
-              <p className="text-sm font-black text-gray-800 truncate max-w-[150px]">Biodescodificación Femenina</p>
+              <p className="text-xs font-bold text-pink-400 uppercase">Oferta limitada</p>
+              <p className="text-sm font-black text-white">Biodescodificación Femenina</p>
             </div>
-            <div className="flex items-center gap-3 sm:gap-4 flex-1 sm:flex-initial justify-between sm:justify-end w-full sm:w-auto px-2">
-              <div className="text-left sm:text-right leading-none">
-                <p className="text-[10px] text-gray-500 line-through mb-1">$47 USD</p>
+            <div className="flex items-center gap-4 flex-1 sm:flex-initial justify-between sm:justify-end w-full sm:w-auto px-2">
+              <div className="text-left sm:text-right leading-tight">
+                <p className="text-xs text-gray-400 line-through mb-1">$47 USD</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-xs font-bold text-purple-600">$</span>
-                  <span className="text-xl sm:text-2xl font-black text-purple-600">17.97</span>
+                  <span className="text-xs font-bold text-pink-400">$</span>
+                  <span className="text-2xl font-black text-pink-400">17.97</span>
                 </div>
-                <p className="text-[9px] text-green-600 font-bold">Pago único</p>
               </div>
               <motion.button 
                 onClick={handlePurchase}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.94 }}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-bold text-xs sm:text-sm shadow-glow transition btn-premium whitespace-nowrap"
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-black text-xs shadow-glow transition btn-premium"
               >
-                Acceder ahora
+                Acceder
               </motion.button>
             </div>
           </motion.div>
@@ -947,17 +818,15 @@ const Landing: React.FC = () => {
       </div>
 
       {/* FOOTER */}
-      <footer className="py-12 text-center text-gray-400 text-[10px] sm:text-xs border-t border-gray-200 px-6 bg-white">
+      <footer className="py-12 text-center text-gray-400 text-xs border-t border-purple-900/50 px-6 bg-gradient-dark-premium">
         <div className="container mx-auto max-w-4xl space-y-4">
-          <p className="font-bold text-gray-600 uppercase tracking-widest">Biodescodificación Femenina — El Código Secreto de Tu Cuerpo</p>
+          <p className="font-bold text-gray-300 uppercase tracking-widest">Biodescodificación Femenina</p>
           <p>© {new Date().getFullYear()} Todos los derechos reservados.</p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-2 opacity-60">
-            <a href="/gracias" className="text-purple-600 font-bold hover:underline transition">👁️ Página de Gracias</a>
-            <a href="#" className="hover:text-purple-600 transition">Privacidad</a>
-            <a href="#" className="hover:text-purple-600 transition">Términos</a>
-            <a href="#" className="hover:text-purple-600 transition">Soporte</a>
+          <div className="flex flex-wrap justify-center gap-6 opacity-60">
+            <a href="/gracias" className="text-pink-500 font-bold hover:underline">Página de Gracias</a>
+            <a href="#" className="hover:text-pink-500 transition">Privacidad</a>
+            <a href="#" className="hover:text-pink-500 transition">Términos</a>
           </div>
-          <p className="mt-8 opacity-30 max-w-xs mx-auto text-[9px]">Este sitio no es parte de Facebook Inc.</p>
         </div>
       </footer>
     </div>
