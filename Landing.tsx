@@ -309,7 +309,7 @@ const Landing: React.FC = () => {
                 onClick={handlePurchase} 
                 whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.96 }}
-                className="bg-pink-500/70 hover:bg-pink-400/80 backdrop-blur-sm border border-pink-400/40 text-white px-12 py-5 rounded-full font-black text-lg shadow-glow hover-lift transition"
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-pink-400/60 text-white px-12 py-5 rounded-full font-black text-lg hover-lift transition"
               >
                 SÍ, QUIERO VOLVER A SENTIRME YO
               </motion.button>
@@ -329,11 +329,11 @@ const Landing: React.FC = () => {
 
           {/* HERO IMAGE */}
           <motion.div
-            className="relative flex justify-end max-w-md mx-auto lg:ml-auto lg:-mr-8"
+            className="relative flex justify-end max-w-md mx-auto lg:ml-auto lg:-mr-20"
             initial={{ opacity: 0, x: 60, scale: 0.8 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ marginTop: '-40px' }}
+            style={{ marginTop: '-100px' }}
           >
             <motion.div
               className="relative w-full"
