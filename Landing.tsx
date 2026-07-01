@@ -38,7 +38,7 @@ const preguntas = [
 
 const resultadosQuiz: Record<string, { titulo: string; descripcion: string; sintomas: string }> = {
   carga: { titulo: "Tu cuerpo carga lo que tu corazón no pudo soltar", descripcion: "Llevás años poniendo a todos antes que a vos. El peso de esa responsabilidad se acumula en tu cuerpo — especialmente en cuello, hombros y espalda alta. Es como si tu propio cuerpo dijera: 'Esto que cargás, pesa demasiado'.", sintomas: "Contracturas crónicas, dolor en cuello y hombros, cansancio extremo, migrañas de tensión, problemas de sueño." },
-  control: { titulo: "Tu cuerpo guarda lo que no podés soltar", descripcion: "Te cuesta dejar ir — situaciones, personas, emociones. Esa necesidad de control se expresa en tu sistema digestivo, en tu respiraci��n, en esa sensación de estar 'bloqueada'.", sintomas: "Gastritis, problemas digestivos, ansiedad, falta de aire, rigidez, tensión en mandíbula." },
+  control: { titulo: "Tu cuerpo guarda lo que no podés soltar", descripcion: "Te cuesta dejar ir — situaciones, personas, emociones. Esa necesidad de control se expresa en tu sistema digestivo, en tu respiraci  n, en esa sensación de estar 'bloqueada'.", sintomas: "Gastritis, problemas digestivos, ansiedad, falta de aire, rigidez, tensión en mandíbula." },
   vision: { titulo: "Tu cuerpo guarda todo lo que nunca pudiste decir", descripcion: "Hay emociones, palabras y verdades que nunca pudiste expresar. Se acumulan en tu garganta, tu tiroides, tu cabeza. Tu cuerpo está literalmente 'tragándose' lo que deberías haber dicho.", sintomas: "Problemas de tiroides, nudo en la garganta, aftas, problemas de voz, dolores de cabeza, migrañas." },
   miedo: { titulo: "Tu cuerpo frena cuando tu mente tiene miedo", descripcion: "Los cambios, las decisiones, el futuro — todo te genera una resistencia profunda que se siente en el cuerpo. Las rodillas flaquean, la espalda se curva, es como si el cuerpo dijera 'No puedo'.", sintomas: "Dolor lumbar, problemas en rodillas y piernas, debilidad general, temblores, ansiedad anticipatoria." }
 };
@@ -605,7 +605,9 @@ const Landing: React.FC = () => {
                   className="w-1/2 absolute -right-6 top-1/2 -translate-y-1/2 z-10 opacity-70 hover:opacity-100 transition hover-scale"
                   animate={{ y: [0, 25, 0] }}
                   transition={{ duration: 6, repeat: Infinity, delay: 0.3 }}
-                > 
+                >
+                  <img 
+                    src="https://i.imgur.com/LQKLnWY.png" 
                     alt="App Preview" 
                     className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-contain"
                   />
