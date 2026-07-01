@@ -30,17 +30,17 @@ function useCountdown(minutes: number) {
 }
 
 const preguntas = [
-  { id: 1, pregunta: "¿Dónde sentís más tensión o dolor frecuente?", opciones: [{ texto: "Cuello y hombros", emocion: "carga" }, { texto: "Estómago o digestión", emocion: "control" }, { texto: "Cabeza o migrañas", emocion: "vision" }, { texto: "Pecho o corazón", emocion: "miedo" }] },
-  { id: 2, pregunta: "¿En qué momentos te sentís peor?", opciones: [{ texto: "Cuando tengo conflictos con alguien", emocion: "carga" }, { texto: "Cuando siento que pierdo el control", emocion: "control" }, { texto: "Cuando no puedo expresarme", emocion: "vision" }, { texto: "Ante cambios o incertidumbre", emocion: "miedo" }] },
-  { id: 3, pregunta: "¿Cuál de estas frases te representa más?", opciones: [{ texto: "Siempre termino cargando con todo sola", emocion: "carga" }, { texto: "Me cuesta soltar y dejar ir las cosas", emocion: "control" }, { texto: "Hay cosas que nunca pude decir", emocion: "vision" }, { texto: "El futuro me asusta", emocion: "miedo" }] },
-  { id: 4, pregunta: "¿Cómo reaccionás bajo mucha presión?", opciones: [{ texto: "Me duele el cuerpo físicamente", emocion: "carga" }, { texto: "Me trabo, me bloqueo, no puedo dormir", emocion: "control" }, { texto: "Me cuesta comunicar lo que siento", emocion: "vision" }, { texto: "Siento pánico o ansiedad", emocion: "miedo" }] }
+  { id: 1, pregunta: "¿Dónde sentís más tensión o dolor frecuente?", opciones: [{ texto: "Cuello y hombros", emocion: "carga" }, { texto: "Estómago o digestión", emocion: "control" }, { texto: "Garganta o tiroides", emocion: "vision" }, { texto: "Espalda baja", emocion: "miedo" }] },
+  { id: 2, pregunta: "¿En qué momentos te sentís peor?", opciones: [{ texto: "Cuando tengo conflictos con alguien", emocion: "carga" }, { texto: "Cuando siento que pierdo el control", emocion: "control" }, { texto: "Cuando no puedo expresar lo que siento", emocion: "vision" }, { texto: "Ante cambios o incertidumbre", emocion: "miedo" }] },
+  { id: 3, pregunta: "¿Cuál de estas frases te representa más?", opciones: [{ texto: "Siempre termino cargando con todo sola", emocion: "carga" }, { texto: "Me cuesta soltar y dejar ir las cosas", emocion: "control" }, { texto: "A veces siento que me ahogo por dentro", emocion: "vision" }, { texto: "Siento mucho miedo al futuro", emocion: "miedo" }] },
+  { id: 4, pregunta: "¿Cómo reaccionás bajo mucha presión?", opciones: [{ texto: "Me duele el cuerpo físicamente", emocion: "carga" }, { texto: "Me trabo, me bloqueo, no puedo dormir", emocion: "control" }, { texto: "Siento un nudo que no puedo expresar", emocion: "vision" }, { texto: "Me paralizo por el pánico", emocion: "miedo" }] }
 ];
 
 const resultadosQuiz: Record<string, { titulo: string; descripcion: string; sintomas: string }> = {
-  carga: { titulo: "Tu cuerpo carga lo que tu corazón no pudo soltar", descripcion: "Llevás años poniendo a todos antes que a vos. El peso de esa responsabilidad se acumula en tu cuerpo — especialmente en cuello, hombros y espalda.", sintomas: "Contracturas, dolor de cuello, tensión en hombros, fatiga crónica" },
-  control: { titulo: "Tu cuerpo guarda lo que no podés soltar", descripcion: "Te cuesta dejar ir — situaciones, personas, emociones. Esa necesidad de control se expresa en tu sistema digestivo y tu nerviosismo.", sintomas: "Gastritis, problemas digestivos, ansiedad, insomnio" },
-  vision: { titulo: "Tu cuerpo guarda todo lo que nunca pudiste decir", descripcion: "Hay emociones, palabras y verdades que nunca pudiste expresar. Se acumulan en tu garganta, tu tiroides, tu cabeza.", sintomas: "Problemas de tiroides, migrañas, dolor de garganta, nudo emocional" },
-  miedo: { titulo: "Tu cuerpo frena cuando tu mente tiene miedo", descripcion: "Los cambios, las decisiones, el futuro — todo te genera una resistencia profunda que se siente en el cuerpo. Las resistencias se convierten en síntomas.", sintomas: "Pánico, bloqueos, parálisis, presión en el pecho, vértigos" }
+  carga: { titulo: "Tu cuerpo carga lo que tu corazón no pudo soltar", descripcion: "Llevás años poniendo a todos antes que a vos. El peso de esa responsabilidad se acumula en tu cuerpo — especialmente en cuello, hombros y espalda alta. Es como si tu propio cuerpo dijera: 'Esto que cargás, pesa demasiado'.", sintomas: "Contracturas crónicas, dolor en cuello y hombros, cansancio extremo, migrañas de tensión, problemas de sueño." },
+  control: { titulo: "Tu cuerpo guarda lo que no podés soltar", descripcion: "Te cuesta dejar ir — situaciones, personas, emociones. Esa necesidad de control se expresa en tu sistema digestivo, en tu respiraci��n, en esa sensación de estar 'bloqueada'.", sintomas: "Gastritis, problemas digestivos, ansiedad, falta de aire, rigidez, tensión en mandíbula." },
+  vision: { titulo: "Tu cuerpo guarda todo lo que nunca pudiste decir", descripcion: "Hay emociones, palabras y verdades que nunca pudiste expresar. Se acumulan en tu garganta, tu tiroides, tu cabeza. Tu cuerpo está literalmente 'tragándose' lo que deberías haber dicho.", sintomas: "Problemas de tiroides, nudo en la garganta, aftas, problemas de voz, dolores de cabeza, migrañas." },
+  miedo: { titulo: "Tu cuerpo frena cuando tu mente tiene miedo", descripcion: "Los cambios, las decisiones, el futuro — todo te genera una resistencia profunda que se siente en el cuerpo. Las rodillas flaquean, la espalda se curva, es como si el cuerpo dijera 'No puedo'.", sintomas: "Dolor lumbar, problemas en rodillas y piernas, debilidad general, temblores, ansiedad anticipatoria." }
 };
 
 function QuizSection({ paymentUrl }: { paymentUrl: string }) {
@@ -237,6 +237,7 @@ const Landing: React.FC = () => {
               <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><CheckCircle className="w-5 h-5 text-green-400" /></div>
               <div className="flex-1">
                 <p className="text-xs sm:text-sm text-white leading-tight"><span className="font-bold text-pink-400">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
+                <p className="text-[10px] text-gray-300 font-medium mt-1">{purchases[currentPurchase].action}</p>
                 <div className="flex items-center gap-1 mt-2"><CheckCircle className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
               </div>
             </div>
@@ -249,33 +250,24 @@ const Landing: React.FC = () => {
         {CONTENT.hero.upperAlert}
       </div>
 
-      {/* HERO SECTION WITH ANIMATED VIDEO BACKGROUND */}
+      {/* HERO SECTION WITH VIDEO BACKGROUND */}
       <section className="relative overflow-hidden pt-16 pb-20 lg:pt-32 lg:pb-40">
-        {/* Animated Video Background */}
+        {/* Video Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1a0a2e]">
-          {/* Animated Grid Pattern */}
-          <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.1 }}>
-            <defs>
-              <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid-pattern)" />
-          </svg>
+          {/* Video Element */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+          >
+            <source src="/video-hero.mp4" type="video/mp4" />
+            Su navegador no soporta videos HTML5
+          </video>
 
-          {/* Animated Grid Lines */}
-          <motion.div 
-            className="absolute inset-0"
-            animate={{ 
-              backgroundPosition: ['0px 0px', '40px 40px'],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage: `linear-gradient(45deg, transparent 24%, rgba(168, 85, 247, 0.05) 25%, rgba(168, 85, 247, 0.05) 26%, transparent 27%, transparent 74%, rgba(168, 85, 247, 0.05) 75%, rgba(168, 85, 247, 0.05) 76%, transparent 77%, transparent), linear-gradient(-45deg, transparent 24%, rgba(168, 85, 247, 0.05) 25%, rgba(168, 85, 247, 0.05) 26%, transparent 27%, transparent 74%, rgba(168, 85, 247, 0.05) 75%, rgba(168, 85, 247, 0.05) 76%, transparent 77%, transparent)`,
-              backgroundSize: '60px 60px',
-              backgroundPosition: '0px 0px'
-            }}
-          />
+          {/* Gradient Overlay para mejorar legibilidad */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/60 via-[#2d1b4e]/50 to-[#1a0a2e]/60"></div>
 
           {/* Floating Orbs */}
           <motion.div 
@@ -317,7 +309,7 @@ const Landing: React.FC = () => {
                 onClick={handlePurchase} 
                 whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.96 }}
-                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white px-12 py-5 rounded-full font-black text-lg shadow-glow hover-lift transition btn-premium"
+                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white px-12 py-5 rounded-full font-black text-lg shadow-glow hover-lift transition"
               >
                 SÍ, QUIERO VOLVER A SENTIRME YO
               </motion.button>
@@ -335,7 +327,7 @@ const Landing: React.FC = () => {
             <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Pago único · Sin suscripción · Acceso de por vida</p>
           </motion.div>
 
-          {/* HERO IMAGE - SIN TEXTO FLOTANTE */}
+          {/* HERO IMAGE */}
           <motion.div 
             className="relative flex justify-center max-w-md mx-auto lg:mx-0"
             initial={{ opacity: 0, x: 60, scale: 0.8 }}
@@ -460,7 +452,7 @@ const Landing: React.FC = () => {
                 disabled={isAnalyzing}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap flex items-center justify-center gap-2"
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
               >
                 {isAnalyzing ? (
                   <>⏳ Analizando...</>
@@ -574,7 +566,7 @@ const Landing: React.FC = () => {
                 whileHover={{ y: -10 }}
                 className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass p-8 rounded-2xl shadow-soft hover-lift flex flex-col h-full border-t-4 border-pink-500 interactive-card"
               >
-                <div className="flex text-yellow-400 mb-5 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1.5 }}>★</motion.span>)}</div>
+                <div className="flex text-yellow-400 mb-5 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1, repeat: Infinity }}>⭐</motion.span>)}</div>
                 <p className="text-purple-100 italic mb-8 text-sm sm:text-base flex-1">"{t.text}"</p>
                 <div className="font-bold text-pink-400 mt-auto text-sm">{t.name}, {t.age} años</div>
               </motion.div>
@@ -629,7 +621,7 @@ const Landing: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
             >
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0"><Smartphone className="w-4 h-4" /> Solo en este pack</div>
+                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0"><Smartphone className="w-4 h-4" />App Interactiva</div>
                 <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight text-gradient-white">La App <span className="text-pink-400">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-purple-200 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
               </div>
@@ -650,7 +642,9 @@ const Landing: React.FC = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <div className="flex-shrink-0 w-12 h-12 glass-intense rounded-2xl shadow-soft border border-purple-500/40 flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform duration-300"><feature.Icon className="w-6 h-6" /></div>
+                    <div className="flex-shrink-0 w-12 h-12 glass-intense rounded-2xl shadow-soft border border-purple-500/40 flex items-center justify-center text-pink-400 group-hover:scale-110 transition">
+                      <feature.Icon className="w-6 h-6" />
+                    </div>
                     <div><h4 className="font-bold text-white mb-1">{feature.title}</h4><p className="text-purple-200 text-sm leading-relaxed">{feature.desc}</p></div>
                   </motion.div>
                 ))}
@@ -788,7 +782,7 @@ const Landing: React.FC = () => {
                   onClick={handlePurchase}
                   whileHover={{ scale: 1.08, y: -4 }}
                   whileTap={{ scale: 0.96 }}
-                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-7 px-6 rounded-2xl text-2xl font-black shadow-glow hover-lift transition btn-premium"
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-7 px-6 rounded-2xl text-2xl font-black shadow-glow hover-lift transition"
                 >
                   SÍ, QUIERO MI ACCESO
                 </motion.button>
