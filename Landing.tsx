@@ -607,7 +607,7 @@ const Landing: React.FC = () => {
                   transition={{ duration: 6, repeat: Infinity, delay: 0.3 }}
                 >
                   <img 
-                    src="https://i.imgur.com/LQKLnWY.png" 
+                    
                     alt="App Preview" 
                     className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-contain"
                   />
