@@ -606,7 +606,8 @@ const Landing: React.FC = () => {
                   animate={{ y: [0, 25, 0] }}
                   transition={{ duration: 6, repeat: Infinity, delay: 0.3 }}
                 >
-                  <
+                  <img 
+                    
                     alt="App Preview" 
                     className="w-full rounded-2xl shadow-elevated border-4 border-white/20 object-contain"
                   />
