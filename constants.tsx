@@ -155,54 +155,54 @@ export const FAQS: FAQItem[] = [
 ];
 
 export const STACK_ITEMS: StackItem[] = [
-  { 
-    title: "📖 Libro Principal: \"Biodescodificación Femenina — El Código Secreto de Tu Cuerpo\" (130 págs.)", 
+  {
+    title: "🌸 Libro Principal: \"Biodescodificación Femenina — El Código Secreto de Tu Cuerpo\" (130 págs.)",
     value: 27, 
     image: "https://i.imgur.com/wetlLWW.jpeg",
     description: "El método RE-CONECT completo. Diccionario de 60 señales corporales con su mensaje emocional. Casos guiados, ejercicios prácticos y frases sanadoras. La base de todo tu proceso."
   },
   { 
-    title: "📱 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida", 
+    title: "💎 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida",
     value: 47, 
     image: "https://i.imgur.com/tp3ywRK.png",
     description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo. ✅ Pago único — sin suscripción, sin cobros mensuales."
   },
   { 
-    title: "📚 5 Guías Prácticas en PDF (descargables e imprimibles)", 
+    title: "🌿 5 Guías Prácticas en PDF (descargables e imprimibles)",
     value: 49, 
     image: "https://i.imgur.com/tdxsvSD.jpeg",
     description: "Guía de Meditación · Guía de Tapping · 5 Rituales Diarios · 50 Afirmaciones de Alta Vibración · Plantillas de Gratitud. Todo listo para usar desde hoy."
   },
   { 
-    title: "🎁 BONUS 1: \"Volver a Mí — Amor propio en tiempos de ansiedad\"", 
+    title: "✨ BONUS 1: \"Volver a Mí — Amor propio en tiempos de ansiedad\"", 
     value: 27, 
     image: "https://i.imgur.com/1hDDUH5.png",
     isBonus: true,
     description: "Cuando la ansiedad intenta convencerte de que no sos suficiente. Ejercicios prácticos para reconectar con tu valor cuando más difícil se siente."
   },
   { 
-    title: "🎁 BONUS 2: \"Despierta Tu Luz — Reto espiritual de 30 días\"", 
+    title: "🌙 BONUS 2: \"Despierta Tu Luz — Reto espiritual de 30 días\"", 
     value: 37, 
     image: "https://i.imgur.com/EKsngIC.png",
     isBonus: true,
     description: "Un día a la vez, una práctica a la vez. Reflexión + ejercicio + afirmación para cada uno de los 30 días. Tu esencia más auténtica te espera al final."
   },
   { 
-    title: "🎁 BONUS 3: \"Cuando amar duele — Ansiedad en las relaciones\"", 
+    title: "💜 BONUS 3: \"Cuando amar duele — Ansiedad en las relaciones\"", 
     value: 27, 
     image: "https://i.imgur.com/xSbkW9P.png",
     isBonus: true,
     description: "¿Por qué repetís los mismos patrones? ¿Por qué ciertas personas te generan ansiedad? Este libro te da las respuestas y las herramientas para vincularte desde la paz."
   },
   { 
-    title: "🎁 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
+    title: "🌺 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
     value: 17, 
     image: "https://i.imgur.com/ZvuT6H6.jpeg",
     isBonus: true,
     description: "Diseño hermoso para imprimir o usar en digital. Cada día: tu afirmación, tu logro y tu intención. El hábito más simple que más cambia."
   },
   { 
-    title: "🎁 BONUS 5: Comunidad Privada de Mujeres Conscientes", 
+    title: "🔮 BONUS 5: Comunidad Privada de Mujeres Conscientes", 
     value: 97, 
     image: "https://i.imgur.com/WheJ70c.jpeg",
     isBonus: true,
