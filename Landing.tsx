@@ -90,7 +90,18 @@ function QuizSection({ paymentUrl }: { paymentUrl: string }) {
         <AnimatePresence mode="wait">
           {paso === "intro" && (
             <motion.div key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="text-center">
-              <motion.div className="text-7xl mb-6 animate-float">✨</motion.div>
+              <motion.div
+                className="mb-8 flex justify-center"
+                animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-pink-500/40 to-purple-500/40 blur-2xl scale-150" />
+                  <div className="relative bg-gradient-to-br from-pink-500/20 to-purple-600/20 border border-pink-400/30 backdrop-blur-sm rounded-full p-6">
+                    <Flower2 className="w-14 h-14 text-pink-300 drop-shadow-lg" strokeWidth={1.2} />
+                  </div>
+                </div>
+              </motion.div>
               <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight text-gradient-white">¿Qué emoción está cargando tu cuerpo?</h2>
               <p className="text-purple-200 text-lg mb-10 leading-relaxed">Respondé 4 preguntas y descubrí el origen emocional de tus síntomas</p>
               <motion.button 
