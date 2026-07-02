@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, CheckCircle, Sparkles, Heart, Zap, BookOpen, Smartphone, Users } from 'lucide-react';
+import { BadgeCheck, Sparkles, Flower2, Moon, Sun, Gem, Star, Leaf, Brain, Activity } from 'lucide-react';
 import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
@@ -234,11 +234,11 @@ const Landing: React.FC = () => {
             className="fixed bottom-24 left-4 sm:bottom-8 sm:left-8 z-40"
           >
             <div className="glass-intense p-5 rounded-2xl flex items-center gap-4 max-w-xs">
-              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><CheckCircle className="w-5 h-5 text-green-400" /></div>
+              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><BadgeCheck className="w-5 h-5 text-green-400" /></div>
               <div className="flex-1">
                 <p className="text-xs sm:text-sm text-white leading-tight"><span className="font-bold text-pink-400">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
                 <p className="text-[10px] text-gray-300 font-medium mt-1">{purchases[currentPurchase].action}</p>
-                <div className="flex items-center gap-1 mt-2"><CheckCircle className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
+                <div className="flex items-center gap-1 mt-2"><BadgeCheck className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
               </div>
             </div>
           </motion.div>
@@ -509,12 +509,12 @@ const Landing: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {CONTENT.benefits.items.map((benefit, idx) => {
               const iconMap: Record<string, React.ReactNode> = {
-                '🔓': <Heart className="w-8 h-8" />,
-                '📱': <Smartphone className="w-8 h-8" />,
-                '🧘‍♀️': <Sparkles className="w-8 h-8" />,
-                '💫': <Zap className="w-8 h-8" />,
-                '✨': <Heart className="w-8 h-8" />,
-                '💖': <Heart className="w-8 h-8" />,
+                '🔓': <Flower2 className="w-8 h-8" />,
+                '📱': <Gem className="w-8 h-8" />,
+                '🧘‍♀️': <Moon className="w-8 h-8" />,
+                '💫': <Star className="w-8 h-8" />,
+                '✨': <Sun className="w-8 h-8" />,
+                '💖': <Leaf className="w-8 h-8" />,
               };
               return (
                 <motion.div 
@@ -611,19 +611,19 @@ const Landing: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
             >
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0"><Smartphone className="w-4 h-4" />App Interactiva</div>
+                <div className="inline-flex items-center gap-2 glass-intense px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mx-auto lg:mx-0"><Gem className="w-4 h-4" />App Interactiva</div>
                 <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight text-gradient-white">La App <span className="text-pink-400">"Código Cuerpo"</span></h2>
                 <p className="text-xl text-purple-200 font-medium italic">Tu guía emocional siempre en el bolsillo</p>
               </div>
 
               <div className="grid gap-6">
                 {[
-                  { Icon: Heart, title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
-                  { Icon: Zap, title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
-                  { Icon: BookOpen, title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
-                  { Icon: Sparkles, title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
-                  { Icon: Heart, title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad — listos para escuchar" },
-                  { Icon: Users, title: "Detecta patrones", desc: "La app analiza tu historial de síntomas" }
+                  { Icon: Activity, title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
+                  { Icon: Sparkles, title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
+                  { Icon: Leaf, title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
+                  { Icon: Sun, title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
+                  { Icon: Moon, title: "Meditaciones en audio", desc: "Para culpa, miedo, ansiedad — listos para escuchar" },
+                  { Icon: Brain, title: "Detecta patrones", desc: "La app analiza tu historial de síntomas" }
                 ].map((feature, i) => (
                   <motion.div 
                     key={i} 
