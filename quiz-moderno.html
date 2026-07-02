@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1242890981338351');
+fbq('track', 'PageView');
+</script>
+<noscript><img height='1' width='1' style='display:none'
+src='https://www.facebook.com/tr?id=1242890981338351&ev=PageView&noscript=1'
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>¿Qué emoción bloquea tu salud? · Biodescodificación Femenina</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #ec4899;
+    --pink-light: #f472b6;
+    --purple: #9333ea;
+    --purple-light: #a855f7;
+    --dark: #0f0a1a;
+    --dark-mid: #1a0f2e;
+    --dark-card: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --border-pink: rgba(236,72,153,0.3);
+    --text: #f3e8ff;
+    --text-muted: #c4b5fd;
+    --text-dim: #7c3aed;
+  }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0a1a 0%, #1a0f2e 50%, #0f0a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Orbs de fondo */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -150px;
+    right: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(147,51,234,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px;
+    left: -150px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: orbFloat 25s ease-in-out infinite reverse;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -30px); }
+    66% { transform: translate(-20px, 20px); }
+  }
+
+  .card {
+    max-width: 560px;
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 32px;
+    padding: 48px 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 600px) {
+    .card { padding: 36px 24px; border-radius: 24px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .pantalla { display: none; }
+  .pantalla.activa { display: block; animation: fadeUp 0.45s ease forwards; }
+
+  /* BADGE */
+  .badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(236,72,153,0.1);
+    border: 1px solid rgba(236,72,153,0.25);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: #f472b6;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: #ec4899;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ICON */
+  .icon-wrap {
+    width: 80px; height: 80px;
+    margin: 0 auto 28px;
+    background: linear-gradient(135deg, rgba(236,72,153,0.2), rgba(147,51,234,0.2));
+    border: 1px solid rgba(236,72,153,0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    position: relative;
+    animation: iconFloat 4s ease-in-out infinite;
+  }
+  .icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%);
+  }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  /* TIPOGRAFÍA */
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h1 em { font-style: italic; color: #f472b6; }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-bottom: 28px;
+  }
+
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .desc {
+    font-size: 15px;
+    color: #c4b5fd;
+    line-height: 1.75;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  /* INPUT */
+  .input-wrap { position: relative; margin-bottom: 20px; }
+  input[type=text] {
+    width: 100%;
+    padding: 16px 22px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: #ffffff;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  input[type=text]::placeholder { color: rgba(196,181,253,0.5); }
+  input[type=text]:focus {
+    border-color: rgba(236,72,153,0.5);
+    box-shadow: 0 0 0 4px rgba(236,72,153,0.08);
+  }
+
+  /* BOTÓN PRINCIPAL */
+  .btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #ec4899, #9333ea);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(236,72,153,0.35); }
+  .btn:hover::before { opacity: 1; }
+  .btn:active { transform: translateY(-1px); }
+  .btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .nota {
+    font-size: 11px;
+    color: rgba(196,181,253,0.5);
+    text-align: center;
+    margin-top: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* PROGRESO */
+  .progreso-wrap { margin-bottom: 32px; }
+  .progreso-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .prog-label { font-size: 12px; color: rgba(196,181,253,0.6); font-weight: 300; }
+  .prog-num { font-size: 12px; color: #f472b6; font-weight: 600; }
+  .prog-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ec4899, #9333ea);
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px rgba(236,72,153,0.5);
+  }
+
+  /* OPCIONES */
+  .opciones { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .opcion {
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .opcion:hover {
+    transform: translateX(4px);
+    border-color: rgba(236,72,153,0.3);
+    background: rgba(236,72,153,0.05);
+  }
+  .opcion.seleccionada {
+    border: 1.5px solid rgba(236,72,153,0.5);
+    background: linear-gradient(135deg, rgba(236,72,153,0.1), rgba(147,51,234,0.07));
+    transform: translateX(4px);
+  }
+  .radio {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .opcion.seleccionada .radio {
+    border: 1.5px solid #ec4899;
+    background: rgba(236,72,153,0.15);
+  }
+  .opcion.seleccionada .radio::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: #ec4899;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(236,72,153,0.6);
+  }
+  .opcion-texto {
+    font-size: 14px;
+    color: rgba(196,181,253,0.8);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .opcion.seleccionada .opcion-texto { color: #ffffff; font-weight: 400; }
+
+  /* RESULTADO */
+  .res-icon {
+    width: 90px; height: 90px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(147,51,234,0.25));
+    border: 1px solid rgba(236,72,153,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+    animation: iconFloat 4s ease-in-out infinite;
+  }
+  .res-icon::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%);
+  }
+
+  .res-subtitulo {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #f472b6;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .res-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .resultado-caja {
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(236,72,153,0.15);
+    border-left: 3px solid #ec4899;
+    background: linear-gradient(135deg, rgba(236,72,153,0.06), rgba(147,51,234,0.04));
+  }
+
+  .res-desc {
+    font-size: 14px;
+    color: #c4b5fd;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .res-msg {
+    font-size: 14px;
+    color: rgba(244,114,182,0.9);
+    line-height: 1.7;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* CTA BOX */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(15,10,26,0.8), rgba(26,15,46,0.9));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .cta-sub {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #f472b6;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .cta-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .cta-titulo em { color: #f472b6; font-style: italic; }
+
+  .cta-desc {
+    font-size: 13px;
+    color: rgba(196,181,253,0.7);
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 22px;
+  }
+
+  .btn-cta {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #ec4899, #9333ea);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    animation: glow 2.5s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(236,72,153,0.3); }
+    50%       { box-shadow: 0 0 40px rgba(236,72,153,0.5), 0 0 60px rgba(147,51,234,0.2); }
+  }
+  .btn-cta:hover { transform: translateY(-3px); }
+
+  .btn-reiniciar {
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: rgba(196,181,253,0.4);
+    cursor: pointer;
+    font-weight: 300;
+    display: block;
+    margin: 0 auto;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .btn-reiniciar:hover { color: rgba(196,181,253,0.7); }
+
+  .centro { text-align: center; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 24px 0;
+  }
+
+  /* GARANTÍA */
+  .garantia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(196,181,253,0.4);
+    font-weight: 300;
+    margin-top: 14px;
+    letter-spacing: 0.3px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- INICIO -->
+  <div class="pantalla activa centro" id="p-inicio">
+    <div class="icon-wrap">🌸</div>
+    <div class="badge-top">
+      <span class="badge-dot"></span>
+      Biodescodificación Femenina
+    </div>
+    <h1>Vuelve a <em>sentirte tú</em></h1>
+    <p class="desc">Con energía, con paz y sin cargar lo que nunca fue tuyo. Responde 5 preguntas y descubre qué está pasando en tu cuerpo.</p>
+    <input type="text" id="nombre-input" placeholder="¿Cómo te llamo, cariño?" />
+    <button class="btn" onclick="iniciarQuiz()">QUIERO VOLVER A SENTIRME YO →</button>
+    <p class="nota">Solo 5 preguntas · Menos de 2 minutos · Gratis</p>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="pantalla" id="p-quiz">
+    <div class="progreso-wrap">
+      <div class="progreso-top">
+        <span class="prog-label" id="prog-nombre"></span>
+        <span class="prog-num" id="prog-num">1 de 5</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:20%"></div></div>
+    </div>
+    <h2 id="pregunta-texto"></h2>
+    <div class="opciones" id="opciones-wrap"></div>
+    <button class="btn" id="btn-siguiente" disabled onclick="siguiente()">SIGUIENTE →</button>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="pantalla centro" id="p-resultado">
+    <div class="res-icon" id="res-emoji-wrap"><span id="res-emoji"></span></div>
+    <p class="res-subtitulo" id="res-subtitulo"></p>
+    <p class="res-titulo" id="res-titulo"></p>
+    <div class="resultado-caja" id="res-caja">
+      <p class="res-desc" id="res-desc"></p>
+      <p class="res-msg" id="res-msg"></p>
+    </div>
+    <div class="cta-box">
+      <p class="cta-sub">Creado para ti</p>
+      <p class="cta-titulo">Biodescodificación Femenina<br/><em>+ App Código Cuerpo</em></p>
+      <p class="cta-desc">El único sistema que combina libro + app interactiva para que entiendas y sanes lo que tu cuerpo te está diciendo.</p>
+      <a class="btn-cta" href="https://tubiodescodificacion.vercel.app/" target="_blank">SÍ, QUIERO VOLVER A SENTIRME YO 🌸</a>
+    </div>
+    <button class="btn-reiniciar" onclick="reiniciar()">↺ Volver a empezar</button>
+    <div class="garantia">🛡️ Pago único · Sin suscripción · Garantía 7 días</div>
+  </div>
+
+</div>
+
+<script>
+const preguntas = [
+  {
+    texto: "¿Qué zona de tu cuerpo te ha estado hablando más fuerte últimamente?",
+    esPrincipal: true,
+    opciones: [
+      { texto: "🧠 Cabeza o cuello — migrañas, tensión, contracturas, mareos", valor: "A" },
+      { texto: "💜 Pecho o garganta — presión, nudo, palpitaciones, tos sin causa", valor: "B" },
+      { texto: "🔥 Vientre o digestión — gastritis, colon irritable, hinchazón, náuseas", valor: "C" },
+      { texto: "🌿 Espalda baja, caderas o rodillas — dolor crónico, pesadez, rigidez", valor: "D" },
+      { texto: "✨ Piel o sistema hormonal — manchas, irregularidades en el ciclo, tiroides", valor: "E" },
+    ]
+  },
+  {
+    texto: "¿Con qué frecuencia aparece ese síntoma?",
+    opciones: [
+      { texto: "A diario — ya es parte de mi rutina", valor: "A" },
+      { texto: "Cuando estoy bajo presión o estrés", valor: "B" },
+      { texto: "En ciertos momentos del ciclo o del mes", valor: "C" },
+      { texto: "Cuando hay conflictos con personas cercanas", valor: "D" },
+      { texto: "Sin razón aparente — aparece y desaparece solo", valor: "A" },
+    ]
+  },
+  {
+    texto: "Cuando sientes ese síntoma, ¿qué emoción suele estar más presente?",
+    opciones: [
+      { texto: "Ansiedad o miedo — la mente no para, siempre en alerta", valor: "A" },
+      { texto: "Tristeza o soledad — algo que no puedo expresar con palabras", valor: "B" },
+      { texto: "Enojo o resentimiento — cosas que me trago sin decir", valor: "C" },
+      { texto: "Agotamiento — doy todo y no me queda nada para mí", valor: "D" },
+      { texto: "Culpa o vergüenza — siento que no hago suficiente", valor: "E" },
+    ]
+  },
+  {
+    texto: "¿Cómo describirías tu relación con tu cuerpo hoy?",
+    opciones: [
+      { texto: "Lo ignoro hasta que me obliga a parar con dolor", valor: "A" },
+      { texto: "Lo cuido físicamente pero no lo escucho emocionalmente", valor: "B" },
+      { texto: "Siento que me traiciona — siempre hay algo nuevo que aparece", valor: "C" },
+      { texto: "Estamos en conflicto — no acepto lo que siento ni lo que veo", valor: "D" },
+      { texto: "No sé qué necesita — estoy desconectada de él", valor: "E" },
+    ]
+  },
+  {
+    texto: "¿Qué has buscado sin encontrar todavía?",
+    opciones: [
+      { texto: "Una explicación real — los médicos no encuentran nada", valor: "A" },
+      { texto: "Alivio duradero — mejoro y vuelvo a empeorar siempre", valor: "B" },
+      { texto: "Sentirme escuchada — por alguien que entienda de verdad", valor: "C" },
+      { texto: "Reconectarme conmigo misma — perdí el hilo de quién soy", valor: "D" },
+      { texto: "Paz interior — sin que el cuerpo sea una fuente de angustia", valor: "E" },
+    ]
+  }
+];
+
+const resultadosExtra = {
+  E: {
+    emoji: "✨",
+    titulo: "Puedes volver a sentirte en armonía con tu cuerpo",
+    desc: "Puedes volver a sentirte en armonía con tu cuerpo — sin esa sensación de que algo está mal que nadie sabe explicar. Tu cuerpo no te traiciona. Te habla. Y cuando aprendes a escucharlo, todo cambia.",
+    msg: "Recupera la armonía con tu cuerpo — el Sistema de Biodescodificación Femenina te enseña el idioma que tu cuerpo lleva años intentando hablarte."
+  }
+};
+
+const resultados = {
+  A: {
+    emoji: "🧠",
+    titulo: "Puedes volver a despertar sin ese peso que cargas cada día",
+    desc: "Puedes volver a despertar sin esa tensión que te roba la paz cada mañana. Tu cuerpo no está fallando — está cargando emociones que nunca encontraron otra salida. Cuando las identificas y las sueltas, tu cuerpo puede empezar a respirar diferente.",
+    msg: "Recupera la energía y la paz que creías haber perdido — el Sistema de Biodescodificación Femenina te muestra exactamente cómo hacerlo, paso a paso, desde tu celular."
+  },
+  B: {
+    emoji: "🌊",
+    titulo: "Puedes volverte a reconocer — por dentro y por fuera",
+    desc: "Puedes volverte a reconocer en el espejo — por dentro y por fuera. Hay una voz tuya que lleva años esperando ser escuchada. Cuando la liberas, tu cuerpo deja de cargar lo que nunca fue suyo.",
+    msg: "Vuelve a reconocerte — el Sistema de Biodescodificación Femenina te da las herramientas para expresar, liberar y sanar desde adentro."
+  },
+  C: {
+    emoji: "🔥",
+    titulo: "Puedes volver a sentirte liviana y en paz contigo misma",
+    desc: "Puedes volver a sentirte liviana — sin esa tensión interna que drena tu energía cada día. Tu cuerpo está listo para soltar lo que cargó por tanto tiempo. Solo necesita que le des permiso.",
+    msg: "Recupera tu paz interior — el Sistema de Biodescodificación Femenina te muestra cómo soltar lo que tu cuerpo lleva cargando en silencio."
+  },
+  D: {
+    emoji: "🌿",
+    titulo: "Puedes volver a sentirte ligera — sin ese peso invisible",
+    desc: "Puedes volver a sentirte ligera — sin ese peso invisible que te agota antes de empezar el día. Mereces ponerte primera. Y cuando lo haces, tu cuerpo lo siente de inmediato.",
+    msg: "Vuelve a sentirte tú — el Sistema de Biodescodificación Femenina te acompaña a reconectar con lo que realmente eres, más allá del dolor."
+  }
+};
+
+let preguntaActual = 0;
+let respuestas = [];
+let seleccion = null;
+let nombre = "";
+
+function iniciarQuiz() {
+  if (typeof fbq !== 'undefined') fbq('track', 'ViewContent');
+  nombre = document.getElementById("nombre-input").value.trim() || "amor";
+  preguntaActual = 0;
+  respuestas = [];
+  seleccion = null;
+  mostrarPantalla("p-quiz");
+  renderPregunta();
+}
+
+function mostrarPantalla(id) {
+  document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
+  document.getElementById(id).classList.add("activa");
+}
+
+function renderPregunta() {
+  const p = preguntas[preguntaActual];
+  document.getElementById("prog-nombre").textContent = `Para ti, ${nombre}`;
+  document.getElementById("prog-num").textContent = `${preguntaActual + 1} de ${preguntas.length}`;
+  document.getElementById("prog-fill").style.width = `${((preguntaActual + 1) / preguntas.length) * 100}%`;
+  document.getElementById("pregunta-texto").textContent = p.texto;
+  const wrap = document.getElementById("opciones-wrap");
+  wrap.innerHTML = "";
+  p.opciones.forEach(op => {
+    const div = document.createElement("div");
+    div.className = "opcion";
+    div.innerHTML = `<div class="radio"></div><span class="opcion-texto">${op.texto}</span>`;
+    div.onclick = () => elegir(op.valor, div);
+    wrap.appendChild(div);
+  });
+  seleccion = null;
+  document.getElementById("btn-siguiente").disabled = true;
+  const esUltima = preguntaActual === preguntas.length - 1;
+  document.getElementById("btn-siguiente").textContent = esUltima ? "VER MI RESULTADO ✨" : "SIGUIENTE →";
+}
+
+function elegir(valor, el) {
+  document.querySelectorAll(".opcion").forEach(o => o.classList.remove("seleccionada"));
+  el.classList.add("seleccionada");
+  seleccion = valor;
+  document.getElementById("btn-siguiente").disabled = false;
+}
+
+function siguiente() {
+  if (!seleccion) return;
+  respuestas.push(seleccion);
+  if (preguntaActual < preguntas.length - 1) {
+    preguntaActual++;
+    renderPregunta();
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado() {
+  if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+  const conteo = { A:0, B:0, C:0, D:0, E:0 };
+  respuestas.forEach((r, i) => {
+    const peso = i === 0 ? 3 : 1;
+    conteo[r] = (conteo[r] || 0) + peso;
+  });
+  const ganador = Object.entries(conteo).sort((a,b) => b[1]-a[1])[0][0];
+  const res = ganador === 'E' ? resultadosExtra.E : resultados[ganador];
+  document.getElementById("res-emoji").textContent = res.emoji;
+  document.getElementById("res-subtitulo").textContent = `Tu lectura, ${nombre}`;
+  document.getElementById("res-titulo").textContent = res.titulo;
+  document.getElementById("res-desc").textContent = res.desc;
+  document.getElementById("res-msg").textContent = "💜 " + res.msg;
+  mostrarPantalla("p-resultado");
+}
+
+function reiniciar() {
+  preguntaActual = 0; respuestas = []; seleccion = null; nombre = "";
+  document.getElementById("nombre-input").value = "";
+  mostrarPantalla("p-inicio");
+}
+</script>
+</body>
+</html>
