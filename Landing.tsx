@@ -607,9 +607,12 @@ const Landing: React.FC = () => {
                   animate={{ y: [0, -25, 0] }}
                   transition={{ duration: 6, repeat: Infinity }}
                 >
-                  <img 
-                    src="https://i.imgur.com/tp3ywRK.png" 
-                    alt="App Código Cuerpo" 
+                  <video
+                    src="/app-demo.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                     className="w-full rounded-2xl shadow-elevated border-4 border-white/30 object-contain"
                   />
                 </motion.div>
