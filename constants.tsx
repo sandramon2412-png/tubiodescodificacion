@@ -178,7 +178,7 @@ export const STACK_ITEMS: StackItem[] = [
     value: 27, 
     image: "https://i.imgur.com/1hDDUH5.png",
     isBonus: true,
-    description: "Cuando la ansiedad intenta convencerte de que no sos suficiente. Ejercicios prácticos para reconectar con tu valor cuando más difícil se siente."
+    description: "Cuando la ansiedad intenta convencerte de que no eres suficiente. Ejercicios prácticos para reconectar con tu valor cuando más difícil se siente."
   },
   { 
     title: "🌙 BONUS 2: \"Despierta Tu Luz — Reto espiritual de 30 días\"", 
@@ -192,7 +192,7 @@ export const STACK_ITEMS: StackItem[] = [
     value: 27, 
     image: "https://i.imgur.com/xSbkW9P.png",
     isBonus: true,
-    description: "¿Por qué repetís los mismos patrones? ¿Por qué ciertas personas te generan ansiedad? Este libro te da las respuestas y las herramientas para vincularte desde la paz."
+    description: "¿Por qué repites los mismos patrones? ¿Por qué ciertas personas te generan ansiedad? Este libro te da las respuestas y las herramientas para vincularte desde la paz."
   },
   { 
     title: "🌺 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
