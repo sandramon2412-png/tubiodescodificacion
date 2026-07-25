@@ -37,7 +37,7 @@ export const CONTENT = {
   analyzer: {
     tag: "🔍 Herramienta Gratuita — Impulsada por IA",
     title: "¿Qué te está diciendo tu cuerpo HOY?",
-    subtitle: "Escribí el síntoma que más te preocupa y recibí el mensaje emocional que hay detrás.",
+    subtitle: "Escribe el síntoma que más te preocupa y recibe el mensaje emocional que hay detrás.",
     placeholder: "Ej: dolor de espalda baja, migraña, nudo en la garganta...",
     button: "Descubrir el mensaje",
     loading: "Analizando tu síntoma..."
@@ -45,8 +45,8 @@ export const CONTENT = {
   benefits: {
     title: "Con el Sistema de Biodescodificación Femenina vas a:",
     items: [
-      { icon: '🔓', title: 'Entender cada síntoma como un mensaje, no como un castigo', desc: 'El diccionario de 60 señales corporales te explica exactamente qué emoción está detrás de lo que sentís. Sin tecnicismos. Con amor.' },
-      { icon: '📱', title: 'Consultar tu cuerpo en tiempo real desde la App', desc: 'Tocás la zona en el mapa corporal, escribís lo que sentís, y en segundos tenés la interpretación + una reparación en 3 niveles. Algo que la competencia no tiene.' },
+      { icon: '🔓', title: 'Entender cada síntoma como un mensaje, no como un castigo', desc: 'El diccionario de 60 señales corporales te explica exactamente qué emoción está detrás de lo que sientes. Sin tecnicismos. Con amor.' },
+      { icon: '📱', title: 'Consultar tu cuerpo en tiempo real desde la App', desc: 'Tocas la zona en el mapa corporal, escribes lo que sientes, y en segundos tienes la interpretación + una reparación en 3 niveles. Algo que nadie más te ofrece.' },
       { icon: '🧘‍♀️', title: 'Liberar lo que callaste durante años', desc: 'Técnicas de tapping y meditación guiada (en la app y en PDF) diseñadas específicamente para liberar emociones reprimidas que el cuerpo convirtió en dolor.' },
       { icon: '💫', title: 'Crear una práctica diaria que sana de verdad', desc: 'Rituales de 15 minutos que despiertan tu poder sanador interno. Sin complicaciones. Sin excusas.' },
       { icon: '✨', title: 'Reconectar con quién eras antes de cargarlo todo', desc: 'El reto de 30 días te devuelve a tu esencia paso a paso, con ejercicios guiados y espacio para tus reflexiones.' },
@@ -54,7 +54,7 @@ export const CONTENT = {
     ]
   },
   stack: {
-    title: "📚 TODO LO QUE RECIBÍS HOY",
+    title: "📚 TODO LO QUE RECIBES HOY",
     subtitle: "LANZAMIENTO DE LA APP — VALOR TOTAL: $299 USD",
     mainTitle: "EL SISTEMA COMPLETO DE BIODESCODIFICACIÓN FEMENINA",
     bonusTitle: "🎁 BONOS EXCLUSIVOS — SOLO POR TIEMPO LIMITADO"
@@ -67,22 +67,22 @@ export const CONTENT = {
     paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
   },
   closing: {
-    imagine: "\"Imaginá cómo te vas a sentir en 7 días...\"",
+    imagine: "\"Imagina cómo te vas a sentir en 7 días...\"",
     points: [
       "Ese dolor que te acompaña hace meses ya tiene nombre. Y con nombre, se puede sanar.",
-      "Entendés por qué tu cuerpo reacciona así en ciertos momentos — y ya no te da miedo.",
-      "La ansiedad sigue siendo parte de vos, pero ya no te controla. Ahora vos la escuchás.",
-      "Te despertás con una práctica que te ancla. Que te recuerda quién sos.",
-      "Te mirás al espejo y ves a alguien que por fin se está escuchando a sí misma.",
-      "Y sabés, con certeza, que el cambio más importante no vino de afuera. Vino de adentro."
+      "Entiendes por qué tu cuerpo reacciona así en ciertos momentos — y ya no te da miedo.",
+      "La ansiedad sigue siendo parte de ti, pero ya no te controla. Ahora tú la escuchas.",
+      "Te despiertas con una práctica que te ancla. Que te recuerda quién eres.",
+      "Te miras al espejo y ves a alguien que por fin se está escuchando a sí misma.",
+      "Y sabes, con certeza, que el cambio más importante no vino de afuera. Vino de adentro."
     ],
     reality: "Esto no es un sueño lejano. Es lo que pasa cuando una mujer por fin aprende el idioma de su cuerpo.",
     finalCall: "☀️ EL MOMENTO ES AHORA",
     finalSub: "Tu cuerpo lleva años hablándote. Ya es hora de escucharlo. No mañana. Hoy.",
     finalCta: "🔥 ACCEDER AL SISTEMA COMPLETO — $17.97 USD",
     signOff: "Con amor y verdad,",
-    mentorName: "Tu guía en este camino",
-    ps: "P.D.: Tenés 7 días de garantía total. Si no sentís nada — ninguna emoción, ninguna claridad, ningún alivio — te devolvemos el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
+    mentorName: "Sandra — tu amiga en este camino",
+    ps: "P.D.: Tienes 7 días de garantía total. Si no sientes nada — ninguna emoción, ninguna claridad, ningún alivio — te devolvemos el 100% sin preguntas. El único riesgo real es seguir sin entender lo que tu cuerpo te dice."
   }
 };
 
@@ -130,7 +130,7 @@ export const FAQS: FAQItem[] = [
   },
   {
     question: "¿Cuánto tiempo necesito dedicar cada día?",
-    answer: "Con 15 a 20 minutos diarios es suficiente. El sistema está diseñado para mujeres con vida ocupada. No necesitás horas libres ni un espacio especial — solo el deseo de escucharte."
+    answer: "Con 15 a 20 minutos diarios es suficiente. El sistema está diseñado para mujeres con vida ocupada. No necesitas horas libres ni un espacio especial — solo el deseo de escucharte."
   },
   {
     question: "¿Esto reemplaza a mi médico o terapeuta?",
@@ -142,11 +142,11 @@ export const FAQS: FAQItem[] = [
   },
   {
     question: "¿Cómo funciona la App? ¿Tengo que instalar algo?",
-    answer: "La app funciona directamente desde tu navegador — no necesitás descargar nada. Al comprar, recibís un email con el enlace y tu código de acceso. Podés guardarla en la pantalla de inicio de tu celular como si fuera una app nativa. Es tuya para siempre."
+    answer: "La app funciona directamente desde tu navegador — no necesitas descargar nada. Al comprar, recibes un email con el enlace y tu código de acceso. Puedes guardarla en la pantalla de inicio de tu celular como si fuera una app nativa. Es tuya para siempre."
   },
   {
     question: "¿Qué pasa si compro y no me sirve?",
-    answer: "Tenés 7 días de garantía total. Si en ese tiempo no sentís ninguna emoción, ninguna claridad, ningún alivio... te devolvemos el 100% de tu dinero sin preguntas y sin trámites. Así de simple."
+    answer: "Tienes 7 días de garantía total. Si en ese tiempo no sientes ninguna emoción, ninguna claridad, ningún alivio... te devolvemos el 100% de tu dinero sin preguntas y sin trámites. Así de simple."
   },
   {
     question: "¿Solo sirve para síntomas físicos?",

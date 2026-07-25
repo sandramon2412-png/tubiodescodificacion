@@ -16,174 +16,7 @@ function trackFbEvent(eventName: string, params?: Record<string, any>) {
   }
 }
 
-function useCountdown(minutes: number) {
-  const [seconds, setSeconds] = useState(minutes * 60);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds(s => (s > 0 ? s - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const s = String(seconds % 60).padStart(2, '0');
-  return { m, s, expired: seconds === 0 };
-}
 
-const preguntas = [
-  { id: 1, pregunta: "¿Dónde sentís más tensión o dolor frecuente?", opciones: [{ texto: "Cuello y hombros", emocion: "carga" }, { texto: "Estómago o digestión", emocion: "control" }, { texto: "Garganta o tiroides", emocion: "vision" }, { texto: "Espalda baja", emocion: "miedo" }] },
-  { id: 2, pregunta: "¿En qué momentos te sentís peor?", opciones: [{ texto: "Cuando tengo conflictos con alguien", emocion: "carga" }, { texto: "Cuando siento que pierdo el control", emocion: "control" }, { texto: "Cuando no puedo expresar lo que siento", emocion: "vision" }, { texto: "Ante cambios o incertidumbre", emocion: "miedo" }] },
-  { id: 3, pregunta: "¿Cuál de estas frases te representa más?", opciones: [{ texto: "Siempre termino cargando con todo sola", emocion: "carga" }, { texto: "Me cuesta soltar y dejar ir las cosas", emocion: "control" }, { texto: "A veces siento que me ahogo por dentro", emocion: "vision" }, { texto: "Siento mucho miedo al futuro", emocion: "miedo" }] },
-  { id: 4, pregunta: "¿Cómo reaccionás bajo mucha presión?", opciones: [{ texto: "Me duele el cuerpo físicamente", emocion: "carga" }, { texto: "Me trabo, me bloqueo, no puedo dormir", emocion: "control" }, { texto: "Siento un nudo que no puedo expresar", emocion: "vision" }, { texto: "Me paralizo por el pánico", emocion: "miedo" }] }
-];
-
-const resultadosQuiz: Record<string, { titulo: string; descripcion: string; sintomas: string }> = {
-  carga: { titulo: "Tu cuerpo carga lo que tu corazón no pudo soltar", descripcion: "Llevás años poniendo a todos antes que a vos. El peso de esa responsabilidad se acumula en tu cuerpo — especialmente en cuello, hombros y espalda alta. Es como si tu propio cuerpo dijera: 'Esto que cargás, pesa demasiado'.", sintomas: "Contracturas crónicas, dolor en cuello y hombros, cansancio extremo, migrañas de tensión, problemas de sueño." },
-  control: { titulo: "Tu cuerpo guarda lo que no podés soltar", descripcion: "Te cuesta dejar ir — situaciones, personas, emociones. Esa necesidad de control se expresa en tu sistema digestivo, en tu respiraci  n, en esa sensación de estar 'bloqueada'.", sintomas: "Gastritis, problemas digestivos, ansiedad, falta de aire, rigidez, tensión en mandíbula." },
-  vision: { titulo: "Tu cuerpo guarda todo lo que nunca pudiste decir", descripcion: "Hay emociones, palabras y verdades que nunca pudiste expresar. Se acumulan en tu garganta, tu tiroides, tu cabeza. Tu cuerpo está literalmente 'tragándose' lo que deberías haber dicho.", sintomas: "Problemas de tiroides, nudo en la garganta, aftas, problemas de voz, dolores de cabeza, migrañas." },
-  miedo: { titulo: "Tu cuerpo frena cuando tu mente tiene miedo", descripcion: "Los cambios, las decisiones, el futuro — todo te genera una resistencia profunda que se siente en el cuerpo. Las rodillas flaquean, la espalda se curva, es como si el cuerpo dijera 'No puedo'.", sintomas: "Dolor lumbar, problemas en rodillas y piernas, debilidad general, temblores, ansiedad anticipatoria." }
-};
-
-function QuizSection({ paymentUrl }: { paymentUrl: string }) {
-  const [paso, setPaso] = useState<"intro" | "preguntas" | "resultado">("intro");
-  const [preguntaActual, setPreguntaActual] = useState(0);
-  const [respuestas, setRespuestas] = useState<string[]>([]);
-
-  const calcularResultado = (resp: string[]) => {
-    const conteo: Record<string, number> = { carga: 0, control: 0, vision: 0, miedo: 0 };
-    resp.forEach((r) => { conteo[r] = (conteo[r] || 0) + 1; });
-    return Object.entries(conteo).sort((a, b) => b[1] - a[1])[0][0];
-  };
-
-  const responder = (emocion: string) => {
-    const nuevasRespuestas = [...respuestas, emocion];
-    setRespuestas(nuevasRespuestas);
-    if (preguntaActual + 1 >= preguntas.length) {
-      setPaso("resultado");
-      trackFbEvent('Lead');
-    } else {
-      setPreguntaActual(preguntaActual + 1);
-    }
-  };
-
-  const reiniciar = () => { setPaso("intro"); setPreguntaActual(0); setRespuestas([]); };
-  const resultado = respuestas.length > 0 ? resultadosQuiz[calcularResultado(respuestas)] : null;
-  const progreso = (preguntaActual / preguntas.length) * 100;
-
-  return (
-    <section className="py-20 px-4 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #0f0a1a 0%, #1a0f2e 100%)" }}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl"
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{ duration: 20, repeat: Infinity }}
-          style={{ top: -50, right: -50 }}
-        />
-        <motion.div 
-          className="absolute w-80 h-80 rounded-full bg-pink-600/15 blur-3xl"
-          animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
-          transition={{ duration: 25, repeat: Infinity }}
-          style={{ bottom: -50, left: -50 }}
-        />
-      </div>
-
-      <div className="max-w-2xl mx-auto relative z-10">
-        <AnimatePresence mode="wait">
-          {paso === "intro" && (
-            <motion.div key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="text-center">
-              <motion.div
-                className="mb-8 flex justify-center"
-                animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-pink-500/40 to-purple-500/40 blur-2xl scale-150" />
-                  <div className="relative bg-gradient-to-br from-pink-500/20 to-purple-600/20 border border-pink-400/30 backdrop-blur-sm rounded-full p-6">
-                    <Flower2 className="w-14 h-14 text-pink-300 drop-shadow-lg" strokeWidth={1.2} />
-                  </div>
-                </div>
-              </motion.div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight text-gradient-white">¿Qué emoción está cargando tu cuerpo?</h2>
-              <p className="text-purple-200 text-lg mb-10 leading-relaxed">Respondé 4 preguntas y descubrí el origen emocional de tus síntomas</p>
-              <motion.button 
-                whileHover={{ scale: 1.08, y: -4 }} 
-                whileTap={{ scale: 0.96 }} 
-                onClick={() => setPaso("preguntas")} 
-                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg px-12 py-4 rounded-full shadow-glow hover-lift glass-intense"
-              >
-                Empezar Quiz
-              </motion.button>
-            </motion.div>
-          )}
-          {paso === "preguntas" && (
-            <motion.div key={`pregunta-${preguntaActual}`} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-              <div className="mb-10">
-                <div className="flex justify-between text-purple-300 text-sm mb-4 font-bold"><span>Pregunta {preguntaActual + 1}/{preguntas.length}</span><span className="text-pink-400">{Math.round(progreso)}%</span></div>
-                <div className="w-full bg-purple-900/30 rounded-full h-3 glass backdrop-blur-md">
-                  <motion.div 
-                    className="bg-gradient-to-r from-pink-500 to-purple-500 h-3 rounded-full shadow-glow" 
-                    initial={{ width: 0 }} 
-                    animate={{ width: `${progreso}%` }} 
-                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                  />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-10 text-center leading-tight">{preguntas[preguntaActual].pregunta}</h3>
-              <div className="flex flex-col gap-4">
-                {preguntas[preguntaActual].opciones.map((opcion, i) => (
-                  <motion.button 
-                    key={i} 
-                    whileHover={{ scale: 1.05, x: 10 }} 
-                    whileTap={{ scale: 0.98 }} 
-                    initial={{ opacity: 0, y: 10 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ delay: i * 0.1 }} 
-                    onClick={() => responder(opcion.emocion)}
-                    className="glass-purple p-6 rounded-2xl text-left text-white font-semibold hover-lift transition-all border border-purple-500/40 hover:border-pink-500/60 interactive-card"
-                  >
-                    {opcion.texto}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-          {paso === "resultado" && resultado && (
-            <motion.div key="resultado" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="text-center">
-              <motion.div className="text-7xl mb-8 animate-glow">💫</motion.div>
-              <p className="text-pink-400 text-sm uppercase tracking-widest mb-3 font-bold">Tu resultado</p>
-              <h3 className="text-3xl font-bold text-white mb-10 leading-tight text-gradient-white">{resultado.titulo}</h3>
-              <div className="rounded-3xl p-8 mb-10 text-left glass-intense border-l-4 border-pink-500">
-                <p className="text-purple-100 leading-relaxed mb-8 text-lg">{resultado.descripcion}</p>
-                <div className="border-t border-purple-700 pt-6">
-                  <p className="text-pink-400 text-sm font-bold mb-3 uppercase">Síntomas relacionados:</p>
-                  <p className="text-purple-200 text-sm leading-relaxed">{resultado.sintomas}</p>
-                </div>
-              </div>
-              <p className="text-purple-200 mb-10 leading-relaxed text-lg">La biodescodificación te muestra exactamente cómo sanar esta emoción</p>
-              <motion.a 
-                href={paymentUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                whileHover={{ scale: 1.08, y: -4 }} 
-                whileTap={{ scale: 0.96 }} 
-                onClick={() => trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' })}
-                className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black px-12 py-4 rounded-full shadow-glow hover-lift mb-6 glass-intense"
-              >
-                Acceder ahora por $17.97 USD
-              </motion.a>
-              <p className="text-purple-400 text-xs mb-8">Pago único · Sin suscripción · Acceso de por vida</p>
-              <motion.button 
-                onClick={reiniciar} 
-                className="text-pink-400 text-sm underline cursor-pointer bg-transparent border-0 hover:text-pink-300 transition"
-              >
-                ↻ Hacer el quiz de nuevo
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </section>
-  );
-}
 
 const Landing: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -192,7 +25,6 @@ const Landing: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
-  const { m, s } = useCountdown(17);
 
   useEffect(() => {
     const handleScroll = () => { setShowStickyCta(window.scrollY > 600); };
@@ -218,44 +50,8 @@ const Landing: React.FC = () => {
   const mainItems = STACK_ITEMS.filter(item => !item.isBonus);
   const bonusItems = STACK_ITEMS.filter(item => item.isBonus);
 
-  const [currentPurchase, setCurrentPurchase] = useState<number | null>(null);
-  const purchases = [
-    { name: "Valeria", city: "Buenos Aires", action: "acaba de acceder al pack completo" },
-    { name: "Daniela", city: "Ciudad de México", action: "descargó su libro hace 5 minutos" },
-    { name: "Luciana", city: "Santiago", action: "activó su acceso a la App" },
-    { name: "Marcela", city: "Bogotá", action: "se unió a la comunidad" },
-    { name: "Carolina", city: "Lima", action: "adquirió la oferta de lanzamiento" },
-  ];
-
-  useEffect(() => {
-    const showNext = () => { const i = Math.floor(Math.random() * purchases.length); setCurrentPurchase(i); setTimeout(() => setCurrentPurchase(null), 5000); };
-    const t = setTimeout(showNext, 12000);
-    const interval = setInterval(showNext, Math.random() * 45000 + 45000);
-    return () => { clearTimeout(t); clearInterval(interval); };
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-dark-premium overflow-x-hidden">
-      <AnimatePresence>
-        {currentPurchase !== null && (
-          <motion.div 
-            initial={{ opacity: 0, x: -50, y: 20 }} 
-            animate={{ opacity: 1, x: 0, y: 0 }} 
-            exit={{ opacity: 0, x: -50, scale: 0.95 }} 
-            className="fixed bottom-24 left-4 sm:bottom-8 sm:left-8 z-40"
-          >
-            <div className="glass-intense p-5 rounded-2xl flex items-center gap-4 max-w-xs">
-              <div className="bg-green-500/30 p-3 rounded-full flex-shrink-0"><BadgeCheck className="w-5 h-5 text-green-400" /></div>
-              <div className="flex-1">
-                <p className="text-xs sm:text-sm text-white leading-tight"><span className="font-bold text-pink-400">{purchases[currentPurchase].name}</span> de {purchases[currentPurchase].city}</p>
-                <p className="text-[10px] text-gray-300 font-medium mt-1">{purchases[currentPurchase].action}</p>
-                <div className="flex items-center gap-1 mt-2"><BadgeCheck className="w-3 h-3 text-green-400" /><span className="text-[10px] text-gray-400 font-bold uppercase">Compra confirmada</span></div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* TOP ALERT */}
       <div className="bg-gradient-to-r from-pink-600 to-purple-600 text-white text-center py-3 px-4 text-xs font-bold uppercase tracking-widest shadow-glow">
         {CONTENT.hero.upperAlert}
@@ -304,7 +100,7 @@ const Landing: React.FC = () => {
           >
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full">
               <span className="text-yellow-300 text-base">⭐⭐⭐⭐⭐</span>
-              <span className="text-white/90 text-sm font-semibold ml-3">127 reseñas · +1.400 mujeres</span>
+              <span className="text-white/90 text-sm font-semibold ml-3">+1.400 mujeres ya escuchan su cuerpo</span>
             </div>
 
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-gradient-white">
@@ -404,9 +200,6 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* QUIZ */}
-      <QuizSection paymentUrl={CONTENT.pricing.paymentUrl} />
-
       {/* PAIN SECTION */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -424,80 +217,6 @@ const Landing: React.FC = () => {
           <div className="h-1 w-24 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto"></div>
           <p className="text-2xl font-bold text-white">Cada síntoma es una emoción que no encontró otra salida.</p>
           <p className="text-purple-200 leading-relaxed text-lg">La biodescodificación dice que el cuerpo no miente. Ese dolor que aparece, esa contractura que nunca termina de irse...</p>
-        </div>
-      </section>
-
-      {/* ANALYZER SECTION */}
-      <section id="analyzer" className="py-16 sm:py-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl animate-orb"
-            style={{ top: -100, right: -100 }}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
-          <div className="glass-intense p-8 sm:p-12 rounded-3xl shadow-elevated">
-            <div className="text-center mb-10 flex flex-col items-center">
-              <motion.div 
-                className="glass-dark px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-4"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <Sparkles className="inline-block w-4 h-4 mr-2" />Herramienta IA Gratuita
-              </motion.div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">¿Qué te está diciendo tu cuerpo?</h2>
-              <p className="text-purple-200 mt-3 text-sm sm:text-base">Escribí tu síntoma y recibí el mensaje emocional</p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
-              <input 
-                type="text" 
-                value={symptomInput} 
-                onChange={(e) => setSymptomInput(e.target.value)} 
-                placeholder="Ej: dolor de espalda, migraña, nudo en la garganta..." 
-                className="flex-1 px-6 py-4 rounded-full border-2 border-purple-500/50 focus:border-pink-500 focus:outline-none glass text-white placeholder-purple-300/50 transition"
-                onKeyPress={(e) => e.key === 'Enter' && handleAnalyze()}
-              />
-              <motion.button 
-                onClick={handleAnalyze} 
-                disabled={isAnalyzing}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
-              >
-                {isAnalyzing ? (
-                  <>⏳ Analizando...</>
-                ) : (
-                  <>
-                    <Sparkles className="w-5 h-5" /> Descubrir
-                  </>
-                )}
-              </motion.button>
-            </div>
-
-            {analysis && (
-              <motion.div 
-                ref={analysisRef} 
-                className="mt-10 p-8 glass-purple rounded-2xl border-l-4 border-pink-500 animate-fade-in-up shadow-soft"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <p className="text-white leading-relaxed whitespace-pre-wrap text-sm sm:text-base italic">"{analysis}"</p>
-                <div className="mt-8 text-center">
-                  <p className="text-purple-200 text-sm mb-4">¿Querés explorar más?</p>
-                  <motion.button 
-                    onClick={handlePurchase}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-3 rounded-full font-bold text-sm hover:shadow-glow transition"
-                  >
-                    Acceder al sistema completo
-                  </motion.button>
-                </div>
-              </motion.div>
-            )}
-          </div>
         </div>
       </section>
 
@@ -580,7 +299,10 @@ const Landing: React.FC = () => {
               >
                 <div className="flex text-yellow-400 mb-5 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1, repeat: Infinity }}>⭐</motion.span>)}</div>
                 <p className="text-purple-100 italic mb-8 text-sm sm:text-base flex-1">"{t.text}"</p>
-                <div className="font-bold text-pink-400 mt-auto text-sm">{t.name}, {t.age} años</div>
+                <div className="flex items-center gap-3 mt-auto">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white font-black text-base flex-shrink-0 shadow-glow">{t.name.charAt(0)}</div>
+                  <div className="font-bold text-pink-400 text-sm">{t.name}, {t.age} años</div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -629,7 +351,7 @@ const Landing: React.FC = () => {
 
               <div className="grid gap-6">
                 {[
-                  { Icon: Activity, title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibí la interpretación al instante" },
+                  { Icon: Activity, title: "Mapa corporal interactivo", desc: "Toca donde te duele y recibe la interpretación al instante" },
                   { Icon: Sparkles, title: "Interpretación en segundos", desc: "Mensaje simbólico + reparación emocional" },
                   { Icon: Leaf, title: "Ejercicios digitales", desc: "Interactivos y guardados en la app" },
                   { Icon: Sun, title: "Reto 7 Días guiado", desc: "Con checks de progreso y reflexiones" },
@@ -669,7 +391,7 @@ const Landing: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
           <div className="glass-intense p-10 sm:p-16 rounded-3xl shadow-elevated">
             <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-gradient-white">TODO LO QUE RECIBÍS HOY</h2>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-gradient-white">TODO LO QUE RECIBES HOY</h2>
               <p className="text-purple-300 font-bold uppercase tracking-widest text-sm">Valor total: $299 USD</p>
             </div>
 
@@ -741,19 +463,9 @@ const Landing: React.FC = () => {
 
             {/* PRICE SECTION */}
             <div className="mt-20 border-t-2 border-dashed border-purple-600 pt-16 text-center space-y-10">
-              <div className="glass-dark border-2 border-purple-500 rounded-2xl px-10 py-6 max-w-sm mx-auto shadow-soft">
-                <p className="text-xs font-bold text-purple-300 uppercase tracking-widest mb-4">PRECIO ESPECIAL VENCE EN:</p>
-                <div className="flex items-center justify-center gap-4">
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-pink-400 animate-glow">{m}</div>
-                    <div className="text-xs text-gray-400 uppercase font-bold tracking-widest mt-1">min</div>
-                  </div>
-                  <div className="text-4xl font-black text-pink-400">:</div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-pink-400 animate-glow">{s}</div>
-                    <div className="text-xs text-gray-400 uppercase font-bold tracking-widest mt-1">seg</div>
-                  </div>
-                </div>
+              <div className="glass-dark border-2 border-purple-500 rounded-2xl px-10 py-6 max-w-lg mx-auto shadow-soft">
+                <p className="text-sm font-bold text-white uppercase tracking-widest">⚡ Precio especial de lanzamiento de la App</p>
+                <p className="text-purple-300 text-xs mt-2 font-medium">Cuando termine el lanzamiento, el precio sube a $47 USD — sin excepciones.</p>
               </div>
 
               <div className="space-y-4">
@@ -761,7 +473,7 @@ const Landing: React.FC = () => {
                 <p className="text-gray-500 line-through text-xl font-semibold">Valor Total: $299 USD</p>
                 <div className="flex items-center justify-center gap-1">
                   <span className="text-5xl font-black text-pink-500">$</span>
-                  <motion.span 
+                  <motion.span
                     className="text-7xl font-black text-pink-500 animate-glow"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
@@ -770,7 +482,7 @@ const Landing: React.FC = () => {
                   </motion.span>
                   <span className="text-2xl font-black text-pink-500 self-start mt-4">USD</span>
                 </div>
-                <p className="text-white font-black text-lg uppercase tracking-widest">Precio de lanzamiento — Solo 48 horas</p>
+                <p className="text-white font-black text-lg uppercase tracking-widest">Precio de lanzamiento — Después sube a $47</p>
               </div>
 
               <div className="glass-purple rounded-2xl px-8 py-5 max-w-lg mx-auto border-2 border-pink-500">
@@ -790,6 +502,80 @@ const Landing: React.FC = () => {
                 <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">100% segura · 7 días de garantía total</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ANALYZER SECTION */}
+      <section id="analyzer" className="py-16 sm:py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute w-96 h-96 rounded-full bg-purple-600/20 blur-3xl animate-orb"
+            style={{ top: -100, right: -100 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl relative z-10">
+          <div className="glass-intense p-8 sm:p-12 rounded-3xl shadow-elevated">
+            <div className="text-center mb-10 flex flex-col items-center">
+              <motion.div
+                className="glass-dark px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-4"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Sparkles className="inline-block w-4 h-4 mr-2" />¿Todavía lo dudas? Pruébalo gratis
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">¿Qué te está diciendo tu cuerpo?</h2>
+              <p className="text-purple-200 mt-3 text-sm sm:text-base">Escribe tu síntoma y recibe el mensaje emocional</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <input
+                type="text"
+                value={symptomInput}
+                onChange={(e) => setSymptomInput(e.target.value)}
+                placeholder="Ej: dolor de espalda, migraña, nudo en la garganta..."
+                className="flex-1 px-6 py-4 rounded-full border-2 border-purple-500/50 focus:border-pink-500 focus:outline-none glass text-white placeholder-purple-300/50 transition"
+                onKeyPress={(e) => e.key === 'Enter' && handleAnalyze()}
+              />
+              <motion.button
+                onClick={handleAnalyze}
+                disabled={isAnalyzing}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
+              >
+                {isAnalyzing ? (
+                  <>⏳ Analizando...</>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" /> Descubrir
+                  </>
+                )}
+              </motion.button>
+            </div>
+
+            {analysis && (
+              <motion.div
+                ref={analysisRef}
+                className="mt-10 p-8 glass-purple rounded-2xl border-l-4 border-pink-500 animate-fade-in-up shadow-soft"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-white leading-relaxed whitespace-pre-wrap text-sm sm:text-base italic">"{analysis}"</p>
+                <div className="mt-8 text-center">
+                  <p className="text-purple-200 text-sm mb-4">Esto es solo una muestra. El sistema completo va mucho más profundo:</p>
+                  <motion.button
+                    onClick={handlePurchase}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-3 rounded-full font-bold text-sm hover:shadow-glow transition"
+                  >
+                    Acceder al sistema completo — $17.97
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
@@ -831,6 +617,42 @@ const Landing: React.FC = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CLOSING SECTION */}
+      <section className="py-24 px-4 relative overflow-hidden gradient-premium">
+        <div className="container mx-auto px-6 max-w-3xl text-center relative z-10 space-y-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white italic leading-snug">{CONTENT.closing.imagine}</h2>
+          <div className="space-y-4 text-left">
+            {CONTENT.closing.points.map((point, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="glass-dark p-5 rounded-2xl border-l-4 border-pink-400 flex items-start gap-3"
+              >
+                <span className="text-pink-400 text-xl flex-shrink-0">✨</span>
+                <p className="text-white/90 text-sm sm:text-base leading-relaxed">{point}</p>
+              </motion.div>
+            ))}
+          </div>
+          <p className="text-white text-lg font-semibold leading-relaxed">{CONTENT.closing.reality}</p>
+          <div className="space-y-6">
+            <p className="text-2xl font-black text-white uppercase tracking-wide">{CONTENT.closing.finalCall}</p>
+            <p className="text-purple-100">{CONTENT.closing.finalSub}</p>
+            <motion.button
+              onClick={handlePurchase}
+              whileHover={{ scale: 1.08, y: -4 }}
+              whileTap={{ scale: 0.96 }}
+              className="w-full max-w-xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 px-8 rounded-2xl text-xl font-black shadow-glow hover-lift transition"
+            >
+              {CONTENT.closing.finalCta}
+            </motion.button>
+            <p className="text-xs text-purple-200 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía total</p>
+          </div>
+          <p className="text-purple-100 text-sm leading-relaxed italic max-w-xl mx-auto">{CONTENT.closing.ps}</p>
         </div>
       </section>
 
