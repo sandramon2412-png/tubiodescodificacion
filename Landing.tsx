@@ -1,12 +1,73 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BadgeCheck, Sparkles, Flower2, Moon, Sun, Gem, Star, Leaf, Brain, Activity } from 'lucide-react';
+import { BadgeCheck, Sparkles, Moon, Sun, Gem, Star, Leaf, Brain, Activity, Heart, CalendarDays, Link2, ClipboardList, UsersRound, BookOpen, Smartphone, PenTool, MessageCircleHeart } from 'lucide-react';
 import { analyzeSymptom } from './services/geminiService';
 import { COLORS, TESTIMONIALS, FAQS, STACK_ITEMS, CONTENT } from './constants';
 import { FAQItem, StackItem, Testimonial } from './types';
 
 function generateEventId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+const CHECKOUT_CTA = "SÍ, QUIERO MI ACCESO COMPLETO POR $17.97 →";
+const CHECKOUT_SUBTEXT = "Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total";
+
+type HeroCopy = { title: string; subtitle: string };
+
+const SYMPTOM_HERO_COPY: Record<string, HeroCopy> = {
+  vientre: {
+    title: "Tu vientre inflamado no es por lo que comes. Está guardando lo que no dijiste.",
+    subtitle: "Tu centro creativo se inflama cuando te callas por miedo a ser juzgada. Descubre cómo liberarlo en 5 min al día."
+  },
+  tiroides: {
+    title: "Tu garganta y tu ritmo interior podrían estar pidiéndote voz y pausa.",
+    subtitle: "Desde una mirada emocional, esta zona puede hablar de tiempo, presión y palabras guardadas. Escúchala con claridad y sin juicio."
+  },
+  garganta: {
+    title: "Ese nudo en tu garganta es todo lo que no te atreviste a decir.",
+    subtitle: "Tu voz se quedó atrapada. Tu cuerpo retiene lo que tu boca no dijo."
+  },
+  lumbar: {
+    title: "Tu dolor lumbar no es solo postura. Es de sostenerlo todo sola.",
+    subtitle: "Tu espalda baja guarda el miedo a no tener apoyo y a no poder avanzar."
+  },
+  cabeza: {
+    title: "Tu dolor de cabeza no es estrés. Es sobreexigencia por controlarlo todo.",
+    subtitle: "Pensamientos que no paran porque sientes que si no controlas, algo malo pasa."
+  },
+  ansiedad: {
+    title: "Ese pecho apretado no es ansiedad. Es culpa por ponerte siempre al último.",
+    subtitle: "Aprendiste a ser fuerte para todos, menos para ti. Tu cuerpo te pide volver a ti."
+  },
+  ovarios: {
+    title: "Tu ciclo y tu centro femenino podrían estar pidiendo escucha emocional.",
+    subtitle: "Desde una mirada de autoconocimiento, esta zona puede guardar creatividad, feminidad, linaje y emociones que esperan espacio."
+  },
+  espalda_alta: {
+    title: "Ese peso en hombros y espalda alta es todo lo que cargas que no es tuyo.",
+    subtitle: "Cargas responsabilidades, culpas y expectativas que no te corresponden. Tu cuerpo te invita a soltar."
+  },
+  rodillas: {
+    title: "Tus rodillas podrían estar hablando de miedo a ceder y avanzar.",
+    subtitle: "Las rodillas guardan el conflicto entre sostenerte, pedir ayuda y cambiar de dirección."
+  },
+  ciatica: {
+    title: "Tu cadera y tu camino hacia adelante podrían estar tensos por miedo al futuro.",
+    subtitle: "Tu cuerpo se tensa cuando siente que avanzar no es seguro. Empieza escuchando el mensaje con calma."
+  }
+};
+
+SYMPTOM_HERO_COPY['espalda-alta'] = SYMPTOM_HERO_COPY.espalda_alta;
+SYMPTOM_HERO_COPY['ciática'] = SYMPTOM_HERO_COPY.ciatica;
+SYMPTOM_HERO_COPY['cadera'] = SYMPTOM_HERO_COPY.ciatica;
+function getHeroCopy(): HeroCopy {
+  if (typeof window === 'undefined') {
+    return { title: CONTENT.hero.title, subtitle: CONTENT.hero.subtitle };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const sintoma = params.get('sintoma')?.trim().toLowerCase() || '';
+  return SYMPTOM_HERO_COPY[sintoma] || { title: CONTENT.hero.title, subtitle: CONTENT.hero.subtitle };
 }
 
 function trackFbEvent(eventName: string, params?: Record<string, any>) {
@@ -25,6 +86,7 @@ const Landing: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
+  const heroCopy = getHeroCopy();
 
   useEffect(() => {
     const handleScroll = () => { setShowStickyCta(window.scrollY > 600); };
@@ -34,7 +96,7 @@ const Landing: React.FC = () => {
 
   const handlePurchase = () => {
     trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' });
-    window.open(CONTENT.pricing.paymentUrl, '_blank');
+    window.open(CONTENT.pricing.paymentUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleAnalyze = async () => {
@@ -67,14 +129,14 @@ const Landing: React.FC = () => {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
+            className="absolute inset-0 w-full h-full object-cover opacity-35"
           >
             <source src="/video-hero.mp4" type="video/mp4" />
             Su navegador no soporta videos HTML5
           </video>
 
           {/* Gradient Overlay para mejorar legibilidad */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/35 via-[#2d1b4e]/25 to-[#1a0a2e]/35"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/88 via-[#2d1b4e]/70 to-[#1a0a2e]/88"></div>
 
           {/* Floating Orbs */}
           <motion.div 
@@ -91,24 +153,23 @@ const Landing: React.FC = () => {
           />
         </div>
 
-        <div className="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center relative z-10">
           <motion.div 
-            className="space-y-8 animate-fade-in text-center lg:text-left"
+            className="space-y-6 sm:space-y-8 animate-fade-in text-center lg:text-left"
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full">
-              <span className="text-yellow-300 text-base">⭐⭐⭐⭐⭐</span>
-              <span className="text-white/90 text-sm font-semibold ml-3">+1.400 mujeres ya escuchan su cuerpo</span>
+            <div className="bg-white/12 backdrop-blur-md border border-white/25 px-4 sm:px-5 py-3 w-fit mx-auto lg:mx-0 rounded-full shadow-soft">
+              <span className="inline-flex items-center gap-0.5 text-yellow-300">{[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-300" strokeWidth={1.8} />)}</span><span className="text-white/90 text-sm font-semibold ml-3">+1.400 mujeres ya escuchan su cuerpo</span>
             </div>
 
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-gradient-white">
-              {CONTENT.hero.title}
+            <h1 className="font-display text-[2.35rem] sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white drop-shadow-2xl max-w-3xl mx-auto lg:mx-0">
+              {heroCopy.title}
             </h1>
 
-            <p className="text-xl lg:text-2xl text-purple-200 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              {CONTENT.hero.subtitle}
+            <p className="text-base sm:text-lg lg:text-xl text-purple-100 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow">
+              {heroCopy.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -116,9 +177,9 @@ const Landing: React.FC = () => {
                 onClick={handlePurchase} 
                 whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.96 }}
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-pink-400/60 text-white px-12 py-5 rounded-full font-black text-lg hover-lift transition"
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-pink-400/60 text-white px-8 sm:px-12 py-5 rounded-full font-black text-base sm:text-lg hover-lift transition leading-tight"
               >
-                SÍ, QUIERO VOLVER A SENTIRME YO
+                {CHECKOUT_CTA}
               </motion.button>
             </div>
 
@@ -127,11 +188,11 @@ const Landing: React.FC = () => {
               whileHover={{ y: -4 }}
             >
               <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4">Creado desde la experiencia real</p>
-              <p className="text-white/90 text-sm leading-relaxed italic">"Me enfermé de cáncer de tiroides por guardarme todo. Hoy sano ese dolor enseñándole a otras mujeres."</p>
+              <p className="text-white/90 text-sm leading-relaxed italic">"Me guardé todo por años, hasta que mi cuerpo me obligó a parar. Estaba agotada, con la garganta cerrada, sin energía. Hoy enseño a otras mujeres a escucharse antes de llegar a ese límite."</p>
               <p className="text-white/60 text-xs font-bold mt-4">— Sandra, tu amiga, creadora</p>
             </motion.div>
 
-            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Pago único · Sin suscripción · Acceso de por vida</p>
+            <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total</p>
           </motion.div>
 
           {/* HERO IMAGE */}
@@ -237,16 +298,14 @@ const Landing: React.FC = () => {
             <div className="h-1 w-24 bg-pink-300 mx-auto"></div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-            {CONTENT.benefits.items.map((benefit, idx) => {
-              const iconMap: Record<string, React.ReactNode> = {
-                '🔓': <Flower2 className="w-8 h-8" />,
-                '📱': <Gem className="w-8 h-8" />,
+            {CONTENT.benefits.items.map((benefit, idx) => {              const iconMap: Record<string, React.ReactNode> = {
+                '📖': <BookOpen className="w-8 h-8" />,
+                '📱': <Smartphone className="w-8 h-8" />,
                 '🧘‍♀️': <Moon className="w-8 h-8" />,
                 '💫': <Star className="w-8 h-8" />,
-                '✨': <Sun className="w-8 h-8" />,
-                '💖': <Leaf className="w-8 h-8" />,
-              };
-              return (
+                '✨': <PenTool className="w-8 h-8" />,
+                '💖': <MessageCircleHeart className="w-8 h-8" />,
+              };              return (
                 <motion.div 
                   key={idx} 
                   initial={{ opacity: 0, y: 30 }}
@@ -297,7 +356,7 @@ const Landing: React.FC = () => {
                 whileHover={{ y: -10 }}
                 className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] glass p-8 rounded-2xl shadow-soft hover-lift flex flex-col h-full border-t-4 border-pink-500 interactive-card"
               >
-                <div className="flex text-yellow-400 mb-5 text-sm">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ delay: i * 0.1, duration: 1, repeat: Infinity }}>⭐</motion.span>)}</div>
+                <div className="flex text-yellow-400 mb-5 gap-1">{[...Array(t.rating)].map((_, i) => <motion.span key={i} animate={{ scale: [1, 1.15, 1] }} transition={{ delay: i * 0.08, duration: 1.2, repeat: Infinity }}><Star className="w-4 h-4 fill-yellow-400" strokeWidth={1.8} /></motion.span>)}</div>
                 <p className="text-purple-100 italic mb-8 text-sm sm:text-base flex-1">"{t.text}"</p>
                 <div className="flex items-center gap-3 mt-auto">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white font-black text-base flex-shrink-0 shadow-glow">{t.name.charAt(0)}</div>
@@ -406,29 +465,39 @@ const Landing: React.FC = () => {
                   <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-purple-500 pb-3">EL SISTEMA COMPLETO</h3>
                 </div>
                 <div className="flex flex-wrap justify-center gap-6">
-                  {mainItems.map((item, idx) => (
-                    <motion.div 
-                      key={idx} 
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      whileHover={{ y: -12 }}
-                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
-                    >
-                      <div className="relative w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 overflow-hidden flex items-center justify-center">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
-                        <div className="absolute top-3 right-3 bg-purple-600 text-white text-[9px] font-bold px-3 py-1 rounded-full shadow-glow uppercase tracking-wider">INCLUIDO</div>
-                      </div>
-                      <div className="p-6 flex-1 flex flex-col">
-                        <h4 className="font-bold text-white leading-tight mb-3 text-sm">{item.title}</h4>
-                        {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
-                        <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
-                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
-                          <span className="text-pink-400 text-[10px] font-black">HOY: $0.00</span>
+                  {mainItems.map((item, idx) => {
+                    const mainIcons = [BookOpen, Smartphone, ClipboardList];
+                    const MainIcon = mainIcons[idx] || Gem;
+
+                    return (
+                      <motion.div 
+                        key={idx} 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        whileHover={{ y: -12 }}
+                        className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
+                      >
+                        <div className="relative w-full h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 overflow-hidden flex items-center justify-center">
+                          <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
+                          <div className="absolute top-3 right-3 bg-purple-600 text-white text-[9px] font-bold px-3 py-1 rounded-full shadow-glow uppercase tracking-wider">INCLUIDO</div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                        <div className="p-6 flex-1 flex flex-col">
+                          <div className="flex items-start gap-3 mb-3">
+                            <div className="flex-shrink-0 w-9 h-9 rounded-xl glass-purple border border-purple-500/50 flex items-center justify-center text-purple-100 shadow-soft group-hover:scale-110 transition-transform duration-300">
+                              <MainIcon className="w-5 h-5" strokeWidth={2.2} />
+                            </div>
+                            <h4 className="font-bold text-white leading-tight text-sm pt-0.5">{item.title}</h4>
+                          </div>
+                          {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
+                          <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
+                            <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
+                            <span className="text-pink-400 text-[10px] font-black">HOY: $0.00</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -438,29 +507,39 @@ const Landing: React.FC = () => {
                   <h3 className="text-3xl font-bold text-white inline-block border-b-4 border-yellow-500 pb-3">BONOS EXCLUSIVOS</h3>
                 </div>
                 <div className="flex flex-wrap justify-center gap-6">
-                  {bonusItems.map((item, idx) => (
-                    <motion.div 
-                      key={idx} 
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      whileHover={{ y: -12 }}
-                      className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
-                    >
-                      <div className="relative w-full h-48 bg-gradient-to-br from-yellow-600/30 to-orange-600/30 overflow-hidden flex items-center justify-center">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
-                        <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full shadow-glow uppercase">REGALO</div>
-                      </div>
-                      <div className="p-6 flex-1 flex flex-col">
-                        <h4 className="font-bold text-pink-400 leading-tight mb-3 text-sm">{item.title}</h4>
-                        {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
-                        <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
-                          <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
-                          <span className="text-green-400 text-[10px] font-black">REGALO</span>
+                  {bonusItems.map((item, idx) => {
+                    const bonusIcons = [Heart, CalendarDays, Link2, ClipboardList, UsersRound];
+                    const BonusIcon = bonusIcons[idx] || Sparkles;
+
+                    return (
+                      <motion.div 
+                        key={idx} 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        whileHover={{ y: -12 }}
+                        className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] glass-dark rounded-2xl overflow-hidden flex flex-col group hover-lift interactive-card"
+                      >
+                        <div className="relative w-full h-48 bg-gradient-to-br from-yellow-600/30 to-orange-600/30 overflow-hidden flex items-center justify-center">
+                          <img src={item.image} alt={item.title} className="w-full h-full object-contain p-4 transition duration-500 group-hover:scale-110" />
+                          <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full shadow-glow uppercase">REGALO</div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                        <div className="p-6 flex-1 flex flex-col">
+                          <div className="flex items-start gap-3 mb-3">
+                            <div className="flex-shrink-0 w-9 h-9 rounded-xl glass-purple border border-pink-400/60 flex items-center justify-center text-pink-300 shadow-soft group-hover:scale-110 transition-transform duration-300">
+                              <BonusIcon className="w-5 h-5" strokeWidth={2.2} />
+                            </div>
+                            <h4 className="font-bold text-pink-400 leading-tight text-sm pt-0.5">{item.title}</h4>
+                          </div>
+                          {item.description && <p className="text-purple-200 text-xs leading-relaxed mb-4 flex-1">{item.description}</p>}
+                          <div className="flex justify-between items-center pt-4 mt-auto border-t border-purple-700">
+                            <span className="text-gray-400 text-[10px] font-bold line-through">VALOR: ${item.value}</span>
+                            <span className="text-green-400 text-[10px] font-black">REGALO</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -499,11 +578,11 @@ const Landing: React.FC = () => {
                   onClick={handlePurchase}
                   whileHover={{ scale: 1.08, y: -4 }}
                   whileTap={{ scale: 0.96 }}
-                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-7 px-6 rounded-2xl text-2xl font-black shadow-glow hover-lift transition"
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 sm:py-7 px-5 sm:px-6 rounded-2xl text-lg sm:text-2xl font-black leading-tight shadow-glow hover-lift transition"
                 >
-                  SÍ, QUIERO MI ACCESO
+                  {CHECKOUT_CTA}
                 </motion.button>
-                <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">100% segura · 7 días de garantía total</p>
+                <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total</p>
               </div>
             </div>
           </div>
@@ -550,7 +629,7 @@ const Landing: React.FC = () => {
                 className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
               >
                 {isAnalyzing ? (
-                  <>⏳ Analizando...</>
+                  <>â³ Analizando...</>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5" /> Descubrir
@@ -573,9 +652,9 @@ const Landing: React.FC = () => {
                     onClick={handlePurchase}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-3 rounded-full font-bold text-sm hover:shadow-glow transition"
+                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 sm:px-10 py-3 rounded-full font-bold text-xs sm:text-sm leading-tight hover:shadow-glow transition"
                   >
-                    Acceder al sistema completo — $17.97
+                    {CHECKOUT_CTA}
                   </motion.button>
                 </div>
               </motion.div>
@@ -654,7 +733,7 @@ const Landing: React.FC = () => {
             >
               {CONTENT.closing.finalCta}
             </motion.button>
-            <p className="text-xs text-purple-200 font-bold uppercase tracking-widest">🛡️ 100% segura · 7 días de garantía total</p>
+            <p className="text-xs text-purple-200 font-bold uppercase tracking-widest">🛡️ Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total</p>
           </div>
           <p className="text-purple-100 text-sm leading-relaxed italic max-w-xl mx-auto">{CONTENT.closing.ps}</p>
         </div>
@@ -698,7 +777,7 @@ const Landing: React.FC = () => {
       <footer className="py-12 text-center text-gray-400 text-xs border-t border-purple-900/50 px-6 bg-gradient-dark-premium">
         <div className="container mx-auto max-w-4xl space-y-4">
           <p className="font-bold text-gray-300 uppercase tracking-widest">Biodescodificación Femenina</p>
-          <p>© {new Date().getFullYear()} Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Todos los derechos reservados.</p><p className="text-gray-500 max-w-xl mx-auto leading-relaxed">Este sistema es una herramienta de autoconocimiento emocional y no reemplaza consejo médico profesional.</p>
           <div className="flex flex-wrap justify-center gap-6 opacity-60">
             <a href="/gracias" className="text-pink-500 font-bold hover:underline">Página de Gracias</a>
             <a href="#" className="hover:text-pink-500 transition">Privacidad</a>
@@ -711,3 +790,14 @@ const Landing: React.FC = () => {
 };
 
 export default Landing;
+
+
+
+
+
+
+
+
+
+
+

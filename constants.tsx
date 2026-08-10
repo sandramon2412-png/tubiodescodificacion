@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Testimonial, FAQItem, StackItem } from './types';
 
 export const COLORS = {
@@ -13,9 +13,9 @@ export const CONTENT = {
     upperAlert: "🚀 LANZAMIENTO OFICIAL DE LA APP — Precio especial de $17.97 solo por tiempo limitado · Después sube a $47",
     title: "Vuelve a sentirte tú — con energía, con paz, sin cargar lo que nunca fue tuyo",
     subtitle: "Aprende el idioma de tu cuerpo y sana desde adentro con el único sistema que combina libro + App interactiva de biodescodificación femenina.",
-    cta: "🚀 SÍ, QUIERO VOLVER A SENTIRME YO",
+    cta: "SÍ, QUIERO MI ACCESO COMPLETO POR $17.97 →",
     footer: "✅ Acceso inmediato · Descarga en 2 minutos · Garantía 7 días",
-    heroImage: "https://i.imgur.com/wetlLWW.jpeg"
+    heroImage: "/assets/offer/libro-codigo-cuerpo.jpeg"
   },
   identification: {
     title: "Antes de seguir, respóndete esto con honestidad:",
@@ -45,7 +45,7 @@ export const CONTENT = {
   benefits: {
     title: "Con el Sistema de Biodescodificación Femenina vas a:",
     items: [
-      { icon: '🔓', title: 'Entender cada síntoma como un mensaje, no como un castigo', desc: 'El diccionario de 60 señales corporales te explica exactamente qué emoción está detrás de lo que sientes. Sin tecnicismos. Con amor.' },
+      { icon: '📖', title: 'Entender cada síntoma como un mensaje, no como un castigo', desc: 'El diccionario de 60 señales corporales te explica exactamente qué emoción está detrás de lo que sientes. Sin tecnicismos. Con amor.' },
       { icon: '📱', title: 'Consultar tu cuerpo en tiempo real desde la App', desc: 'Tocas la zona en el mapa corporal, escribes lo que sientes, y en segundos tienes la interpretación + una reparación en 3 niveles. Algo que nadie más te ofrece.' },
       { icon: '🧘‍♀️', title: 'Liberar lo que callaste durante años', desc: 'Técnicas de tapping y meditación guiada (en la app y en PDF) diseñadas específicamente para liberar emociones reprimidas que el cuerpo convirtió en dolor.' },
       { icon: '💫', title: 'Crear una práctica diaria que sana de verdad', desc: 'Rituales de 15 minutos que despiertan tu poder sanador interno. Sin complicaciones. Sin excusas.' },
@@ -62,7 +62,7 @@ export const CONTENT = {
   pricing: {
     totalValueLabel: "Valor Total del Pack",
     launchPriceLabel: "PRECIO DE LANZAMIENTO DE LA APP — SOLO POR TIEMPO LIMITADO",
-    cta: "🔥 SÍ, QUIERO MI ACCESO AHORA POR $17.97",
+    cta: "SÍ, QUIERO MI ACCESO COMPLETO POR $17.97 →",
     guarantee: "🛡️ GARANTÍA TOTAL DE 7 DÍAS",
     paymentUrl: "https://pay.hotmart.com/U104712118U?checkoutMode=10"
   },
@@ -156,56 +156,64 @@ export const FAQS: FAQItem[] = [
 
 export const STACK_ITEMS: StackItem[] = [
   {
-    title: "🌸 Libro Principal: \"Biodescodificación Femenina — El Código Secreto de Tu Cuerpo\" (130 págs.)",
+    title: "Libro Principal · Biodescodificación Femenina — El Código Secreto de Tu Cuerpo",
     value: 27, 
-    image: "https://i.imgur.com/wetlLWW.jpeg",
+    image: "/assets/offer/libro-codigo-cuerpo.jpeg",
     description: "El método RE-CONECT completo. Diccionario de 60 señales corporales con su mensaje emocional. Casos guiados, ejercicios prácticos y frases sanadoras. La base de todo tu proceso."
   },
   { 
-    title: "💎 App Interactiva \"Código Cuerpo\" — Acceso Exclusivo de por vida",
+    title: "App Interactiva · Código Cuerpo — Acceso exclusivo de por vida",
     value: 47, 
-    image: "https://i.imgur.com/tp3ywRK.png",
+    image: "/assets/offer/app-codigo-cuerpo.png",
     description: "Lo que ningún libro puede darte: una guía interactiva en tiempo real. Mapa corporal femenino, interpretación instantánea de síntomas, diario emocional, reto de 7 días, meditaciones y tapping en audio, y seguimiento de tus patrones. Siempre en tu bolsillo. ✅ Pago único — sin suscripción, sin cobros mensuales."
   },
   { 
-    title: "🌿 5 Guías Prácticas en PDF (descargables e imprimibles)",
+    title: "5 Guías Prácticas en PDF",
     value: 49, 
-    image: "https://i.imgur.com/tdxsvSD.jpeg",
+    image: "/assets/offer/guias-practicas.jpeg",
     description: "Guía de Meditación · Guía de Tapping · 5 Rituales Diarios · 50 Afirmaciones de Alta Vibración · Plantillas de Gratitud. Todo listo para usar desde hoy."
   },
   { 
-    title: "✨ BONUS 1: \"Volver a Mí — Amor propio en tiempos de ansiedad\"", 
+    title: "Bonus 1 · Volver a Mí — Amor propio en tiempos de ansiedad", 
     value: 27, 
-    image: "https://i.imgur.com/1hDDUH5.png",
+    image: "/assets/offer/bonus-amor-propio.png",
     isBonus: true,
     description: "Cuando la ansiedad intenta convencerte de que no eres suficiente. Ejercicios prácticos para reconectar con tu valor cuando más difícil se siente."
   },
   { 
-    title: "🌙 BONUS 2: \"Despierta Tu Luz — Reto espiritual de 30 días\"", 
+    title: "Bonus 2 · Despierta Tu Luz — Reto espiritual de 30 días", 
     value: 37, 
-    image: "https://i.imgur.com/EKsngIC.png",
+    image: "/assets/offer/bonus-luz.png",
     isBonus: true,
     description: "Un día a la vez, una práctica a la vez. Reflexión + ejercicio + afirmación para cada uno de los 30 días. Tu esencia más auténtica te espera al final."
   },
   { 
-    title: "💜 BONUS 3: \"Cuando amar duele — Ansiedad en las relaciones\"", 
+    title: "Bonus 3 · Cuando amar duele — Ansiedad en las relaciones", 
     value: 27, 
-    image: "https://i.imgur.com/xSbkW9P.png",
+    image: "/assets/offer/bonus-relaciones.png",
     isBonus: true,
     description: "¿Por qué repites los mismos patrones? ¿Por qué ciertas personas te generan ansiedad? Este libro te da las respuestas y las herramientas para vincularte desde la paz."
   },
   { 
-    title: "🌺 BONUS 4: Plantillas de Gratitud Diarias (PDF imprimible)", 
+    title: "Bonus 4 · Plantillas de Gratitud Diarias", 
     value: 17, 
-    image: "https://i.imgur.com/ZvuT6H6.jpeg",
+    image: "/assets/offer/bonus-gratitud.jpeg",
     isBonus: true,
     description: "Diseño hermoso para imprimir o usar en digital. Cada día: tu afirmación, tu logro y tu intención. El hábito más simple que más cambia."
   },
   { 
-    title: "🔮 BONUS 5: Comunidad Privada de Mujeres Conscientes", 
+    title: "Bonus 5 · Comunidad Privada de Mujeres Conscientes", 
     value: 97, 
-    image: "https://i.imgur.com/WheJ70c.jpeg",
+    image: "/assets/offer/bonus-comunidad.jpeg",
     isBonus: true,
     description: "Un espacio real donde compartir tu proceso, recibir apoyo y saber que no estás sola en este camino. Otras mujeres que entienden exactamente lo que estás viviendo."
   }
 ];
+
+
+
+
+
+
+
+
