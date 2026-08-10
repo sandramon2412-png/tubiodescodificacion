@@ -12,64 +12,366 @@ function generateEventId(): string {
 const CHECKOUT_CTA = "SÍ, QUIERO MI ACCESO COMPLETO POR $17.97 →";
 const CHECKOUT_SUBTEXT = "Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total";
 
-type HeroCopy = { title: string; subtitle: string };
+type SymptomContext = {
+  title: string;
+  subtitle: string;
+  area: string;
+  theme: string;
+  signal: string;
+  examples: string;
+  questions: string[];
+  promise: string;
+  closingPoints: string[];
+};
 
-const SYMPTOM_HERO_COPY: Record<string, HeroCopy> = {
-  vientre: {
-    title: "Tu vientre inflamado no es por lo que comes. Está guardando lo que no dijiste.",
-    subtitle: "Tu centro creativo se inflama cuando te callas por miedo a ser juzgada. Descubre cómo liberarlo en 5 min al día."
+type DynamicLandingCopy = {
+  hero: { title: string; subtitle: string };
+  identification: { title: string; questions: string[]; conclusion: string };
+  pain: { eyebrow: string; title: string; statement: string; description: string };
+  benefits: { title: string; items: { icon: string; title: string; desc: string }[] };
+  analyzer: { title: string; subtitle: string; placeholder: string };
+  closing: { imagine: string; points: string[]; reality: string; finalSub: string };
+};
+
+const DEFAULT_DYNAMIC_COPY: DynamicLandingCopy = {
+  hero: {
+    title: CONTENT.hero.title,
+    subtitle: CONTENT.hero.subtitle
   },
-  tiroides: {
-    title: "Tu garganta y tu ritmo interior podrían estar pidiéndote voz y pausa.",
-    subtitle: "Desde una mirada emocional, esta zona puede hablar de tiempo, presión y palabras guardadas. Escúchala con claridad y sin juicio."
+  identification: {
+    title: "Antes de seguir, respóndete con honestidad:",
+    questions: CONTENT.identification.questions,
+    conclusion: CONTENT.identification.conclusion
   },
-  garganta: {
-    title: "Ese nudo en tu garganta es todo lo que no te atreviste a decir.",
-    subtitle: "Tu voz se quedó atrapada. Tu cuerpo retiene lo que tu boca no dijo."
+  pain: {
+    eyebrow: "Estás ignorando el idioma más importante que existe.",
+    title: "No estás exagerando. No estás loca.",
+    statement: "Cada síntoma es una emoción que no encontró otra salida.",
+    description: "La biodescodificación dice que el cuerpo no miente. Ese dolor que aparece, esa contractura que nunca termina de irse... son mensajes que llevan años esperando que los leas."
   },
-  lumbar: {
-    title: "Tu dolor lumbar no es solo postura. Es de sostenerlo todo sola.",
-    subtitle: "Tu espalda baja guarda el miedo a no tener apoyo y a no poder avanzar."
+  benefits: {
+    title: "Con el Sistema vas a:",
+    items: CONTENT.benefits.items
   },
-  cabeza: {
-    title: "Tu dolor de cabeza no es estrés. Es sobreexigencia por controlarlo todo.",
-    subtitle: "Pensamientos que no paran porque sientes que si no controlas, algo malo pasa."
+  analyzer: {
+    title: "¿Qué te está diciendo tu cuerpo?",
+    subtitle: "Escribe tu síntoma y recibe el mensaje emocional",
+    placeholder: "Ej: dolor de espalda, migraña, nudo en la garganta..."
   },
-  ansiedad: {
-    title: "Ese pecho apretado no es ansiedad. Es culpa por ponerte siempre al último.",
-    subtitle: "Aprendiste a ser fuerte para todos, menos para ti. Tu cuerpo te pide volver a ti."
-  },
-  ovarios: {
-    title: "Tu ciclo y tu centro femenino podrían estar pidiendo escucha emocional.",
-    subtitle: "Desde una mirada de autoconocimiento, esta zona puede guardar creatividad, feminidad, linaje y emociones que esperan espacio."
-  },
-  espalda_alta: {
-    title: "Ese peso en hombros y espalda alta es todo lo que cargas que no es tuyo.",
-    subtitle: "Cargas responsabilidades, culpas y expectativas que no te corresponden. Tu cuerpo te invita a soltar."
-  },
-  rodillas: {
-    title: "Tus rodillas podrían estar hablando de miedo a ceder y avanzar.",
-    subtitle: "Las rodillas guardan el conflicto entre sostenerte, pedir ayuda y cambiar de dirección."
-  },
-  ciatica: {
-    title: "Tu cadera y tu camino hacia adelante podrían estar tensos por miedo al futuro.",
-    subtitle: "Tu cuerpo se tensa cuando siente que avanzar no es seguro. Empieza escuchando el mensaje con calma."
+  closing: {
+    imagine: CONTENT.closing.imagine,
+    points: CONTENT.closing.points,
+    reality: CONTENT.closing.reality,
+    finalSub: CONTENT.closing.finalSub
   }
 };
 
-SYMPTOM_HERO_COPY['espalda-alta'] = SYMPTOM_HERO_COPY.espalda_alta;
-SYMPTOM_HERO_COPY['ciática'] = SYMPTOM_HERO_COPY.ciatica;
-SYMPTOM_HERO_COPY['cadera'] = SYMPTOM_HERO_COPY.ciatica;
-function getHeroCopy(): HeroCopy {
+const SYMPTOM_CONTEXTS: Record<string, SymptomContext> = {
+  vientre: {
+    title: "Tu vientre inflamado no es por lo que comes. Está guardando lo que no dijiste.",
+    subtitle: "Tu centro creativo se inflama cuando te callas por miedo a ser juzgada. Descubre cómo liberarlo en 5 min al día.",
+    area: "vientre",
+    theme: "miedo a ser juzgada, emociones tragadas y palabras no dichas",
+    signal: "inflamación, pesadez, gastritis, colon o náuseas",
+    examples: "vientre inflamado, gastritis, colon irritable, náuseas",
+    questions: [
+      "¿Te inflamas más cuando callas algo para no incomodar?",
+      "¿Tu digestión cambia después de discusiones, presión o culpa?",
+      "¿Sientes que tragas emociones para sostener una imagen de que todo está bien?",
+      "¿Te cuesta poner límites y luego tu cuerpo lo expresa en el vientre?",
+      "¿Tu centro se tensa cuando tienes miedo a ser juzgada?"
+    ],
+    promise: "Si te reconoces aquí, tu vientre no solo está pidiendo dieta. Está pidiendo permiso para expresar lo que guardaste.",
+    closingPoints: [
+      "Reconoces qué situaciones te inflaman emocionalmente.",
+      "Dejas de culparte solo por lo que comes y empiezas a escuchar lo que callas.",
+      "Tienes una práctica concreta para respirar antes de tragarte otra emoción.",
+      "Empiezas a escribir lo que no te atreviste a decir en voz alta.",
+      "Tu cuerpo deja de sentirse como enemigo y se vuelve una guía.",
+      "Sientes más claridad para poner límites sin tanta culpa."
+    ]
+  },
+  tiroides: {
+    title: "Tu garganta y tu ritmo interior podrían estar pidiéndote voz y pausa.",
+    subtitle: "Desde una mirada emocional, esta zona puede hablar de tiempo, presión y palabras guardadas. Escúchala con claridad y sin juicio.",
+    area: "garganta y tiroides",
+    theme: "tiempo, presión interna, voz retenida y necesidad de pausa",
+    signal: "garganta cerrada, cansancio, presión o sensación de no alcanzar",
+    examples: "tiroides, garganta cerrada, presión, falta de energía",
+    questions: [
+      "¿Sientes que nunca te alcanza el tiempo para ti?",
+      "¿Te guardas palabras para evitar conflicto?",
+      "¿Tu garganta se cierra cuando necesitas pedir algo?",
+      "¿Vives acelerada, intentando cumplir con todos?",
+      "¿Te cuesta decir tu verdad sin sentir culpa?"
+    ],
+    promise: "Tu garganta puede estar pidiendo espacio, ritmo y una voz que no tenga que esconderse para ser amada.",
+    closingPoints: [
+      "Identificas qué palabras estás guardando.",
+      "Notas cuándo tu cuerpo se acelera por complacer.",
+      "Tienes ejercicios para pausar antes de tragarte tu verdad.",
+      "Empiezas a expresar necesidades pequeñas sin tanta culpa.",
+      "Tu ritmo deja de depender tanto de la urgencia de otros.",
+      "Tu garganta se vuelve una señal de atención, no de miedo."
+    ]
+  },
+  garganta: {
+    title: "Ese nudo en tu garganta es todo lo que no te atreviste a decir.",
+    subtitle: "Tu voz se quedó atrapada. Tu cuerpo retiene lo que tu boca no dijo.",
+    area: "garganta",
+    theme: "palabras retenidas, miedo al conflicto y verdad no expresada",
+    signal: "nudo, tos, ronquera, dolor al tragar o tensión mandibular",
+    examples: "nudo en la garganta, tos, ronquera, dolor al tragar",
+    questions: [
+      "¿Sientes un nudo cuando quieres hablar y decides callarte?",
+      "¿Te da miedo que decir tu verdad genere conflicto?",
+      "¿Tu voz cambia cuando estás emocionalmente cargada?",
+      "¿Te arrepientes después de no haber dicho lo que sentías?",
+      "¿Sientes que tu cuerpo grita lo que tú intentas esconder?"
+    ],
+    promise: "Ese nudo puede ser una conversación pendiente contigo misma.",
+    closingPoints: [
+      "Reconoces qué conversación sigues postergando.",
+      "Tienes una forma segura de escribir antes de hablar.",
+      "Empiezas a validar tu verdad sin justificarla tanto.",
+      "Notas qué personas o situaciones apagan tu voz.",
+      "Aprendes a soltar presión con respiración y tapping.",
+      "Tu voz deja de sentirse como amenaza y se vuelve guía."
+    ]
+  },
+  lumbar: {
+    title: "Tu dolor lumbar no es solo postura. Es de sostenerlo todo sola.",
+    subtitle: "Tu espalda baja guarda el miedo a no tener apoyo y a no poder avanzar.",
+    area: "espalda baja",
+    theme: "falta de apoyo, carga económica o emocional y miedo a avanzar",
+    signal: "dolor lumbar, presión baja, cadera tensa o sensación de sostener demasiado",
+    examples: "dolor lumbar, espalda baja, ciática, cadera tensa",
+    questions: [
+      "¿Sientes que si tú no sostienes todo, nadie lo hace?",
+      "¿Tu espalda baja duele más cuando te preocupas por dinero, futuro o apoyo?",
+      "¿Te cuesta pedir ayuda aunque estés agotada?",
+      "¿Sientes miedo de avanzar porque no sabes quién te sostiene?",
+      "¿Tu cuerpo se carga cuando intentas ser fuerte por todos?"
+    ],
+    promise: "Tu espalda baja puede estar mostrando el peso de sostenerlo todo sola por demasiado tiempo.",
+    closingPoints: [
+      "Distingues qué cargas realmente son tuyas y cuáles no.",
+      "Empiezas a pedir apoyo desde claridad, no desde culpa.",
+      "Identificas qué miedo al futuro tensa tu cuerpo.",
+      "Tienes ejercicios para soltar peso emocional en pocos minutos.",
+      "Tu espalda deja de ser solo dolor y se vuelve una señal.",
+      "Das pasos pequeños sin sentir que tienes que poder con todo."
+    ]
+  },
+  cabeza: {
+    title: "Tu dolor de cabeza no es estrés. Es sobreexigencia por controlarlo todo.",
+    subtitle: "Pensamientos que no paran porque sientes que si no controlas, algo malo pasa.",
+    area: "cabeza",
+    theme: "control, perfeccionismo, exceso mental y sobreexigencia",
+    signal: "migraña, presión craneal, insomnio o pensamientos acelerados",
+    examples: "dolor de cabeza, migraña, tensión craneal, insomnio",
+    questions: [
+      "¿Tu mente no descansa porque necesitas tener todo bajo control?",
+      "¿Te duele la cabeza cuando intentas resolverlo todo sola?",
+      "¿Te cuesta apagar pensamientos antes de dormir?",
+      "¿Sientes culpa cuando descansas?",
+      "¿Tu cuerpo se tensa cuando algo sale diferente a lo planeado?"
+    ],
+    promise: "Tu cabeza puede estar pidiendo bajar la exigencia y volver al cuerpo antes de colapsar.",
+    closingPoints: [
+      "Reconoces qué pensamientos aceleran tu dolor.",
+      "Aprendes a soltar el control sin sentir que pierdes seguridad.",
+      "Tienes ejercicios para bajar de la mente al cuerpo.",
+      "Empiezas a descansar sin tanta culpa.",
+      "Ordenas tus emociones antes de que se conviertan en presión.",
+      "Tu mente deja de pelear contigo y empieza a escucharte."
+    ]
+  },
+  ansiedad: {
+    title: "Ese pecho apretado no es ansiedad. Es culpa por ponerte siempre al último.",
+    subtitle: "Aprendiste a ser fuerte para todos, menos para ti. Tu cuerpo te pide volver a ti.",
+    area: "pecho y respiración",
+    theme: "culpa, miedo, autoabandono y necesidad de volver a ti",
+    signal: "pecho apretado, palpitaciones, falta de aire o vacío emocional",
+    examples: "pecho apretado, palpitaciones, ansiedad, sensación de vacío",
+    questions: [
+      "¿Tu pecho se aprieta cuando intentas descansar o elegirte?",
+      "¿Sientes culpa por decir que no?",
+      "¿Te acostumbraste a ser fuerte para todos menos para ti?",
+      "¿Tu respiración cambia cuando sientes que decepcionas a alguien?",
+      "¿Te cuesta reconocer tus necesidades antes que las de otros?"
+    ],
+    promise: "Ese pecho apretado puede estar pidiendo que dejes de abandonarte para sostener a todos.",
+    closingPoints: [
+      "Reconoces cuándo tu ansiedad aparece por culpa y autoabandono.",
+      "Tienes ejercicios de respiración para volver al presente.",
+      "Empiezas a elegirte sin sentir que traicionas a nadie.",
+      "Detectas qué vínculos te sacan de tu centro.",
+      "Tu pecho se vuelve una señal para cuidarte, no para asustarte.",
+      "Vuelves a sentir que tú también importas."
+    ]
+  },
+  ovarios: {
+    title: "Tu ciclo y tu centro femenino podrían estar pidiendo escucha emocional.",
+    subtitle: "Desde una mirada de autoconocimiento, esta zona puede guardar creatividad, feminidad, linaje y emociones que esperan espacio.",
+    area: "pelvis y ciclo femenino",
+    theme: "feminidad, creatividad, linaje, deseo y permiso de sentir",
+    signal: "dolor menstrual, tensión pélvica, irregularidad o síndrome premenstrual",
+    examples: "dolor menstrual, pelvis, ciclo irregular, síndrome premenstrual",
+    questions: [
+      "¿Tu ciclo se intensifica cuando te sientes emocionalmente exigida?",
+      "¿Hay historias de tu linaje femenino que todavía pesan en ti?",
+      "¿Te cuesta habitar tu feminidad sin juicio?",
+      "¿Sientes que tu creatividad está bloqueada?",
+      "¿Tu pelvis se tensa cuando no te das permiso de sentir?"
+    ],
+    promise: "Tu centro femenino puede estar pidiendo reconciliación, escucha y permiso para crear desde ti.",
+    closingPoints: [
+      "Escuchas tu ciclo como una guía, no como una molestia.",
+      "Identificas emociones ligadas a feminidad y linaje.",
+      "Tienes prácticas suaves para habitar tu pelvis con respeto.",
+      "Empiezas a liberar juicio sobre tu cuerpo femenino.",
+      "Conectas con tu creatividad de forma más segura.",
+      "Te das permiso de sentir sin esconderte."
+    ]
+  },
+  espalda_alta: {
+    title: "Ese peso en hombros y espalda alta es todo lo que cargas que no es tuyo.",
+    subtitle: "Cargas responsabilidades, culpas y expectativas que no te corresponden. Tu cuerpo te invita a soltar.",
+    area: "hombros y espalda alta",
+    theme: "responsabilidades ajenas, culpa, deber y carga emocional",
+    signal: "contracturas, cuello rígido, nuca tensa o dolor de brazos",
+    examples: "hombros tensos, espalda alta, cuello rígido, contractura",
+    questions: [
+      "¿Sientes que cargas problemas que no te corresponden?",
+      "¿Tus hombros se tensan cuando intentas cumplir con todos?",
+      "¿Te cuesta descansar porque siempre falta algo por hacer?",
+      "¿Sientes culpa cuando sueltas responsabilidades ajenas?",
+      "¿Tu cuello se endurece cuando intentas mantener el control?"
+    ],
+    promise: "Esa carga puede estar mostrando que tu cuerpo ya no quiere sostener lo que no es tuyo.",
+    closingPoints: [
+      "Reconoces qué responsabilidades te están pesando demasiado.",
+      "Aprendes a soltar culpa sin volverte indiferente.",
+      "Tienes ejercicios para relajar cuello, hombros y respiración.",
+      "Identificas qué expectativas ajenas aceptaste como obligación.",
+      "Tu cuerpo te recuerda que descansar también es sanar.",
+      "Empiezas a elegir qué sí sostener y qué devolver."
+    ]
+  },
+  rodillas: {
+    title: "Tus rodillas podrían estar hablando de miedo a ceder y avanzar.",
+    subtitle: "Las rodillas guardan el conflicto entre sostenerte, pedir ayuda y cambiar de dirección.",
+    area: "rodillas y piernas",
+    theme: "miedo a avanzar, rigidez, orgullo y dificultad para ceder",
+    signal: "dolor de rodilla, piernas pesadas o resistencia a moverte",
+    examples: "dolor de rodilla, piernas pesadas, dificultad para avanzar",
+    questions: [
+      "¿Te cuesta cambiar de dirección aunque algo ya no te haga bien?",
+      "¿Sientes que ceder es perder?",
+      "¿Tu cuerpo se frena cuando tienes que tomar una decisión?",
+      "¿Te cuesta pedir ayuda para avanzar?",
+      "¿Tus piernas pesan cuando piensas en el futuro?"
+    ],
+    promise: "Tus rodillas pueden estar mostrando el miedo a moverte, ceder o tomar una nueva dirección.",
+    closingPoints: [
+      "Entiendes qué decisión te está frenando.",
+      "Aprendes a ceder sin sentir que pierdes valor.",
+      "Tienes prácticas para volver al cuerpo antes de avanzar.",
+      "Identificas qué miedo aparece cuando miras al futuro.",
+      "Empiezas con pasos pequeños, no con presión.",
+      "Tu movimiento se vuelve más consciente y menos forzado."
+    ]
+  },
+  ciatica: {
+    title: "Tu cadera y tu camino hacia adelante podrían estar tensos por miedo al futuro.",
+    subtitle: "Tu cuerpo se tensa cuando siente que avanzar no es seguro. Empieza escuchando el mensaje con calma.",
+    area: "cadera y ciática",
+    theme: "miedo al futuro, dirección de vida, seguridad y avance",
+    signal: "ciática, dolor de cadera, pierna cargada o tensión lumbar",
+    examples: "ciática, cadera, dolor que baja por la pierna, lumbar",
+    questions: [
+      "¿Tu cuerpo se tensa cuando piensas en el futuro?",
+      "¿Sientes miedo de avanzar porque no sabes si habrá apoyo?",
+      "¿La cadera duele más cuando tienes que tomar decisiones?",
+      "¿Te cuesta confiar en tu camino?",
+      "¿Hay una parte de ti que quiere moverse y otra que se paraliza?"
+    ],
+    promise: "Tu cadera puede estar mostrando el conflicto entre querer avanzar y no sentirte segura para hacerlo.",
+    closingPoints: [
+      "Reconoces qué miedo aparece cuando imaginas tu siguiente paso.",
+      "Tienes ejercicios para bajar tensión y escuchar la señal.",
+      "Aprendes a avanzar sin exigirte certezas absolutas.",
+      "Identificas qué apoyo necesitas pedir o construir.",
+      "Tu cadera deja de sentirse como bloqueo y se vuelve mapa.",
+      "Das pasos pequeños desde seguridad interna."
+    ]
+  }
+};
+
+SYMPTOM_CONTEXTS['espalda-alta'] = SYMPTOM_CONTEXTS.espalda_alta;
+SYMPTOM_CONTEXTS['ciática'] = SYMPTOM_CONTEXTS.ciatica;
+SYMPTOM_CONTEXTS['cadera'] = SYMPTOM_CONTEXTS.ciatica;
+
+function getPossessiveArea(area: string): string {
+  const pluralAreas = ['hombros', 'rodillas'];
+  return `${pluralAreas.some(prefix => area.startsWith(prefix)) ? 'tus' : 'tu'} ${area}`;
+}
+
+function composeLandingCopy(context: SymptomContext): DynamicLandingCopy {
+  const possessiveArea = getPossessiveArea(context.area);
+
+  return {
+    hero: {
+      title: context.title,
+      subtitle: context.subtitle
+    },
+    identification: {
+      title: `Si llegaste por ${context.area}, respóndete con honestidad:`,
+      questions: context.questions,
+      conclusion: context.promise
+    },
+    pain: {
+      eyebrow: `${possessiveArea} puede estar hablando de ${context.theme}.`,
+      title: `No es solo ${context.signal.split(',')[0]}. Es un mensaje que merece ser escuchado.`,
+      statement: `Esta zona puede guardar ${context.theme}.`,
+      description: `Desde una mirada de autoconocimiento emocional, ${context.signal} no se mira como enemigo, sino como una señal. El sistema te guía para identificar el patrón, escribir lo que aparece y liberar la carga con prácticas simples y seguras.`
+    },
+    benefits: {
+      title: `Con el Sistema vas a trabajar ${possessiveArea} desde la emoción:`,
+      items: [
+        { icon: '📖', title: `Entender el mensaje de ${possessiveArea}`, desc: `Aprende qué puede estar detrás de ${context.signal} sin tecnicismos y sin culparte.` },
+        { icon: '📱', title: 'Consultar tu cuerpo en la App', desc: `Registra ${context.examples}, ubica la zona y recibe una guía emocional para empezar.` },
+        { icon: '🧘‍♀️', title: 'Liberar la carga acumulada', desc: `Meditaciones, tapping y escritura para trabajar ${context.theme} de forma suave.` },
+        { icon: '💫', title: 'Crear una práctica diaria breve', desc: 'Rituales de 5 a 15 minutos para escuchar el cuerpo antes de que tenga que gritar más fuerte.' },
+        { icon: '✨', title: 'Detectar tus patrones repetidos', desc: `Observa cuándo aparece la señal y qué situación emocional la activa.` },
+        { icon: '💖', title: 'Volver a hablarte con amor', desc: 'Afirmaciones y preguntas guiadas para dejar de pelear con tu cuerpo y empezar a colaborar con él.' }
+      ]
+    },
+    analyzer: {
+      title: `¿Qué está intentando decir ${possessiveArea}?`,
+      subtitle: 'Escribe tu sensación y recibe una primera lectura emocional',
+      placeholder: `Ej: ${context.examples}...`
+    },
+    closing: {
+      imagine: `"Imagina entender ${possessiveArea} en 7 días..."`,
+      points: context.closingPoints,
+      reality: 'No se trata de prometer magia. Se trata de darte un método para escuchar tu cuerpo con más claridad y acompañarte mejor.',
+      finalSub: `${possessiveArea} ya habló. Ahora toca escucharlo con amor y dirección.`
+    }
+  };
+}
+
+function getLandingCopy(): DynamicLandingCopy {
   if (typeof window === 'undefined') {
-    return { title: CONTENT.hero.title, subtitle: CONTENT.hero.subtitle };
+    return DEFAULT_DYNAMIC_COPY;
   }
 
   const params = new URLSearchParams(window.location.search);
   const sintoma = params.get('sintoma')?.trim().toLowerCase() || '';
-  return SYMPTOM_HERO_COPY[sintoma] || { title: CONTENT.hero.title, subtitle: CONTENT.hero.subtitle };
+  const context = SYMPTOM_CONTEXTS[sintoma];
+  return context ? composeLandingCopy(context) : DEFAULT_DYNAMIC_COPY;
 }
-
 function trackFbEvent(eventName: string, params?: Record<string, any>) {
   if (typeof window !== 'undefined' && (window as any).fbq) {
     const eventId = generateEventId();
@@ -86,7 +388,7 @@ const Landing: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
-  const heroCopy = getHeroCopy();
+  const landingCopy = getLandingCopy();
 
   useEffect(() => {
     const handleScroll = () => { setShowStickyCta(window.scrollY > 600); };
@@ -165,11 +467,11 @@ const Landing: React.FC = () => {
             </div>
 
             <h1 className="font-display text-[2.35rem] sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white drop-shadow-2xl max-w-3xl mx-auto lg:mx-0">
-              {heroCopy.title}
+              {landingCopy.hero.title}
             </h1>
 
             <p className="text-base sm:text-lg lg:text-xl text-purple-100 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow">
-              {heroCopy.subtitle}
+              {landingCopy.hero.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -229,9 +531,9 @@ const Landing: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 max-w-3xl relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-14 leading-snug">Antes de seguir, respóndete con honestidad:</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-14 leading-snug">{landingCopy.identification.title}</h2>
           <div className="space-y-5 mb-12">
-            {CONTENT.identification.questions.map((q, idx) => (
+            {landingCopy.identification.questions.map((q, idx) => (
               <motion.div 
                 key={idx} 
                 initial={{ opacity: 0, x: -40 }}
@@ -256,7 +558,7 @@ const Landing: React.FC = () => {
             className="gradient-premium text-white rounded-2xl px-10 py-8 text-center shadow-glow hover-lift"
             whileHover={{ scale: 1.02 }}
           >
-            <p className="text-base sm:text-lg font-bold leading-relaxed">{CONTENT.identification.conclusion}</p>
+            <p className="text-base sm:text-lg font-bold leading-relaxed">{landingCopy.identification.conclusion}</p>
           </motion.div>
         </div>
       </section>
@@ -273,11 +575,11 @@ const Landing: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 max-w-3xl text-center space-y-8 relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">No estás exagerando. No estás loca.</h2>
-          <p className="text-2xl text-pink-400 italic font-semibold">Estás ignorando el idioma más importante que existe.</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">{landingCopy.pain.title}</h2>
+          <p className="text-2xl text-pink-400 italic font-semibold">{landingCopy.pain.eyebrow}</p>
           <div className="h-1 w-24 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto"></div>
-          <p className="text-2xl font-bold text-white">Cada síntoma es una emoción que no encontró otra salida.</p>
-          <p className="text-purple-200 leading-relaxed text-lg">La biodescodificación dice que el cuerpo no miente. Ese dolor que aparece, esa contractura que nunca termina de irse...</p>
+          <p className="text-2xl font-bold text-white">{landingCopy.pain.statement}</p>
+          <p className="text-purple-200 leading-relaxed text-lg">{landingCopy.pain.description}</p>
         </div>
       </section>
 
@@ -294,11 +596,11 @@ const Landing: React.FC = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl sm:text-5xl font-bold">Con el Sistema vas a:</h2>
+            <h2 className="text-4xl sm:text-5xl font-bold">{landingCopy.benefits.title}</h2>
             <div className="h-1 w-24 bg-pink-300 mx-auto"></div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-            {CONTENT.benefits.items.map((benefit, idx) => {              const iconMap: Record<string, React.ReactNode> = {
+            {landingCopy.benefits.items.map((benefit, idx) => {              const iconMap: Record<string, React.ReactNode> = {
                 '📖': <BookOpen className="w-8 h-8" />,
                 '📱': <Smartphone className="w-8 h-8" />,
                 '🧘‍♀️': <Moon className="w-8 h-8" />,
@@ -608,8 +910,8 @@ const Landing: React.FC = () => {
               >
                 <Sparkles className="inline-block w-4 h-4 mr-2" />¿Todavía lo dudas? Pruébalo gratis
               </motion.div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">¿Qué te está diciendo tu cuerpo?</h2>
-              <p className="text-purple-200 mt-3 text-sm sm:text-base">Escribe tu síntoma y recibe el mensaje emocional</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white text-gradient-white">{landingCopy.analyzer.title}</h2>
+              <p className="text-purple-200 mt-3 text-sm sm:text-base">{landingCopy.analyzer.subtitle}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
@@ -617,7 +919,7 @@ const Landing: React.FC = () => {
                 type="text"
                 value={symptomInput}
                 onChange={(e) => setSymptomInput(e.target.value)}
-                placeholder="Ej: dolor de espalda, migraña, nudo en la garganta..."
+                placeholder={landingCopy.analyzer.placeholder}
                 className="flex-1 px-6 py-4 rounded-full border-2 border-purple-500/50 focus:border-pink-500 focus:outline-none glass text-white placeholder-purple-300/50 transition"
                 onKeyPress={(e) => e.key === 'Enter' && handleAnalyze()}
               />
@@ -629,7 +931,7 @@ const Landing: React.FC = () => {
                 className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-black hover:shadow-glow transition disabled:opacity-50 btn-premium whitespace-nowrap"
               >
                 {isAnalyzing ? (
-                  <>â³ Analizando...</>
+                  <>Analizando...</>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5" /> Descubrir
@@ -706,9 +1008,9 @@ const Landing: React.FC = () => {
       {/* CLOSING SECTION */}
       <section className="py-24 px-4 relative overflow-hidden gradient-premium">
         <div className="container mx-auto px-6 max-w-3xl text-center relative z-10 space-y-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white italic leading-snug">{CONTENT.closing.imagine}</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white italic leading-snug">{landingCopy.closing.imagine}</h2>
           <div className="space-y-4 text-left">
-            {CONTENT.closing.points.map((point, idx) => (
+            {landingCopy.closing.points.map((point, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, x: -30 }}
@@ -721,10 +1023,10 @@ const Landing: React.FC = () => {
               </motion.div>
             ))}
           </div>
-          <p className="text-white text-lg font-semibold leading-relaxed">{CONTENT.closing.reality}</p>
+          <p className="text-white text-lg font-semibold leading-relaxed">{landingCopy.closing.reality}</p>
           <div className="space-y-6">
             <p className="text-2xl font-black text-white uppercase tracking-wide">{CONTENT.closing.finalCall}</p>
-            <p className="text-purple-100">{CONTENT.closing.finalSub}</p>
+            <p className="text-purple-100">{landingCopy.closing.finalSub}</p>
             <motion.button
               onClick={handlePurchase}
               whileHover={{ scale: 1.08, y: -4 }}
