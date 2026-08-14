@@ -396,9 +396,10 @@ const Landing: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handlePurchase = () => {
+  const checkoutUrl = CONTENT.pricing.paymentUrl;
+
+  const handleCheckoutClick = () => {
     trackFbEvent('InitiateCheckout', { value: 17.97, currency: 'USD' });
-    window.open(CONTENT.pricing.paymentUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleAnalyze = async () => {
@@ -475,14 +476,15 @@ const Landing: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <motion.button 
-                onClick={handlePurchase} 
+              <motion.a 
+                href={checkoutUrl}
+                onClick={handleCheckoutClick} 
                 whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.96 }}
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-pink-400/60 text-white px-8 sm:px-12 py-5 rounded-full font-black text-base sm:text-lg hover-lift transition leading-tight"
+                className="inline-flex items-center justify-center text-center bg-white/20 hover:bg-white/30 backdrop-blur-md border border-pink-400/60 text-white px-8 sm:px-12 py-5 rounded-full font-black text-base sm:text-lg hover-lift transition leading-tight"
               >
                 {CHECKOUT_CTA}
-              </motion.button>
+              </motion.a>
             </div>
 
             <motion.div 
@@ -876,14 +878,15 @@ const Landing: React.FC = () => {
               </div>
 
               <div className="max-w-xl mx-auto space-y-4">
-                <motion.button 
-                  onClick={handlePurchase}
+                <motion.a 
+                href={checkoutUrl}
+                onClick={handleCheckoutClick}
                   whileHover={{ scale: 1.08, y: -4 }}
                   whileTap={{ scale: 0.96 }}
-                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 sm:py-7 px-5 sm:px-6 rounded-2xl text-lg sm:text-2xl font-black leading-tight shadow-glow hover-lift transition"
+                  className="flex w-full items-center justify-center text-center bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 sm:py-7 px-5 sm:px-6 rounded-2xl text-lg sm:text-2xl font-black leading-tight shadow-glow hover-lift transition"
                 >
                   {CHECKOUT_CTA}
-                </motion.button>
+                </motion.a>
                 <p className="text-xs text-purple-300 font-bold uppercase tracking-widest">Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total</p>
               </div>
             </div>
@@ -950,14 +953,15 @@ const Landing: React.FC = () => {
                 <p className="text-white leading-relaxed whitespace-pre-wrap text-sm sm:text-base italic">"{analysis}"</p>
                 <div className="mt-8 text-center">
                   <p className="text-purple-200 text-sm mb-4">Esto es solo una muestra. El sistema completo va mucho más profundo:</p>
-                  <motion.button
-                    onClick={handlePurchase}
+                  <motion.a 
+                href={checkoutUrl}
+                onClick={handleCheckoutClick}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 sm:px-10 py-3 rounded-full font-bold text-xs sm:text-sm leading-tight hover:shadow-glow transition"
+                    className="inline-flex items-center justify-center text-center bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 sm:px-10 py-3 rounded-full font-bold text-xs sm:text-sm leading-tight hover:shadow-glow transition"
                   >
                     {CHECKOUT_CTA}
-                  </motion.button>
+                  </motion.a>
                 </div>
               </motion.div>
             )}
@@ -1027,14 +1031,15 @@ const Landing: React.FC = () => {
           <div className="space-y-6">
             <p className="text-2xl font-black text-white uppercase tracking-wide">{CONTENT.closing.finalCall}</p>
             <p className="text-purple-100">{landingCopy.closing.finalSub}</p>
-            <motion.button
-              onClick={handlePurchase}
+            <motion.a 
+                href={checkoutUrl}
+                onClick={handleCheckoutClick}
               whileHover={{ scale: 1.08, y: -4 }}
               whileTap={{ scale: 0.96 }}
-              className="w-full max-w-xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 px-8 rounded-2xl text-xl font-black shadow-glow hover-lift transition"
+              className="inline-flex w-full max-w-xl items-center justify-center text-center bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white py-6 px-8 rounded-2xl text-xl font-black shadow-glow hover-lift transition"
             >
               {CONTENT.closing.finalCta}
-            </motion.button>
+            </motion.a>
             <p className="text-xs text-purple-200 font-bold uppercase tracking-widest">🛡️ Pago único · Acceso de por vida · Te lleva a Hotmart de forma 100% segura · 7 días de garantía total</p>
           </div>
           <p className="text-purple-100 text-sm leading-relaxed italic max-w-xl mx-auto">{CONTENT.closing.ps}</p>
@@ -1062,14 +1067,15 @@ const Landing: React.FC = () => {
                   <span className="text-2xl font-black text-pink-400">17.97</span>
                 </div>
               </div>
-              <motion.button 
-                onClick={handlePurchase}
+              <motion.a 
+                href={checkoutUrl}
+                onClick={handleCheckoutClick}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.94 }}
-                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-black text-xs shadow-glow transition btn-premium"
+                className="inline-flex items-center justify-center text-center bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-black text-xs shadow-glow transition btn-premium"
               >
                 Acceder
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
         </div>
