@@ -1047,10 +1047,10 @@ const Landing: React.FC = () => {
       </section>
 
       {/* STICKY CTA */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all duration-500 transform pointer-events-none ${showStickyCta ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0'}`}>
+      <div className={`fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all duration-500 transform ${showStickyCta ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0 pointer-events-none'}`}>
         <div className="container mx-auto max-w-3xl">
           <motion.div 
-            className="glass-intense shadow-elevated rounded-2xl p-4 flex items-center justify-between border-2 border-purple-500"
+            className="glass-intense shadow-elevated rounded-2xl p-4 flex items-center justify-between border-2 border-purple-500 pointer-events-auto"
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: showStickyCta ? 0 : 100, opacity: showStickyCta ? 1 : 0 }}
             transition={{ type: "spring", stiffness: 100 }}
@@ -1072,7 +1072,7 @@ const Landing: React.FC = () => {
                 onClick={handleCheckoutClick}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.94 }}
-                className="inline-flex items-center justify-center text-center bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-black text-xs shadow-glow transition btn-premium"
+                className="relative z-10 inline-flex pointer-events-auto items-center justify-center text-center bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-xl font-black text-xs shadow-glow transition"
               >
                 Acceder
               </motion.a>
