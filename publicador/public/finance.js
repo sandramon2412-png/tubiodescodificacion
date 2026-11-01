@@ -1,5 +1,5 @@
 import { state, subscribe, mutate, esc, money, uid, today } from './store.js';
-import { PLATFORMS, EXPENSE_CATEGORIES, DEFAULT_FEES, feeRules, summarize, rangeFor, inventoryStats, financeCsv } from './finance-calc.js';
+import { PLATFORMS, EXPENSE_CATEGORIES, DEFAULT_FEES, feeRules, summarize, rangeFor, inventoryStats, financeCsv, saleQty } from './finance-calc.js';
 
 const $ = (id) => document.getElementById(id);
 let last = null;
@@ -48,7 +48,7 @@ function render() {
 
   $('finSales').innerHTML = s.sales.length
     ? table(['Fecha', 'Artículo', 'Plataforma', 'Precio', 'Comisión', 'Envío', 'Ganancia', ''],
-      s.sales.map((x) => [x.date, x.item.title, PLATFORMS[x.platform] || x.platform, money(x.price), money(x.fees), money(x.shipping), money(x.profit),
+      s.sales.map((x) => [x.date, saleQty(x) > 1 ? `${x.item.title} ×${saleQty(x)}` : x.item.title, PLATFORMS[x.platform] || x.platform, money(x.price), money(x.fees), money(x.shipping), money(x.profit),
         { html: `<button type="button" class="ghost small" data-undo="${esc(x.id)}" data-item="${esc(x.item.id)}">Deshacer</button>` }]))
     : '<p class="hint">Marca un artículo como «Vendido» en Inventario para verlo aquí.</p>';
 
@@ -95,8 +95,11 @@ function onSalesClick(e) {
   mutate((db) => {
     const it = db.items.find((x) => x.id === item);
     if (!it) return;
+    const sale = it.sales.find((s) => s.id === undo);
+    if (!sale) return;
     it.sales = it.sales.filter((s) => s.id !== undo);
-    it.quantity += 1;
+    it.quantity += saleQty(sale);
+    if (sale.externalId) db.settings.ebayIgnored = [...(db.settings.ebayIgnored || []), sale.externalId];
     if (it.status === 'vendido') it.status = 'disponible';
   });
 }

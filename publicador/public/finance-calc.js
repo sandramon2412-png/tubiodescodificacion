@@ -30,8 +30,9 @@ export function estimateFee(platform, price, rules = DEFAULT_FEES) {
 }
 
 /** Ganancia neta de una venta concreta. */
+export const saleQty = (sale) => Math.max(1, Number(sale.quantity) || 1);
 export const saleProfit = (sale, unitCost) =>
-  round2((Number(sale.price) || 0) - (Number(sale.fees) || 0) - (Number(sale.shipping) || 0) - (Number(unitCost) || 0));
+  round2((Number(sale.price) || 0) - (Number(sale.fees) || 0) - (Number(sale.shipping) || 0) - (Number(unitCost) || 0) * saleQty(sale));
 
 const inRange = (date, { from, to } = {}) => (!from || date >= from) && (!to || date <= to);
 
@@ -64,7 +65,7 @@ export function summarize(db, range = {}) {
   const revenue = sum(sales, (s) => s.price);
   const fees = sum(sales, (s) => s.fees);
   const shipping = sum(sales, (s) => s.shipping);
-  const cogs = sum(sales, (s) => s.item.cost);
+  const cogs = sum(sales, (s) => (Number(s.item.cost) || 0) * saleQty(s));
   const otherExpenses = sum(expenses, (e) => e.amount);
   const profit = round2(revenue - fees - shipping - cogs - otherExpenses);
 
@@ -119,9 +120,9 @@ export function rangeFor(key, today = new Date()) {
   }
 }
 
-/** Registra la venta de 1 unidad. Devuelve el artículo actualizado (no muta el original). */
+/** Registra una venta (1 unidad o sale.quantity). Devuelve el artículo actualizado (no muta el original). */
 export function applySale(item, sale) {
-  const quantity = Math.max(0, (item.quantity || 0) - 1);
+  const quantity = Math.max(0, (item.quantity || 0) - saleQty(sale));
   return {
     ...item,
     quantity,
@@ -139,10 +140,53 @@ export const toCsv = (rows) => rows.map((r) => r.map(csvCell).join(',')).join('\
 export function financeCsv(summary) {
   const rows = [['Tipo', 'Fecha', 'Concepto', 'Plataforma/Categoría', 'Ingreso', 'Comisión', 'Envío', 'Costo', 'Ganancia']];
   for (const s of summary.sales) {
-    rows.push(['Venta', s.date, s.item.title, PLATFORMS[s.platform] || s.platform, s.price, s.fees, s.shipping, s.item.cost || 0, s.profit]);
+    rows.push(['Venta', s.date, s.item.title, PLATFORMS[s.platform] || s.platform, s.price, s.fees, s.shipping, round2((s.item.cost || 0) * saleQty(s)), s.profit]);
   }
   for (const e of summary.expenses) {
     rows.push(['Gasto', e.date, e.concept, e.category, 0, 0, 0, e.amount, -e.amount]);
   }
   return toCsv(rows);
+}
+
+/**
+ * Mete en el inventario las ventas importadas de eBay (ver lib/ebay.js → orderLines).
+ * Muta db. Cada venta se registra una sola vez (externalId). Si el anuncio no está en el
+ * inventario, crea un artículo nuevo marcado para que añadas el costo.
+ * Devuelve { added, created, remind } — remind = artículos agotados que siguen publicados en otra plataforma.
+ */
+export function mergeEbaySales(db, lines, newId, now = new Date().toISOString()) {
+  const seen = new Set([
+    ...db.items.flatMap((i) => (i.sales || []).map((x) => x.externalId).filter(Boolean)),
+    ...(db.settings?.ebayIgnored || []), // ventas que deshiciste a mano: no se vuelven a importar
+  ]);
+  const result = { added: 0, created: 0, remind: [] };
+  for (const line of lines) {
+    if (seen.has(line.externalId)) continue;
+    seen.add(line.externalId);
+    let item = db.items.find((i) =>
+      (line.sku && i.listings?.ebay?.sku === line.sku) ||
+      (line.listingId && String(i.listings?.ebay?.listingId) === String(line.listingId)));
+    if (!item) {
+      item = {
+        id: newId(), createdAt: now, title: line.title || 'Venta de eBay', status: 'disponible',
+        quantity: line.quantity, cost: 0, price: round2(line.price / line.quantity), images: [],
+        notes: 'Importado de eBay: añade lo que te costó.', needsCost: true,
+        listings: { ebay: { status: 'publicado', listingId: line.listingId, sku: line.sku } }, sales: [],
+      };
+      db.items.push(item);
+      result.created += 1;
+    }
+    const updated = applySale(item, {
+      id: newId(), externalId: line.externalId, platform: 'ebay', date: line.date,
+      quantity: line.quantity, price: line.price, fees: line.fees, shipping: 0,
+    });
+    if (updated.quantity === 0 && updated.listings?.ebay) {
+      updated.listings = { ...updated.listings, ebay: { ...updated.listings.ebay, status: 'vendido' } };
+      const others = Object.entries(updated.listings).filter(([p, l]) => p !== 'ebay' && l.status === 'publicado').map(([p]) => PLATFORMS[p] || p);
+      if (others.length) result.remind.push({ title: updated.title, platforms: others });
+    }
+    Object.assign(item, updated);
+    result.added += 1;
+  }
+  return result;
 }

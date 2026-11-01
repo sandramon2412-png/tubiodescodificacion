@@ -66,6 +66,7 @@ function card(i) {
         <span class="badge ${esc(i.status)}">${STATUS_LABEL[i.status] || esc(i.status)}</span>
       </div>
       <p class="meta">${[i.brand, i.size && `Talla ${i.size}`, i.location && `📦 ${i.location}`, i.sku].filter(Boolean).map(esc).join(' · ')}</p>
+      ${i.needsCost && !i.cost ? '<p class="meta err">⚠ Importado de eBay: pulsa Editar y añade lo que te costó.</p>' : ''}
       <p class="meta">Costo ${money(i.cost)} · Precio ${money(i.price)} · Quedan ${i.quantity}${sold ? ` · Vendidas ${sold}` : ''}</p>
       <div class="chips">${chips}</div>
       <div class="row wrap actions">
@@ -120,7 +121,7 @@ function saveItem(e) {
   const data = { ...v, cost: Number(v.cost) || 0, price: Number(v.price) || 0, quantity: Math.max(0, parseInt(v.quantity, 10) || 0) };
   mutate((db) => {
     const existing = db.items.find((x) => x.id === id);
-    if (existing) Object.assign(existing, data);
+    if (existing) Object.assign(existing, data, data.cost ? { needsCost: false } : {});
     else db.items.push(newItem(data));
   });
   $('itemDialog').close();

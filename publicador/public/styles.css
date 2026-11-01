@@ -93,3 +93,6 @@ label.inline { max-width: 120px; }
 dialog { border: 1px solid var(--line); border-radius: 16px; padding: 18px; width: min(560px, calc(100vw - 32px)); background: var(--card); color: var(--ink); }
 dialog::backdrop { background: rgb(0 0 0 / .45); }
 dialog .row { margin-top: 8px; }
+
+.notice { margin: 0 0 16px; padding: 10px 14px; border-radius: 12px; background: var(--soft); font-size: .9rem; }
+.notice.ok { color: var(--ok); } .notice.err { color: var(--err); }

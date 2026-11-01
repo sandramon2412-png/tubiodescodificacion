@@ -2,6 +2,7 @@ import { CONDITIONS, forPoshmark, forDepop, asCopyText } from './formatters.js';
 import { initStore, load, mutate, findItem } from './store.js';
 import { initInventory, newItem } from './inventory.js';
 import { initFinance } from './finance.js';
+import { syncEbay } from './ebay-sync.js';
 
 const $ = (id) => document.getElementById(id);
 const store = {
@@ -68,8 +69,10 @@ function showApp() {
     initInventory({ api, loadIntoForm });
     initFinance();
     restoreDraft();
+    document.querySelectorAll('.ebaySync').forEach((b) => b.addEventListener('click', () => syncEbay(api)));
   }
-  load();
+  document.querySelectorAll('.ebaySync').forEach((b) => { b.hidden = !config.ebay.ready; });
+  load().then(() => { if (config.ebay.ready) syncEbay(api, { silent: true }); });
 }
 
 // ── Pestañas ──────────────────────────────────────────────

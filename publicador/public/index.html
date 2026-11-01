@@ -31,6 +31,8 @@
       <button type="button" role="tab" data-tab="finanzas">Finanzas</button>
     </nav>
 
+    <p id="notice" class="notice" hidden></p>
+
     <div id="tab-publicar" class="tab">
     <section class="card status" id="status"></section>
     <section class="card" id="setup" hidden></section>
@@ -113,6 +115,7 @@
             <option value="todos">Todos</option>
           </select>
           <button type="button" id="invAdd">+ Añadir</button>
+          <button type="button" class="ghost ebaySync" hidden>Importar ventas de eBay</button>
         </div>
         <p class="hint">Toca la etiqueta de Poshmark o Depop para cambiar su estado (pendiente → publicado → retirado).</p>
       </section>
@@ -129,6 +132,7 @@
             <option value="all">Todo</option>
           </select>
           <button type="button" class="ghost" id="finExport">Descargar CSV</button>
+          <button type="button" class="ghost ebaySync" hidden>Importar ventas de eBay</button>
         </div>
         <div class="kpis" id="finKpis"></div>
         <p class="hint">Ganancia neta = ventas − comisiones − envíos − costo de lo vendido − otros gastos. Las compras de mercancía se cuentan con el «costo» de cada artículo, no las apuntes también como gasto.</p>

@@ -13,6 +13,9 @@ Además tiene dos pestañas más:
 - **Inventario**: todos tus artículos con costo, precio, unidades, ubicación (caja/estante) y el estado en cada plataforma.
   Al marcar **Vendido**, descuenta la unidad, estima la comisión y, si era la última, **retira el anuncio de eBay automáticamente**
   y te recuerda borrar el de Poshmark/Depop para no venderlo dos veces.
+- **Ventas de eBay automáticas**: al abrir la app (o con el botón «Importar ventas de eBay») se traen tus pedidos pagados de eBay
+  con la **comisión real** que cobró eBay. Se apuntan una sola vez; si el anuncio no estaba en tu inventario, se crea el artículo
+  y te avisa para que añadas lo que te costó. El precio incluye el envío que pagó el comprador: anota en la venta lo que pagaste por la etiqueta.
 - **Finanzas**: ingresos, comisiones, envíos, costo de lo vendido, otros gastos y **ganancia neta** (por mes, por plataforma y total),
   valor del inventario, registro de gastos y descarga en **CSV** (Excel / Google Sheets). Las comisiones son estimaciones editables.
 
@@ -42,6 +45,9 @@ Las fotos se reducen a 1600 px en el móvil antes de subirse.
 6. Activa las **Business policies** en Seller Hub (envío, pago, devoluciones) si no lo están.
 7. En la app pulsa **Ver mis IDs de eBay**: te muestra los IDs de tus políticas y te deja crear la ubicación de envío. Copia
    `EBAY_FULFILLMENT_POLICY_ID`, `EBAY_PAYMENT_POLICY_ID`, `EBAY_RETURN_POLICY_ID` y `EBAY_MERCHANT_LOCATION_KEY`. Redeploy.
+
+> **¿Conectaste eBay antes de que existiera la importación de ventas?** Pulsa **Reconectar eBay** y sustituye `EBAY_REFRESH_TOKEN`
+> por el nuevo (incluye el permiso de solo lectura de pedidos). Mientras tanto, publicar sigue funcionando.
 
 Cuando la etiqueta diga **eBay listo**, ya publica automáticamente. Todas las variables están en [`.env.example`](.env.example).
 

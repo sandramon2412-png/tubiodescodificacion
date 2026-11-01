@@ -6,11 +6,15 @@ const HOSTS = {
   sandbox: { api: 'https://api.sandbox.ebay.com', auth: 'https://auth.sandbox.ebay.com', web: 'https://sandbox.ebay.com' },
 };
 
+// Permisos para publicar. Las ventas (fulfillment) se piden aparte para que un token
+// antiguo, conectado sin ese permiso, siga pudiendo publicar.
 export const SCOPES = [
   'https://api.ebay.com/oauth/api_scope',
   'https://api.ebay.com/oauth/api_scope/sell.inventory',
   'https://api.ebay.com/oauth/api_scope/sell.account',
 ];
+export const ORDERS_SCOPE = 'https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly';
+const CONSENT_SCOPES = [...SCOPES, ORDERS_SCOPE];
 
 // Mapeo de las condiciones de la app a los enums de eBay.
 export const CONDITION_MAP = {
@@ -48,7 +52,7 @@ export function consentUrl(state) {
   u.searchParams.set('client_id', process.env.EBAY_CLIENT_ID);
   u.searchParams.set('response_type', 'code');
   u.searchParams.set('redirect_uri', process.env.EBAY_RUNAME);
-  u.searchParams.set('scope', SCOPES.join(' '));
+  u.searchParams.set('scope', CONSENT_SCOPES.join(' '));
   u.searchParams.set('state', state);
   return u.toString();
 }
@@ -68,7 +72,7 @@ export const exchangeCode = (code) =>
   tokenRequest({ grant_type: 'authorization_code', code, redirect_uri: process.env.EBAY_RUNAME });
 
 // Caché en memoria mientras la función siga "caliente".
-const cache = { user: null, app: null };
+const cache = {};
 
 async function cachedToken(slot, params) {
   const now = Date.now();
@@ -78,11 +82,11 @@ async function cachedToken(slot, params) {
   return data.access_token;
 }
 
-export const userToken = () =>
-  cachedToken('user', {
+export const userToken = (scopes = SCOPES) =>
+  cachedToken(`user:${scopes.join(' ')}`, {
     grant_type: 'refresh_token',
     refresh_token: process.env.EBAY_REFRESH_TOKEN,
-    scope: SCOPES.join(' '),
+    scope: scopes.join(' '),
   });
 
 export const appToken = () =>
@@ -267,4 +271,58 @@ export async function createLocation({ key, name, postalCode, country }) {
 export async function withdrawOffer(offerId) {
   const token = await userToken();
   return call('POST', `/sell/inventory/v1/offer/${encodeURIComponent(offerId)}/withdraw`, { token });
+}
+
+const money = (m) => Number(m?.value) || 0;
+
+/**
+ * Ventas de eBay desde una fecha (ISO). Devuelve una línea por artículo vendido, ya
+ * normalizada: { externalId, orderId, date, sku, listingId, title, quantity, price, fees }.
+ * price = lo que pagó el comprador por el artículo + su parte del envío.
+ * fees = parte proporcional de la comisión real de eBay (totalMarketplaceFee).
+ * Se omiten pedidos cancelados, sin pagar o reembolsados por completo.
+ */
+export async function fetchSales(sinceIso) {
+  let token;
+  try {
+    token = await userToken([SCOPES[0], ORDERS_SCOPE]);
+  } catch (e) {
+    const err = new Error('Tu conexión con eBay no tiene permiso para leer ventas. Pulsa «Reconectar eBay» y actualiza EBAY_REFRESH_TOKEN.');
+    err.status = 403;
+    err.needsReconnect = true;
+    throw err;
+  }
+  const filter = `creationdate:[${sinceIso}..]`;
+  const lines = [];
+  for (let offset = 0; offset < 5000; offset += 200) {
+    const page = await call('GET', `/sell/fulfillment/v1/order?limit=200&offset=${offset}&filter=${encodeURIComponent(filter)}`, { token });
+    for (const o of page.orders || []) lines.push(...orderLines(o));
+    if (!page.next || !(page.orders || []).length) break;
+  }
+  return lines;
+}
+
+export function orderLines(o) {
+  if (o.cancelStatus?.cancelState === 'CANCELED') return [];
+  if (!['PAID', 'PARTIALLY_REFUNDED'].includes(o.orderPaymentStatus)) return [];
+  const items = o.lineItems || [];
+  const subtotal = items.reduce((s, li) => s + money(li.lineItemCost), 0);
+  const delivery = money(o.pricingSummary?.deliveryCost) - money(o.pricingSummary?.deliveryDiscount);
+  const fee = money(o.totalMarketplaceFee);
+  const round = (n) => Math.round(n * 100) / 100;
+  return items.map((li) => {
+    const share = subtotal ? money(li.lineItemCost) / subtotal : 1 / items.length;
+    return {
+      externalId: `ebay:${o.orderId}:${li.lineItemId}`,
+      orderId: o.orderId,
+      date: String(o.creationDate || '').slice(0, 10),
+      sku: li.sku || '',
+      listingId: li.legacyItemId || '',
+      title: li.title || '',
+      quantity: Number(li.quantity) || 1,
+      price: round(money(li.lineItemCost) + delivery * share),
+      fees: round(fee * share),
+      feesExact: o.totalMarketplaceFee != null,
+    };
+  });
 }
