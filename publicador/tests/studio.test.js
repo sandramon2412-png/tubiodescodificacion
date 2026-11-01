@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildEditUrl, STYLES } from '../lib/photo.js';
+import { buildEditUrl, resolveLook, STYLES } from '../lib/photo.js';
 import { cleanListing, buildSystemPrompt } from '../lib/ai.js';
 import { priceStats } from '../lib/ebay.js';
 
@@ -9,7 +9,7 @@ const q = (u) => new URL(u).searchParams;
 test('Photoroom: fondo vintage con prompt, semilla, sombra y arrugas', () => {
   const p = q(buildEditUrl({ imageUrl: 'https://b/x.jpg', style: 'boutique', iron: true, seed: 42 }));
   assert.equal(p.get('imageUrl'), 'https://b/x.jpg');
-  assert.equal(p.get('background.prompt'), STYLES.boutique.prompt);
+  assert.equal(p.get('background.prompt'), STYLES.boutique.backdrop);
   assert.equal(p.get('background.seed'), '42');
   assert.equal(p.get('ironing.mode'), 'ai.auto');
   assert.equal(p.get('shadow.mode'), 'ai.auto-with-overrides');
@@ -29,6 +29,10 @@ test('IA: limpia título, palabras clave y precio', () => {
   assert.ok(l.title.length <= 80 && !l.title.endsWith(' '));
   assert.deepEqual(l.keywords, ['Boho', 'midi']);
   assert.equal(l.suggestedPrice, 25);
+  const odd = cleanListing({ title: 'x', keywords: [], suggestedPrice: 1, condition: 'mint', look: { modelScene: 'moon' }, detailPhotoIndexes: [1, -1, 2.5] });
+  assert.equal(odd.condition, 'good');
+  assert.equal(odd.look.modelScene, 'goldenlight');
+  assert.deepEqual(odd.detailPhotoIndexes, [1]);
 });
 
 test('IA: el idioma del anuncio llega al prompt', () => {
@@ -50,4 +54,42 @@ test('lote: agrupa por hora y detecta horas inútiles', async () => {
   const same = groupByTime([t(5), t(5), t(5)]);
   assert.equal(same.usable, false);
   assert.deepEqual(same.items.map((p) => p.startsGroup), [true, false, false]);
+});
+
+const boho = { backdrop: 'boho room', hanger: 'an old wooden door', flatlay: 'a persian rug with a straw hat', modelScene: 'countryside', modelVibe: 'boho festival' };
+
+test('look: en automático manda la IA; con estilo fijo manda el estilo', () => {
+  assert.equal(resolveLook('auto', boho).hanger, 'an old wooden door');
+  assert.equal(resolveLook('deportivo', boho).hanger, STYLES.deportivo.hanger);
+  assert.equal(resolveLook('auto', null).hanger, STYLES.boutique.hanger, 'sin IA usa boutique');
+  assert.equal(resolveLook('auto', { ...boho, modelScene: 'luna' }).modelScene, STYLES.boutique.modelScene, 'escena inválida');
+  assert.equal(resolveLook('personalizado', boho).flatlay, boho.flatlay, 'personalizado toma las escenas de la IA');
+});
+
+test('Photoroom: colgada en gancho con Edit With AI', () => {
+  const p = q(buildEditUrl({ imageUrl: 'https://b/x.jpg', kind: 'hanger', style: 'auto', look: boho }));
+  assert.equal(p.get('editWithAI.mode'), 'ai.auto');
+  assert.match(p.get('editWithAI.prompt'), /wooden clothes hanger against an old wooden door/);
+  assert.match(p.get('editWithAI.prompt'), /exactly as it is/);
+  assert.equal(p.get('removeBackground'), 'false');
+  assert.equal(p.get('background.prompt'), null);
+});
+
+test('Photoroom: en el piso con accesorios (Flat Lay)', () => {
+  const p = q(buildEditUrl({ imageUrl: 'https://b/x.jpg', kind: 'flatlay', style: 'auto', look: boho }));
+  assert.equal(p.get('flatLay.mode'), 'ai.auto');
+  assert.match(p.get('flatLay.prompt'), /persian rug with a straw hat/);
+  assert.equal(p.get('flatLay.size'), 'SQUARE_HD');
+});
+
+test('Photoroom: en modelo (Virtual Model) con escena según el estilo', () => {
+  const p = q(buildEditUrl({ imageUrl: 'https://b/x.jpg', kind: 'model', style: 'auto', look: boho, modelName: 'maya' }));
+  assert.equal(p.get('virtualModel.mode'), 'ai.auto');
+  assert.equal(p.get('virtualModel.model.preset.name'), 'maya');
+  assert.equal(p.get('virtualModel.scene.preset.name'), 'countryside');
+  assert.equal(p.get('virtualModel.prompt'), 'boho festival');
+  assert.equal(p.get('referenceBox'), 'originalImage');
+  const bad = q(buildEditUrl({ imageUrl: 'https://b/x.jpg', kind: 'model', style: 'deportivo', modelName: 'nadie' }));
+  assert.equal(bad.get('virtualModel.model.preset.name'), 'avery');
+  assert.equal(bad.get('virtualModel.scene.preset.name'), 'concretestudio');
 });

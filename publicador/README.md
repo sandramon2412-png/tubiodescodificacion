@@ -20,8 +20,12 @@ Además tiene dos pestañas más:
   valor del inventario, registro de gastos y descarga en **CSV** (Excel / Google Sheets). Las comisiones son estimaciones editables.
 
 - **Estudio con IA** (opcional):
-  - **Fotos**: quita el fondo y pone uno **vintage de boutique** generado con IA (o tu propia foto de fondo, o blanco limpio para eBay),
-    con sombra realista, luz mejorada sin cambiar el color de la prenda y **sin arrugas**. Todas las fotos de un artículo comparten estilo.
+  - **Fotos**: de tu primera foto crea tres presentaciones: **🪝 colgada en gancho** (p. ej. sobre una puerta de madera vieja),
+    **👒 en el piso con accesorios** (vista desde arriba) y **💃 puesta en una modelo** (16 modelos a elegir). Además pone fondo nuevo a tus
+    fotos reales, con sombra, luz que no cambia el color de la prenda y **sin arrugas**; las fotos de etiqueta o detalle se dejan tal cual.
+    En modo **✨ Automático** la IA detecta el estilo de la prenda (boho, deportiva, urbana, elegante…) y elige escena y accesorios a juego;
+    también puedes fijar un estilo (Boutique vintage, Bohemio, Deportivo, Urbano, Elegante, Floral, Blanco) o usar tu propio fondo.
+    Si hay foto con accesorios, el anuncio aclara que no se incluyen.
   - **Textos**: mira las fotos (y la etiqueta) y escribe título con SEO (80 caracteres, palabras que más se buscan primero), descripción,
     marca, talla, material, condición, palabras clave/hashtags, características de eBay, categoría y **precio sugerido** con
     referencia de anuncios parecidos en eBay. Te dice qué revisar (medidas, etiqueta ilegible…). En inglés o español.
@@ -49,6 +53,9 @@ Las fotos se reducen a 1600 px en el móvil antes de subirse.
    y pon la clave en `PHOTOROOM_API_KEY`. Cada foto editada gasta un crédito; mira sus precios actuales en su web.
    Para probar gratis, usa su clave de **sandbox** (empieza por `sandbox_`): funciona igual pero con marca de agua.
 3. Redeploy.
+
+> **Importante:** las fotos en gancho, en el piso y en modelo las genera la IA. Revisa siempre que la prenda se vea igual que la real
+> (color, estampado, largo, botones) y deja al menos una foto real en el anuncio: así evitas devoluciones por «no es como en la foto».
 
 Consejos para mejores resultados: fotografía la prenda entera sobre una superficie lisa con buena luz, y añade **una foto de la etiqueta**
 (marca, talla, material). Para eBay, la primera foto en **Blanco limpio** suele funcionar mejor en las búsquedas.

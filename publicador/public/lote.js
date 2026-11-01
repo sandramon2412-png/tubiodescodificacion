@@ -1,7 +1,7 @@
 // Pestaña "Lote": sube muchas fotos, agrúpalas por artículo y deja que la app
 // edite las fotos y escriba cada anuncio. Cada artículo queda como "borrador" en Inventario.
 import { mutate, esc, findItem } from './store.js';
-import { uploadImage, editImages, describe, listingToFields, newSeed } from './studio-api.js';
+import { uploadImage, runStudio, listingToFields } from './studio-api.js';
 import { newItem } from './inventory.js';
 
 const $ = (id) => document.getElementById(id);
@@ -23,6 +23,9 @@ export function studioOptions() {
     backgroundUrl: $('stBgUrl').value,
     iron: $('stIron').checked,
     language: $('stLang').value,
+    kinds: [...document.querySelectorAll('[data-kind]:checked')].map((c) => c.dataset.kind),
+    modelName: $('stModel').value,
+    aiAvailable: Boolean(deps?.config.ai),
   };
 }
 
@@ -32,14 +35,21 @@ export function initLote(d) {
   sel.add(new Option('Sin editar (solo la IA escribe)', ''));
   for (const [k, label] of Object.entries(d.config.styles || {})) sel.add(new Option(label, k));
   const saved = opt.get();
-  sel.value = saved.style ?? (d.config.photos ? 'boutique' : '');
+  sel.value = saved.style ?? (d.config.photos ? (d.config.ai ? 'auto' : 'boutique') : '');
+  if (!d.config.ai) sel.querySelector('option[value="auto"]')?.remove();
+  for (const m of d.config.models || []) $('stModel').add(new Option(m[0].toUpperCase() + m.slice(1), m));
+  $('stModel').value = saved.modelName || 'avery';
+  const kinds = saved.kinds || ['hanger', 'flatlay', 'model', 'background'];
+  document.querySelectorAll('[data-kind]').forEach((c) => { c.checked = kinds.includes(c.dataset.kind); });
   $('stPrompt').value = saved.prompt || '';
   $('stBgUrl').value = saved.backgroundUrl || '';
   $('stIron').checked = saved.iron ?? true;
   $('stLang').value = saved.language || 'en';
   if (!d.config.photos) { sel.value = ''; sel.disabled = true; }
   syncStudioUi();
-  for (const id of ['stStyle', 'stPrompt', 'stIron', 'stLang']) $(id).addEventListener('change', () => { opt.set(studioOptions()); syncStudioUi(); });
+  const save = () => { opt.set(studioOptions()); syncStudioUi(); };
+  for (const id of ['stStyle', 'stPrompt', 'stIron', 'stLang', 'stModel']) $(id).addEventListener('change', save);
+  document.querySelectorAll('[data-kind]').forEach((c) => c.addEventListener('change', save));
 
   $('stBgFile').addEventListener('change', async (e) => {
     const file = e.target.files[0];
@@ -71,6 +81,8 @@ function syncStudioUi() {
   const style = $('stStyle').value;
   $('stPromptWrap').hidden = style !== 'personalizado';
   $('stBgWrap').hidden = style !== 'propio';
+  $('stModelWrap').hidden = !document.querySelector('[data-kind="model"]').checked;
+  $('stKinds').hidden = !style;
   const bg = $('stBgUrl').value;
   $('stBgPreview').innerHTML = bg ? `<img src="${esc(bg)}" alt="Tu fondo">` : 'Aún no has subido tu fondo.';
 }
@@ -147,13 +159,14 @@ const setStatus = (g, text, cls = '') => {
 async function run() {
   const gs = groups();
   const o = studioOptions();
-  const edit = Boolean(o.style) && deps.config.photos;
+  const edit = Boolean(o.style) && deps.config.photos && o.kinds.length > 0;
   const write = deps.config.ai;
   if (!edit && !write) return alert('Configura ANTHROPIC_API_KEY y/o PHOTOROOM_API_KEY en Vercel para usar el estudio.');
   if (o.style === 'propio' && !o.backgroundUrl) return alert('Sube primero la foto de tu fondo.');
-  const nPhotos = gs.reduce((s, g) => s + g.photos.length, 0);
-  const plan = [edit && `editar ${nPhotos} foto(s)`, write && `escribir ${gs.length} anuncio(s) con IA`].filter(Boolean).join(' y ');
-  if (!confirm(`Voy a ${plan}. Cada foto editada gasta un crédito de Photoroom. ¿Continuar?`)) return;
+  const scenes = o.kinds.filter((k) => k !== 'background').length;
+  const nPhotos = gs.reduce((s, g) => s + scenes + (o.kinds.includes('background') ? g.photos.length : 0), 0);
+  const plan = [edit && `crear hasta ${nPhotos} foto(s)`, write && `escribir ${gs.length} anuncio(s) con IA`].filter(Boolean).join(' y ');
+  if (!confirm(`Voy a ${plan}. Cada foto creada gasta créditos de Photoroom. ¿Continuar?`)) return;
 
   running = true;
   $('loteRun').disabled = true;
@@ -164,13 +177,12 @@ async function run() {
       const urls = [];
       for (const p of g.photos) urls.push(await uploadImage(deps.api, p.file));
 
-      setStatus(g, [edit && 'Editando fotos', write && 'escribiendo anuncio'].filter(Boolean).join(' y ') + '…');
-      const [edited, ai] = await Promise.all([
-        edit ? editImages(deps.api, urls, { ...o, seed: newSeed() }) : Promise.resolve(urls),
-        write ? describe(deps.api, urls, photos[g.start].notes, o.language) : Promise.resolve(null),
-      ]);
-      const fields = ai ? listingToFields(ai) : {};
-      const failedEdits = edited.filter((u) => !u).length;
+      const r = await runStudio(deps.api, {
+        urls, notes: photos[g.start].notes, opts: edit ? o : { ...o, kinds: [] }, write,
+        onProgress: (t) => setStatus(g, t),
+      });
+      const fields = r.ai ? listingToFields(r.ai, { usedFlatlay: r.usedFlatlay, language: o.language }) : {};
+      const failedEdits = r.failures.length;
       const { categories, catSearch, ...data } = fields;
       let id;
       mutate((db) => {
@@ -179,10 +191,10 @@ async function run() {
           ...data,
           price: Number(data.price) || 0,
           notes: photos[g.start].notes,
-          images: edited.map((u, i) => u || urls[i]),
+          images: r.images,
           originalImages: urls,
           status: 'borrador',
-          aiNotes: [data.aiNotes, failedEdits && `⚠ ${failedEdits} foto(s) no se pudieron editar y quedan como originales.`].filter(Boolean).join('\n'),
+          aiNotes: [data.aiNotes, failedEdits && `⚠ ${failedEdits} foto(s) no se pudieron crear.`, edit && '👀 Revisa que la prenda se vea igual que la real en las fotos creadas con IA.'].filter(Boolean).join('\n'),
         });
         id = item.id;
         db.items.push(item);

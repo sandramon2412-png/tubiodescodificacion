@@ -53,7 +53,7 @@
         <legend>✨ Estudio con IA</legend>
         <div id="studioSlot-publicar"></div>
         <div class="row wrap">
-          <button type="button" id="editPhotosBtn">🎨 Editar fotos</button>
+          <button type="button" id="editPhotosBtn">🎨 Crear fotos</button>
           <button type="button" id="undoEditBtn" class="ghost" hidden>Volver a las originales</button>
         </div>
         <label>Notas para la IA <small>(opcional: talla, medidas, defectos que no se vean…)</small>
@@ -212,7 +212,16 @@
       <div id="stBgPreview" class="bgPreview"></div>
       <input type="hidden" id="stBgUrl">
     </div>
-    <label class="check"><input type="checkbox" id="stIron" checked> Quitar arrugas de la ropa</label>
+    <fieldset id="stKinds" class="kinds">
+      <legend>Fotos a crear</legend>
+      <label class="check"><input type="checkbox" data-kind="hanger"> 🪝 Colgada en gancho</label>
+      <label class="check"><input type="checkbox" data-kind="flatlay"> 👒 En el piso con accesorios</label>
+      <label class="check"><input type="checkbox" data-kind="model"> 💃 Puesta en una modelo</label>
+      <label class="check"><input type="checkbox" data-kind="background"> 🖼 Mis fotos con fondo nuevo</label>
+    </fieldset>
+    <label id="stModelWrap">Modelo virtual<select id="stModel"></select></label>
+    <label class="check"><input type="checkbox" id="stIron" checked> Quitar arrugas (en mis fotos)</label>
+    <p class="hint">Las fotos de gancho, piso y modelo se crean con IA a partir de tu primera foto. Revisa siempre que la prenda se vea igual que la real.</p>
   </div>
   </div>
 

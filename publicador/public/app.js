@@ -3,7 +3,7 @@ import { initStore, load, mutate, findItem } from './store.js';
 import { initInventory, newItem } from './inventory.js';
 import { initFinance } from './finance.js';
 import { syncEbay } from './ebay-sync.js';
-import { uploadImage, editImages, describe, listingToFields, newSeed } from './studio-api.js';
+import { uploadImage, runStudio, describe, listingToFields, PROPS_NOTE } from './studio-api.js';
 import { initLote, studioOptions } from './lote.js';
 
 const $ = (id) => document.getElementById(id);
@@ -197,33 +197,52 @@ const allImages = () => [
   ...$('photoUrls').value.split('\n').map((s) => s.trim()).filter((s) => /^https:\/\//.test(s)),
 ];
 
-/** Fija las fotos del formulario; originals[i] es la foto sin editar de uploaded[i]. */
+/** Fija las fotos del formulario. originals = las fotos reales (sin editar) que lee la IA. */
 function setPhotos(images = [], orig = []) {
   uploaded.splice(0, uploaded.length, ...images);
-  originals.splice(0, originals.length, ...images.map((u, i) => orig[i] || u));
+  originals.splice(0, originals.length, ...(orig.length ? orig : images));
 }
 
 // ── Asistente: fotos e IA ─────────────────────────────────
+let lastAi = null; // última respuesta de la IA para este artículo (su "look" sirve para las fotos)
+
+function showComps(result) {
+  if (result?.comps?.count) {
+    $('aiNotes').textContent += `\n📊 eBay: ${result.comps.count} anuncios parecidos entre ${result.comps.low} y ${result.comps.high} (mediana ${result.comps.median}).`;
+  }
+}
+
 $('editPhotosBtn').addEventListener('click', async () => {
-  if (!uploaded.length) return alert('Sube primero tus fotos.');
-  const opts = { ...studioOptions(), seed: newSeed() };
+  if (!originals.length) return alert('Sube primero tus fotos.');
+  const opts = studioOptions();
+  if (!opts.style) return alert('Elige un fondo para las fotos.');
+  if (!opts.kinds.length) return alert('Marca al menos un tipo de foto (gancho, piso, modelo o fondo nuevo).');
   const btn = $('editPhotosBtn');
   btn.disabled = true;
-  let done = 0;
-  btn.textContent = `Editando 0/${originals.length}…`;
-  const errors = [];
-  const edited = await editImages(api, [...originals], opts, (i, url, err) => {
-    done += 1;
-    btn.textContent = `Editando ${done}/${originals.length}…`;
-    if (err) errors.push(err.message);
-  });
-  edited.forEach((url, i) => { if (url) uploaded[i] = url; });
-  renderThumbs();
-  btn.disabled = false;
-  btn.textContent = '🎨 Editar fotos';
-  $('undoEditBtn').hidden = false;
-  if (errors.length) alert(`${errors.length} foto(s) no se pudieron editar: ${[...new Set(errors)].join(' · ')}`);
+  try {
+    const r = await runStudio(api, {
+      urls: [...originals], notes: $('aiNotesInput').value, opts, ai: lastAi,
+      onProgress: (t) => { btn.textContent = t; },
+    });
+    if (r.ai && r.ai !== lastAi) { lastAi = r.ai; applyFields(listingToFields(r.ai, { usedFlatlay: r.usedFlatlay, language: opts.language })); showComps(r.ai); }
+    else if (r.usedFlatlay) addPropsNote(opts.language);
+    setPhotos(r.images, [...originals]);
+    renderThumbs();
+    $('undoEditBtn').hidden = false;
+    if (r.failures.length) alert(`${r.failures.length} foto(s) no se pudieron crear: ${[...new Set(r.failures)].join(' · ')}`);
+  } catch (e) {
+    alert(e.message);
+  } finally {
+    btn.disabled = !config.photos;
+    btn.textContent = '🎨 Crear fotos';
+  }
 });
+
+function addPropsNote(language) {
+  const note = PROPS_NOTE[language] || PROPS_NOTE.en;
+  if (!$('description').value.includes(note)) $('description').value = `${$('description').value.trim()}\n\n${note}`.trim();
+  saveDraft();
+}
 
 $('undoEditBtn').addEventListener('click', () => {
   setPhotos([...originals], [...originals]);
@@ -238,15 +257,13 @@ $('aiBtn').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = 'La IA está escribiendo… (hasta 1 min)';
   try {
-    const result = await describe(api, images, $('aiNotesInput').value, studioOptions().language);
-    applyFields(listingToFields(result));
-    if (result.comps?.count) {
-      $('aiNotes').textContent += `\n📊 eBay: ${result.comps.count} anuncios parecidos entre ${result.comps.low} y ${result.comps.high} (mediana ${result.comps.median}).`;
-    }
+    lastAi = await describe(api, images, $('aiNotesInput').value, studioOptions().language);
+    applyFields(listingToFields(lastAi, { language: studioOptions().language }));
+    showComps(lastAi);
   } catch (e) {
     alert(e.message);
   } finally {
-    btn.disabled = false;
+    btn.disabled = !config.ai;
     btn.textContent = '✨ Escribir anuncio con IA';
   }
 });
@@ -310,6 +327,7 @@ function setEditing(id) {
 
 /** Carga un artículo del inventario en el formulario para publicarlo (o republicarlo). */
 function loadIntoForm(item) {
+  lastAi = null;
   const values = { ...item, price: item.price || '', cost: item.cost || '', quantity: item.quantity || 1, photoUrls: '', catSearch: '' };
   FIELDS.forEach((f) => { $(f).value = values[f] ?? ''; });
   if (item.ebayCategoryId) {
@@ -326,6 +344,7 @@ function loadIntoForm(item) {
 }
 
 function clearForm() {
+  lastAi = null;
   $('listingForm').reset();
   $('condition').value = 'like_new';
   setPhotos([], []);

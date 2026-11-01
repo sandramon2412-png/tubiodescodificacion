@@ -108,3 +108,6 @@ dialog .row { margin-top: 8px; }
 .loteGroup figure.starts img { outline: 3px solid var(--brand); outline-offset: 1px; }
 .loteGroup input { margin-bottom: 8px; }
 .badge.err { color: var(--err); }
+.kinds { border: 0; padding: 0; margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.kinds legend { font-weight: 600; font-size: .92rem; padding: 0 0 6px; }
+.kinds .check { padding: 8px 12px; font-weight: 500; }
