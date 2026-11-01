@@ -6,7 +6,7 @@ import { put, list, del } from '@vercel/blob';
 const PREFIX = 'datos/db-';
 const KEEP = 10; // copias anteriores que se conservan
 
-export const emptyDb = () => ({ items: [], expenses: [], settings: {} });
+export const emptyDb = () => ({ items: [], expenses: [], settings: {}, offers: [], notifications: [] });
 
 export function normalizeDb(data) {
   const d = data && typeof data === 'object' ? data : {};
@@ -14,6 +14,8 @@ export function normalizeDb(data) {
     items: Array.isArray(d.items) ? d.items : [],
     expenses: Array.isArray(d.expenses) ? d.expenses : [],
     settings: d.settings && typeof d.settings === 'object' && !Array.isArray(d.settings) ? d.settings : {},
+    offers: Array.isArray(d.offers) ? d.offers.slice(-300) : [],
+    notifications: Array.isArray(d.notifications) ? d.notifications.slice(-150) : [],
   };
 }
 
@@ -54,4 +56,21 @@ export async function writeDb(data, baseVersion) {
   const old = current.slice(KEEP - 1).map((b) => b.url);
   if (old.length) await del(old).catch(() => {});
   return { version: blob.pathname };
+}
+
+/**
+ * Lee, aplica fn(data) y guarda; si otro proceso guardó a la vez, vuelve a leer y reintenta.
+ * fn debe trabajar solo sobre el `data` que recibe. Devuelve lo que devuelva fn.
+ */
+export async function updateDb(fn, tries = 4) {
+  for (let i = 0; i < tries; i++) {
+    const { version, data } = await readDb();
+    const result = await fn(data);
+    try {
+      await writeDb(data, version);
+      return result;
+    } catch (e) {
+      if (!(e instanceof ConflictError) || i === tries - 1) throw e;
+    }
+  }
 }

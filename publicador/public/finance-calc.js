@@ -159,7 +159,7 @@ export function mergeEbaySales(db, lines, newId, now = new Date().toISOString())
     ...db.items.flatMap((i) => (i.sales || []).map((x) => x.externalId).filter(Boolean)),
     ...(db.settings?.ebayIgnored || []), // ventas que deshiciste a mano: no se vuelven a importar
   ]);
-  const result = { added: 0, created: 0, remind: [] };
+  const result = { added: 0, created: 0, remind: [], sold: [] };
   for (const line of lines) {
     if (seen.has(line.externalId)) continue;
     seen.add(line.externalId);
@@ -176,17 +176,84 @@ export function mergeEbaySales(db, lines, newId, now = new Date().toISOString())
       db.items.push(item);
       result.created += 1;
     }
+    // ¿Ya la apuntaste a mano como venta de eBay? Entonces solo se completa con los datos reales.
+    const manual = (item.sales || []).find((x) => x.platform === 'ebay' && !x.externalId
+      && Math.abs(Date.parse(x.date) - Date.parse(line.date)) <= 3 * 86400000);
+    if (manual) {
+      Object.assign(manual, { externalId: line.externalId, fees: line.fees });
+      continue;
+    }
     const updated = applySale(item, {
       id: newId(), externalId: line.externalId, platform: 'ebay', date: line.date,
       quantity: line.quantity, price: line.price, fees: line.fees, shipping: 0,
     });
     if (updated.quantity === 0 && updated.listings?.ebay) {
       updated.listings = { ...updated.listings, ebay: { ...updated.listings.ebay, status: 'vendido' } };
-      const others = Object.entries(updated.listings).filter(([p, l]) => p !== 'ebay' && l.status === 'publicado').map(([p]) => PLATFORMS[p] || p);
-      if (others.length) result.remind.push({ title: updated.title, platforms: others });
+      const keys = Object.entries(updated.listings).filter(([p, l]) => p !== 'ebay' && l.status === 'publicado').map(([p]) => p);
+      if (keys.length) result.remind.push({ itemId: item.id, title: updated.title, platforms: keys.map((p) => PLATFORMS[p] || p), platformKeys: keys });
     }
     Object.assign(item, updated);
     result.added += 1;
+    result.sold.push({ itemId: item.id, title: item.title, price: line.price });
   }
   return result;
+}
+
+// ── Ofertas ───────────────────────────────────────────────
+// Porcentajes sobre el precio del artículo en el inventario.
+export const DEFAULT_OFFER_RULES = {
+  enabled: true,    // activar "Mejor oferta" en los anuncios nuevos de eBay
+  auto: true,       // responder sola a las ofertas (si no, solo avisa con botones)
+  acceptPct: 90,    // aceptar desde este % del precio
+  declinePct: 60,   // rechazar por debajo de este %
+  between: 'counter', // entre medias: 'counter' (contraofertar) o 'ask' (preguntarme)
+  counterPct: 90,   // contraoferta a este %
+  protectCost: true, // nunca aceptar si pierdo dinero (costo + comisión)
+};
+
+export const offerRules = (settings) => ({ ...DEFAULT_OFFER_RULES, ...(settings?.offers || {}) });
+
+/** Precio mínimo para no perder dinero en eBay con este costo. */
+export function breakEven(cost, settings) {
+  const f = feeRules(settings).ebay;
+  const c = Number(cost) || 0;
+  if (c <= 0) return 0;
+  return Math.ceil(((c + (Number(f.fixed) || 0)) / (1 - (Number(f.pct) || 0) / 100)) * 100) / 100;
+}
+
+/**
+ * Decide qué hacer con una oferta: { action: 'accept'|'decline'|'counter'|'ask', price?, reason }.
+ * offer.price es el total ofrecido por offer.quantity unidades.
+ */
+export function decideOffer(offer, item, settings) {
+  const r = offerRules(settings);
+  const list = Number(item?.price) || 0;
+  const qty = Math.max(1, Number(offer.quantity) || 1);
+  const unit = round2(offer.price / qty);
+  if (!list) return { action: 'ask', reason: 'El artículo no tiene precio en el inventario.' };
+  const floor = r.protectCost ? breakEven(item.cost, settings) : 0;
+  const counterAt = round2(Math.min(list, Math.max(list * r.counterPct / 100, floor)) * qty);
+
+  if (floor && unit < floor) {
+    return r.between === 'counter' && counterAt > offer.price
+      ? { action: 'counter', price: counterAt, reason: `Con ${unit} perderías dinero (mínimo ${floor}).` }
+      : { action: 'ask', reason: `Con ${unit} perderías dinero (mínimo ${floor}).` };
+  }
+  if (unit >= list * r.acceptPct / 100) return { action: 'accept', reason: `Es al menos el ${r.acceptPct}% del precio.` };
+  if (unit < list * r.declinePct / 100) return { action: 'decline', reason: `Es menos del ${r.declinePct}% del precio.` };
+  if (r.between === 'counter' && counterAt > offer.price) {
+    return { action: 'counter', price: counterAt, reason: `Contraoferta al ${r.counterPct}% del precio.` };
+  }
+  return { action: 'ask', reason: 'Está entre tus límites: decide tú.', suggest: counterAt > offer.price ? counterAt : undefined };
+}
+
+/** Límites que se envían a eBay al publicar (eBay acepta/rechaza al instante sin esperar a la app). */
+export function bestOfferTerms(price, cost, settings) {
+  const r = offerRules(settings);
+  if (!r.enabled || !(price > 0)) return null;
+  const floor = r.protectCost ? breakEven(cost, settings) : 0;
+  const accept = round2(Math.max(price * r.acceptPct / 100, floor));
+  const decline = round2(Math.max(price * r.declinePct / 100, floor));
+  if (accept >= price) return { bestOfferEnabled: true };
+  return { bestOfferEnabled: true, autoAcceptPrice: accept, autoDeclinePrice: Math.min(decline, round2(accept - 0.01)) };
 }

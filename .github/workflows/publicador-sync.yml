@@ -1,0 +1,28 @@
+# Revisa cada 15 minutos ventas y ofertas de eBay del Publicador (carpeta publicador/).
+# Necesita dos secretos del repositorio (Settings → Secrets and variables → Actions):
+#   PUBLICADOR_URL  → https://TU-APP.vercel.app
+#   CRON_SECRET     → el mismo valor que la variable CRON_SECRET de Vercel
+name: Publicador · revisar ventas y ofertas
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Llamar a la revisión
+        env:
+          URL: ${{ secrets.PUBLICADOR_URL }}
+          SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$URL" ] || [ -z "$SECRET" ]; then
+            echo "Faltan los secretos PUBLICADOR_URL y CRON_SECRET; no hago nada."
+            exit 0
+          fi
+          curl --fail-with-body -sS --max-time 150 -X POST "$URL/api/cron/sync" -H "Authorization: Bearer $SECRET"

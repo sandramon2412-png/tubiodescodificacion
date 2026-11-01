@@ -80,6 +80,7 @@ test('CSV escapa comillas y comas', () => {
 });
 
 test('normalizeDb repara datos incompletos', () => {
-  assert.deepEqual(normalizeDb(null), { items: [], expenses: [], settings: {} });
-  assert.deepEqual(normalizeDb({ items: 'x', settings: [] }), { items: [], expenses: [], settings: {} });
+  const empty = { items: [], expenses: [], settings: {}, offers: [], notifications: [] };
+  assert.deepEqual(normalizeDb(null), empty);
+  assert.deepEqual(normalizeDb({ items: 'x', settings: [] }), empty);
 });

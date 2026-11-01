@@ -32,6 +32,15 @@ Además tiene dos pestañas más:
   - **Lote**: eliges todas las fotos de golpe, la app las agrupa por artículo (por la hora en que las tomaste) y procesa todo.
     Cada artículo queda como **Borrador** en Inventario para revisarlo y publicarlo.
 
+- **🔔 Avisos y automatización**:
+  - **Venta en una plataforma → se quita de las demás.** Si vendes en Poshmark/Depop y lo marcas «Vendido», el anuncio de eBay se retira
+    solo. Si se vende en eBay, la app lo detecta sola y te manda un aviso **urgente** para borrarlo de Poshmark/Depop, con un botón
+    «Ya lo borré». (Poshmark y Depop no tienen API: ahí el borrado tiene que hacerlo una persona.)
+  - **Notificaciones en el móvil por Telegram** (gratis): ventas, ofertas y lo que tengas que borrar. También en la pestaña 🔔 de la app.
+  - **Ofertas de eBay automáticas**: los anuncios nuevos se publican con «Mejor oferta» y eBay acepta/rechaza al instante según tus
+    porcentajes. Las ofertas intermedias la app las contraoferta sola o te pregunta con botones (Aceptar / Rechazar / Contraoferta), y
+    **nunca acepta si pierdes dinero** (costo + comisión). Todo configurable en 🔔 → «Ofertas y ventas automáticas».
+
 Los datos se guardan en tu **Vercel Blob** (se ven igual desde el móvil y el ordenador) y se conservan las últimas 10 versiones como copia de seguridad.
 
 ## 1. Desplegar en Vercel
@@ -59,6 +68,16 @@ Las fotos se reducen a 1600 px en el móvil antes de subirse.
 
 Consejos para mejores resultados: fotografía la prenda entera sobre una superficie lisa con buena luz, y añade **una foto de la etiqueta**
 (marca, talla, material). Para eBay, la primera foto en **Blanco limpio** suele funcionar mejor en las búsquedas.
+
+### Avisos y revisión automática (opcional)
+1. **Telegram**: en Telegram abre **@BotFather**, escribe `/newbot`, ponle nombre y copia el token en `TELEGRAM_BOT_TOKEN`. Redeploy.
+   En la app ve a 🔔 → **Conectar Telegram** → pulsa «Iniciar» en el bot. Usa «Enviar prueba» para comprobarlo.
+2. **Revisión automática** de ventas y ofertas: inventa una clave larga y ponla en Vercel como `CRON_SECRET`.
+   - Vercel la ejecuta **una vez al día** (plan gratis). Para que sea **cada 15 minutos**, en GitHub ve a este repositorio →
+     Settings → Secrets and variables → Actions y crea `PUBLICADOR_URL` (`https://TU-APP.vercel.app`) y `CRON_SECRET` (la misma clave).
+     El flujo `.github/workflows/publicador-sync.yml` se encarga del resto. (GitHub puede retrasarlo unos minutos en horas punta.)
+   - Además, la app revisa al abrirse y con el botón «Revisar ahora».
+3. Si conectaste eBay antes de esta versión, no hace falta reconectar: las ofertas usan el mismo permiso.
 
 ## 2. Conectar eBay
 
@@ -94,4 +113,4 @@ npm run check   # sintaxis + tests
 npx vercel dev  # servidor local con las funciones /api
 ```
 
-Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel: `data` = inventario/finanzas, `ebay/*`, `ai/describe`, `photo/edit`, `upload`), `lib/` (eBay, Claude, Photoroom, almacenamiento en Blob, contraseña), `tests/`.
+Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel: `data` = inventario/finanzas, `ebay/*` (incl. `offers`), `ai/describe`, `photo/edit`, `sync`, `cron/sync`, `telegram`, `notify`, `upload`), `lib/` (eBay REST y Trading, Claude, Photoroom, Telegram, revisión automática, almacenamiento en Blob, contraseña), `tests/`.

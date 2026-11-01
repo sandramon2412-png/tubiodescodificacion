@@ -171,7 +171,7 @@ export function validateListing(raw = {}) {
 }
 
 /** Crea el inventory item, la oferta y la publica. Devuelve { sku, offerId, listingId, url }. */
-export async function publishListing(listing) {
+export async function publishListing(listing, { bestOffer = null } = {}) {
   const token = await userToken();
   const sku = makeSku(listing.title);
   const marketplaceId = process.env.EBAY_MARKETPLACE_ID || 'EBAY_US';
@@ -204,6 +204,7 @@ export async function publishListing(listing) {
         fulfillmentPolicyId: process.env.EBAY_FULFILLMENT_POLICY_ID,
         paymentPolicyId: process.env.EBAY_PAYMENT_POLICY_ID,
         returnPolicyId: process.env.EBAY_RETURN_POLICY_ID,
+        ...(bestOffer ? { bestOfferTerms: toBestOfferTerms(bestOffer) } : {}),
       },
       pricingSummary: {
         price: { value: listing.price.toFixed(2), currency: process.env.EBAY_CURRENCY || 'USD' },
@@ -217,6 +218,16 @@ export async function publishListing(listing) {
     offerId: offer.offerId,
     listingId: published.listingId,
     url: `${env().web}/itm/${published.listingId}`,
+  };
+}
+
+function toBestOfferTerms(t) {
+  const cur = process.env.EBAY_CURRENCY || 'USD';
+  const m = (v) => ({ value: Number(v).toFixed(2), currency: cur });
+  return {
+    bestOfferEnabled: true,
+    ...(t.autoAcceptPrice ? { autoAcceptPrice: m(t.autoAcceptPrice) } : {}),
+    ...(t.autoDeclinePrice ? { autoDeclinePrice: m(t.autoDeclinePrice) } : {}),
   };
 }
 

@@ -97,7 +97,10 @@ function onListClick(e) {
       const order = ['pendiente', 'publicado', 'retirado'];
       const cur = item.listings[b.dataset.p]?.status;
       const next = order[(order.indexOf(cur) + 1) % order.length];
-      return mutate(() => { item.listings[b.dataset.p] = { ...item.listings[b.dataset.p], status: next }; });
+      return mutate((db) => {
+        const it = db.items.find((x) => x.id === item.id);
+        if (it) it.listings[b.dataset.p] = { ...it.listings[b.dataset.p], status: next };
+      });
     }
   }
 }
@@ -176,7 +179,8 @@ async function saveSale(e) {
     ? Object.entries(updated.listings || {}).filter(([p, l]) => p !== sale.platform && l.status === 'publicado')
     : [];
   const ebay = others.find(([p]) => p === 'ebay')?.[1];
-  if (ebay?.offerId && confirm('Se vendió la última unidad. ¿Retiro el anuncio de eBay automáticamente?')) {
+  // Retirar de eBay automáticamente (se puede desactivar en Avisos → Ofertas y avisos).
+  if (ebay?.offerId && (state.db.settings.autoDelist !== false || confirm('Se vendió la última unidad. ¿Retiro el anuncio de eBay?'))) {
     try {
       await deps.api('/api/ebay/withdraw', { method: 'POST', body: { offerId: ebay.offerId } });
       updated.listings.ebay = { ...ebay, status: 'retirado' };
@@ -189,6 +193,13 @@ async function saveSale(e) {
     updated.listings.ebay = { ...updated.listings.ebay, status: 'vendido' };
   }
   const manual = others.filter(([p]) => p !== 'ebay').map(([p]) => PLATFORMS[p]);
-  mutate((db) => { Object.assign(db.items.find((x) => x.id === item.id), updated); });
+  mutate((db) => {
+    const it = db.items.find((x) => x.id === item.id);
+    if (!it) return;
+    // Sobre los datos más recientes: aplica la venta y el estado de los anuncios.
+    const fresh = applySale(it, sale);
+    fresh.listings = { ...structuredClone(it.listings || {}), ...(updated.listings.ebay ? { ebay: updated.listings.ebay } : {}) };
+    Object.assign(it, fresh);
+  });
   if (manual.length) alert(`Recuerda borrar el anuncio en: ${manual.join(', ')}. Luego toca su etiqueta para marcarlo como «retirado».`);
 }

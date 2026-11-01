@@ -111,3 +111,14 @@ dialog .row { margin-top: 8px; }
 .kinds { border: 0; padding: 0; margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 6px; }
 .kinds legend { font-weight: 600; font-size: .92rem; padding: 0 0 6px; }
 .kinds .check { padding: 8px 12px; font-weight: 500; }
+
+/* ── Avisos ───────────────────────────────── */
+.tabs .count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 2px; border-radius: 99px; background: var(--err); color: #fff; font-size: .7rem; line-height: 18px; }
+.aviso { border-top: 1px solid var(--line); padding: 10px 0; font-size: .9rem; }
+.aviso:first-child { border-top: 0; } .aviso p { margin: 0 0 4px; }
+.aviso.unread p { font-weight: 600; }
+.aviso.urgent { background: color-mix(in srgb, var(--err) 10%, transparent); border-radius: 10px; padding: 10px; }
+.offer { border-top: 1px solid var(--line); padding: 10px 0; } .offer:first-child { border-top: 0; } .offer p { margin: 0 0 4px; }
+.counterInput { width: 100px; margin-top: 0; }
+ul.plain { padding-left: 18px; font-size: .9rem; } h3.sub { margin-top: 14px; font-size: .95rem; }
+#tgMissing ol { padding-left: 18px; margin: 6px 0 10px; }

@@ -1,5 +1,4 @@
-import { state, mutate, uid, today } from './store.js';
-import { mergeEbaySales } from './finance-calc.js';
+import { state, load } from './store.js';
 
 const $ = (id) => document.getElementById(id);
 let running = false;
@@ -11,32 +10,25 @@ export function notice(text, cls = '') {
   el.hidden = !text;
 }
 
-const daysAgo = (n) => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
-
-/** Trae las ventas de eBay nuevas y las apunta en Inventario y Finanzas. */
+/**
+ * Pide al servidor que revise eBay (ventas nuevas y ofertas) y recarga los datos.
+ * La misma revisión corre sola cada 15 min (GitHub Actions) y una vez al día (Vercel Cron).
+ */
 export async function syncEbay(api, { silent = false } = {}) {
   if (running || !state.db) return;
   running = true;
   document.querySelectorAll('.ebaySync').forEach((b) => { b.disabled = true; });
-  if (!silent) notice('Buscando ventas nuevas en eBay…');
+  if (!silent) notice('Revisando ventas y ofertas en eBay…');
   try {
-    // Repasa desde unos días antes de la última vez, por si algún pago se confirmó tarde.
-    const last = state.db.settings.ebayLastSync;
-    const since = last ? new Date(Date.parse(last) - 3 * 86400000).toISOString().slice(0, 10) : daysAgo(90);
-    const { lines } = await api(`/api/ebay/sales?since=${since}`);
-    let r = { added: 0, created: 0, remind: [] };
-    if (lines.length || last !== today()) {
-      mutate((db) => {
-        r = mergeEbaySales(db, lines, uid);
-        db.settings.ebayLastSync = today();
-      });
-    }
+    const r = await api('/api/sync', { method: 'POST' });
+    await load();
     const parts = [];
-    if (r.added) parts.push(`${r.added} venta(s) nueva(s) de eBay apuntada(s)`);
-    if (r.created) parts.push(`${r.created} artículo(s) nuevo(s): añade su costo en Inventario`);
-    for (const x of r.remind) parts.push(`«${x.title}» se agotó: bórralo de ${x.platforms.join(', ')}`);
-    if (parts.length) notice(parts.join(' · '), 'ok');
-    else notice(silent ? '' : 'No hay ventas nuevas en eBay.', 'ok');
+    if (r.sales) parts.push(`${r.sales} venta(s) nueva(s) de eBay`);
+    if (r.offersAuto) parts.push(`${r.offersAuto} oferta(s) respondida(s) sola(s)`);
+    if (r.offersAsk) parts.push(`${r.offersAsk} oferta(s) esperan tu decisión`);
+    if (r.errors?.length) parts.push(`⚠ ${r.errors[0]}`);
+    if (parts.length) notice(`${parts.join(' · ')} — mira la pestaña Avisos.`, r.errors?.length ? 'err' : 'ok');
+    else notice(silent ? '' : 'Todo al día: no hay ventas ni ofertas nuevas.', 'ok');
   } catch (e) {
     if (!silent || e.status === 403) notice(e.message, 'err');
   } finally {

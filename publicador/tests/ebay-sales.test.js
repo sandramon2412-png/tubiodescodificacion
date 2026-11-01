@@ -38,7 +38,8 @@ test('mergeEbaySales: empareja por SKU, crea los desconocidos y no duplica', () 
   const lines = orderLines(order);
   const r = mergeEbaySales(db, lines, id);
   assert.deepEqual([r.added, r.created], [2, 1]);
-  assert.deepEqual(r.remind, [{ title: 'Vestido', platforms: ['Poshmark'] }]);
+  assert.deepEqual(r.remind, [{ itemId: 'v', title: 'Vestido', platforms: ['Poshmark'], platformKeys: ['poshmark'] }]);
+  assert.equal(r.sold.length, 2);
   const v = db.items.find((i) => i.id === 'v');
   assert.equal(v.status, 'vendido');
   assert.equal(v.listings.ebay.status, 'vendido');
@@ -53,4 +54,15 @@ test('mergeEbaySales: empareja por SKU, crea los desconocidos y no duplica', () 
   const s = summarize(db);
   assert.equal(s.cogs, 25);
   assert.equal(s.profit, 130 - 12 - 25);
+});
+
+test('mergeEbaySales: no duplica una venta de eBay que ya apuntaste a mano', () => {
+  const db = { items: [{ id: 'v', title: 'Vestido', cost: 5, price: 30, quantity: 0, status: 'vendido',
+    listings: { ebay: { status: 'vendido', sku: 'VESTIDO-1' } },
+    sales: [{ id: 's', platform: 'ebay', price: 30, fees: 4, shipping: 0, date: '2026-10-21' }] }], expenses: [], settings: {} };
+  const r = mergeEbaySales(db, orderLines(order).slice(0, 1), () => 'x');
+  assert.equal(r.added, 0);
+  assert.equal(db.items[0].sales.length, 1);
+  assert.equal(db.items[0].sales[0].fees, 3, 'usa la comisión real de eBay');
+  assert.equal(db.items[0].sales[0].externalId, 'ebay:12-345:L1');
 });

@@ -3,6 +3,7 @@ import { initStore, load, mutate, findItem } from './store.js';
 import { initInventory, newItem } from './inventory.js';
 import { initFinance } from './finance.js';
 import { syncEbay } from './ebay-sync.js';
+import { initAvisos } from './avisos.js';
 import { uploadImage, runStudio, describe, listingToFields, PROPS_NOTE } from './studio-api.js';
 import { initLote, studioOptions } from './lote.js';
 
@@ -72,6 +73,7 @@ function showApp() {
     initInventory({ api, loadIntoForm });
     initFinance();
     initLote({ api, config, loadIntoForm });
+    initAvisos({ api });
     restoreDraft();
     document.querySelectorAll('.ebaySync').forEach((b) => b.addEventListener('click', () => syncEbay(api)));
   }

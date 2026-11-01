@@ -30,6 +30,7 @@
       <button type="button" role="tab" data-tab="lote">Lote</button>
       <button type="button" role="tab" data-tab="inventario">Inventario</button>
       <button type="button" role="tab" data-tab="finanzas">Finanzas</button>
+      <button type="button" role="tab" data-tab="avisos">🔔<span class="count" hidden></span></button>
     </nav>
 
     <p id="notice" class="notice" hidden></p>
@@ -152,6 +153,58 @@
         <p class="hint">Toca la etiqueta de Poshmark o Depop para cambiar su estado (pendiente → publicado → retirado).</p>
       </section>
       <div id="invList"></div>
+    </div>
+
+    <div id="tab-avisos" class="tab" hidden>
+      <section class="card">
+        <h2>Avisos al móvil</h2>
+        <p id="tgState"></p>
+        <div id="tgMissing" class="hint">
+          Para recibir avisos con botones en tu móvil (gratis):
+          <ol>
+            <li>En Telegram abre <b>@BotFather</b>, escribe <code>/newbot</code> y sigue los pasos. Te dará un <b>token</b>.</li>
+            <li>Pon ese token en Vercel como <code>TELEGRAM_BOT_TOKEN</code> y haz Redeploy.</li>
+            <li>Vuelve aquí y pulsa «Conectar Telegram».</li>
+          </ol>
+        </div>
+        <div class="row wrap">
+          <button type="button" id="tgLink" hidden>📲 Conectar Telegram</button>
+          <button type="button" id="tgTest" class="ghost" hidden>Enviar prueba</button>
+          <button type="button" class="ghost ebaySync" hidden>Revisar ahora</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ofertas de eBay por decidir</h2>
+        <div id="offersPending"></div>
+        <h3 class="sub">Últimas ofertas</h3>
+        <ul id="offersDone" class="plain"></ul>
+      </section>
+
+      <section class="card">
+        <div class="itemHead"><h2>Avisos</h2><button type="button" id="markRead" class="ghost small">Marcar todo como leído</button></div>
+        <div id="avisosList"></div>
+      </section>
+
+      <section class="card">
+        <h2>Ofertas y ventas automáticas</h2>
+        <form id="rulesForm">
+          <label class="check"><input type="checkbox" name="autoDelist"> Al vender en otra plataforma, retirar de eBay automáticamente</label>
+          <label class="check"><input type="checkbox" name="enabled"> Permitir ofertas en los anuncios nuevos de eBay</label>
+          <label class="check"><input type="checkbox" name="auto"> Responder sola a las ofertas (si no, solo te aviso)</label>
+          <div class="grid">
+            <label>Aceptar desde <small>(% del precio)</small><input type="number" name="acceptPct" min="0" max="100"></label>
+            <label>Rechazar por debajo de <small>(%)</small><input type="number" name="declinePct" min="0" max="100"></label>
+            <label>Entre medias
+              <select name="between"><option value="counter">Contraofertar</option><option value="ask">Preguntarme</option></select>
+            </label>
+            <label id="counterWrap">Contraoferta al <small>(%)</small><input type="number" name="counterPct" min="0" max="100"></label>
+          </div>
+          <label class="check"><input type="checkbox" name="protectCost"> Nunca aceptar si pierdo dinero (costo + comisión de eBay)</label>
+          <p class="hint">eBay aplica al instante los límites de aceptar/rechazar en los anuncios que publiques desde aquí. Las ofertas intermedias las revisa la app cada 15 minutos.</p>
+          <button type="submit">Guardar reglas</button>
+        </form>
+      </section>
     </div>
 
     <div id="tab-finanzas" class="tab" hidden>
