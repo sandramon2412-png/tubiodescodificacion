@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publicador Multicanal</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <h1>Publicador <span>eBay · Poshmark · Depop</span></h1>
+    <button id="logout" class="ghost" hidden>Salir</button>
+  </header>
+
+  <!-- Acceso -->
+  <section id="login" class="card narrow" hidden>
+    <h2>Entrar</h2>
+    <form id="loginForm">
+      <label>Contraseña de la app<input type="password" id="pw" autocomplete="current-password" required></label>
+      <button type="submit">Entrar</button>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+  </section>
+
+  <main id="app" hidden>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="publicar" aria-selected="true">Publicar</button>
+      <button type="button" role="tab" data-tab="inventario">Inventario</button>
+      <button type="button" role="tab" data-tab="finanzas">Finanzas</button>
+    </nav>
+
+    <p id="notice" class="notice" hidden></p>
+
+    <div id="tab-publicar" class="tab">
+    <section class="card status" id="status"></section>
+    <section class="card" id="setup" hidden></section>
+
+    <form id="listingForm" class="card">
+      <p class="editing" id="editingBanner" hidden>Publicando un artículo de tu inventario. <button type="button" class="ghost small" id="newListing">Empezar uno nuevo</button></p>
+      <h2>1. Tu artículo</h2>
+
+      <label>Fotos
+        <input type="file" id="photos" accept="image/*" multiple>
+        <small>Se reducen a 1600 px y se suben a tu Vercel Blob. También puedes pegar URLs https (una por línea):</small>
+        <textarea id="photoUrls" rows="2" placeholder="https://…"></textarea>
+      </label>
+      <div id="thumbs" class="thumbs"></div>
+
+      <label>Título <small class="count" data-for="title" data-max="80"></small>
+        <input id="title" maxlength="80" required placeholder="Vestido midi floral Zara talla M">
+      </label>
+      <label>Descripción
+        <textarea id="description" rows="5" required placeholder="Estado, medidas, detalles…"></textarea>
+      </label>
+
+      <div class="grid">
+        <label>Precio<input id="price" type="number" min="0.01" step="0.01" required></label>
+        <label>Cantidad<input id="quantity" type="number" min="1" value="1"></label>
+        <label>Condición
+          <select id="condition" required></select>
+        </label>
+        <label>Marca<input id="brand"></label>
+        <label>Talla<input id="size"></label>
+        <label>Color<input id="color"></label>
+        <label>Costo <small>(lo que pagaste)</small><input id="cost" type="number" min="0" step="0.01"></label>
+        <label>Ubicación <small>(caja, estante…)</small><input id="location"></label>
+      </div>
+      <label>Palabras clave <small>(hashtags de Depop y estilos de Poshmark, separadas por comas)</small>
+        <input id="keywords" placeholder="vintage, boho, verano">
+      </label>
+
+      <h2>2. ¿Dónde publicar?</h2>
+      <div class="platforms">
+        <label class="check"><input type="checkbox" id="toEbay" checked> eBay <em>automático</em></label>
+        <label class="check"><input type="checkbox" id="toPoshmark" checked> Poshmark <em>asistido</em></label>
+        <label class="check"><input type="checkbox" id="toDepop" checked> Depop <em>asistido</em></label>
+      </div>
+
+      <fieldset id="ebayFields">
+        <legend>Datos para eBay</legend>
+        <label>Categoría
+          <div class="row">
+            <input id="catSearch" placeholder="Busca: women dress, sneakers…">
+            <button type="button" id="catBtn" class="ghost">Buscar</button>
+          </div>
+          <select id="ebayCategoryId"><option value="">— elige una categoría —</option></select>
+        </label>
+        <label>Características extra <small>(una por línea, «Clave: valor». eBay te dirá si falta alguna obligatoria)</small>
+          <textarea id="extraAspects" rows="3" placeholder="Department: Women&#10;Style: Midi"></textarea>
+        </label>
+      </fieldset>
+
+      <button type="submit" id="publishBtn" class="primary">Publicar y guardar en inventario</button>
+      <button type="button" id="saveOnlyBtn" class="ghost wide">Solo guardar en inventario</button>
+    </form>
+
+    <section id="results" class="card" hidden>
+      <h2>3. Resultado</h2>
+      <div id="resultList"></div>
+    </section>
+
+    </div>
+
+    <div id="tab-inventario" class="tab" hidden>
+      <section class="card">
+        <div class="kpis" id="invStats"></div>
+        <div class="row wrap toolbar">
+          <input id="invSearch" type="search" placeholder="Buscar por título, marca, talla, ubicación…">
+          <select id="invStatus">
+            <option value="disponible">Disponibles</option>
+            <option value="vendido">Vendidos</option>
+            <option value="retirado">Retirados</option>
+            <option value="todos">Todos</option>
+          </select>
+          <button type="button" id="invAdd">+ Añadir</button>
+          <button type="button" class="ghost ebaySync" hidden>Importar ventas de eBay</button>
+        </div>
+        <p class="hint">Toca la etiqueta de Poshmark o Depop para cambiar su estado (pendiente → publicado → retirado).</p>
+      </section>
+      <div id="invList"></div>
+    </div>
+
+    <div id="tab-finanzas" class="tab" hidden>
+      <section class="card">
+        <div class="row wrap toolbar">
+          <select id="finPeriod">
+            <option value="month">Este mes</option>
+            <option value="lastMonth">Mes pasado</option>
+            <option value="year">Este año</option>
+            <option value="all">Todo</option>
+          </select>
+          <button type="button" class="ghost" id="finExport">Descargar CSV</button>
+          <button type="button" class="ghost ebaySync" hidden>Importar ventas de eBay</button>
+        </div>
+        <div class="kpis" id="finKpis"></div>
+        <p class="hint">Ganancia neta = ventas − comisiones − envíos − costo de lo vendido − otros gastos. Las compras de mercancía se cuentan con el «costo» de cada artículo, no las apuntes también como gasto.</p>
+      </section>
+      <section class="card"><h2>Por plataforma</h2><div id="finPlatforms"></div></section>
+      <section class="card"><h2>Por mes</h2><div id="finMonths"></div></section>
+      <section class="card"><h2>Ventas</h2><div id="finSales"></div></section>
+      <section class="card">
+        <h2>Gastos</h2>
+        <form id="expenseForm" class="grid">
+          <label>Fecha<input type="date" id="expDate" required></label>
+          <label>Concepto<input id="expConcept" required placeholder="Cajas, cinta…"></label>
+          <label>Categoría<select id="expCategory"></select></label>
+          <label>Monto<input type="number" id="expAmount" min="0.01" step="0.01" required></label>
+          <button type="submit">Añadir gasto</button>
+        </form>
+        <div id="finExpenses"></div>
+      </section>
+      <section class="card">
+        <h2>Comisiones y moneda</h2>
+        <p class="hint">Se usan para estimar la comisión al registrar una venta. Son aproximadas (EE. UU.) y las plataformas las cambian: ajústalas a las tuyas. Poshmark cobra una tarifa fija en ventas pequeñas.</p>
+        <form id="feesForm">
+          <div id="feesFields"></div>
+          <label class="inline">Moneda<input id="finCurrency" maxlength="3" placeholder="USD"></label>
+          <button type="submit">Guardar</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="itemDialog">
+    <form id="itemForm" method="dialog">
+      <h2 id="itemDialogTitle">Artículo</h2>
+      <label>Título<input id="itemTitle" required maxlength="80"></label>
+      <div class="grid">
+        <label>Marca<input id="itemBrand"></label>
+        <label>Talla<input id="itemSize"></label>
+        <label>Color<input id="itemColor"></label>
+        <label>Condición<select id="itemCondition"></select></label>
+        <label>Costo<input id="itemCost" type="number" min="0" step="0.01"></label>
+        <label>Precio<input id="itemPrice" type="number" min="0" step="0.01"></label>
+        <label>Cantidad<input id="itemQuantity" type="number" min="0"></label>
+        <label>Estado<select id="itemStatus"><option value="disponible">Disponible</option><option value="vendido">Vendido</option><option value="retirado">Retirado</option></select></label>
+      </div>
+      <label>Ubicación<input id="itemLocation" placeholder="Caja 3"></label>
+      <label>Notas<textarea id="itemNotes" rows="2"></textarea></label>
+      <div class="row"><button type="submit">Guardar</button><button type="button" class="ghost" data-close>Cancelar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="saleDialog">
+    <form id="saleForm" method="dialog">
+      <h2>Registrar venta</h2>
+      <p id="saleItemName" class="hint"></p>
+      <div class="grid">
+        <label>Dónde se vendió<select id="salePlatform"></select></label>
+        <label>Fecha<input id="saleDate" type="date" required></label>
+        <label>Precio de venta<input id="salePrice" type="number" min="0" step="0.01" required></label>
+        <label>Comisión<input id="saleFees" type="number" min="0" step="0.01"></label>
+        <label>Envío que pagaste tú<input id="saleShipping" type="number" min="0" step="0.01"></label>
+      </div>
+      <p class="hint" id="saleFeeHint"></p>
+      <div class="row"><button type="submit">Guardar venta</button><button type="button" class="ghost" data-close>Cancelar</button></div>
+    </form>
+  </dialog>
+
+  <template id="assistTpl">
+    <div class="assist">
+      <h3></h3>
+      <p class="hint"></p>
+      <dl></dl>
+      <div class="row wrap">
+        <button type="button" class="copyAll">Copiar todo</button>
+        <a class="button open" target="_blank" rel="noopener">Abrir formulario ↗</a>
+        <button type="button" class="ghost markDone">Marcar como publicado</button>
+      </div>
+      <div class="photoLinks"></div>
+    </div>
+  </template>
+</body>
+</html>
