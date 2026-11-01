@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/**/*.js": { "maxDuration": 30 }
+    "api/*.js": { "maxDuration": 30 },
+    "api/ebay/*.js": { "maxDuration": 60 },
+    "api/ai/*.js": { "maxDuration": 120 },
+    "api/photo/*.js": { "maxDuration": 90 }
   }
 }

@@ -5,7 +5,7 @@ import { CONDITIONS } from './formatters.js';
 const $ = (id) => document.getElementById(id);
 let deps; // { api, loadIntoForm }
 
-const STATUS_LABEL = { disponible: 'Disponible', vendido: 'Vendido', retirado: 'Retirado' };
+const STATUS_LABEL = { borrador: 'Borrador', disponible: 'Disponible', vendido: 'Vendido', retirado: 'Retirado' };
 const LISTING_LABEL = { publicado: 'publicado', pendiente: 'pendiente', retirado: 'retirado', vendido: 'vendido', error: 'error' };
 
 export function initInventory(d) {
@@ -72,7 +72,7 @@ function card(i) {
       <div class="row wrap actions">
         ${i.status === 'disponible' && i.quantity > 0 ? `<button type="button" data-act="sell" data-id="${esc(i.id)}">Vendido</button>` : ''}
         <button type="button" class="ghost" data-act="edit" data-id="${esc(i.id)}">Editar</button>
-        <button type="button" class="ghost" data-act="publish" data-id="${esc(i.id)}">Publicar</button>
+        <button type="button" class="${i.status === 'borrador' ? '' : 'ghost'}" data-act="publish" data-id="${esc(i.id)}">${i.status === 'borrador' ? 'Revisar y publicar' : 'Publicar'}</button>
         <button type="button" class="ghost danger" data-act="delete" data-id="${esc(i.id)}">Borrar</button>
       </div>
     </div>

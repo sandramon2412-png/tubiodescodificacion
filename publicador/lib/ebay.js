@@ -326,3 +326,27 @@ export function orderLines(o) {
     };
   });
 }
+
+/**
+ * Precios de anuncios ACTIVOS parecidos en eBay (Browse API). eBay no da precios de
+ * vendidos a cuentas normales, así que esto es una referencia, no un precio garantizado.
+ */
+export async function marketComps(q) {
+  const token = await appToken();
+  const mp = process.env.EBAY_MARKETPLACE_ID || 'EBAY_US';
+  const data = await call('GET', `/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&limit=50`, {
+    token, headers: { 'X-EBAY-C-MARKETPLACE-ID': mp },
+  });
+  return priceStats((data.itemSummaries || []).map((i) => Number(i.price?.value)).filter((n) => n > 0), q);
+}
+
+export function priceStats(prices, query = '') {
+  const p = [...prices].sort((a, b) => a - b);
+  if (!p.length) return { query, count: 0 };
+  const at = (f) => {
+    const i = (p.length - 1) * f;
+    const lo = Math.floor(i);
+    return Math.round((p[lo] + (p[Math.ceil(i)] - p[lo]) * (i - lo)) * 100) / 100;
+  };
+  return { query, count: p.length, low: at(0.25), median: at(0.5), high: at(0.75) };
+}

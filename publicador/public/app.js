@@ -3,6 +3,8 @@ import { initStore, load, mutate, findItem } from './store.js';
 import { initInventory, newItem } from './inventory.js';
 import { initFinance } from './finance.js';
 import { syncEbay } from './ebay-sync.js';
+import { uploadImage, editImages, describe, listingToFields, newSeed } from './studio-api.js';
+import { initLote, studioOptions } from './lote.js';
 
 const $ = (id) => document.getElementById(id);
 const store = {
@@ -12,7 +14,8 @@ const store = {
 };
 let password = store.get('pw', '');
 let config = null;
-const uploaded = []; // URLs de fotos subidas
+const uploaded = []; // URLs de fotos subidas (o ya editadas)
+const originals = []; // fotos antes de editarlas: la IA las usa para leer etiquetas
 let currentItemId = null; // artículo del inventario que se está publicando
 let started = false;
 
@@ -68,10 +71,14 @@ function showApp() {
     initStore(api);
     initInventory({ api, loadIntoForm });
     initFinance();
+    initLote({ api, config, loadIntoForm });
     restoreDraft();
     document.querySelectorAll('.ebaySync').forEach((b) => b.addEventListener('click', () => syncEbay(api)));
   }
   document.querySelectorAll('.ebaySync').forEach((b) => { b.hidden = !config.ebay.ready; });
+  $('editPhotosBtn').disabled = !config.photos;
+  $('aiBtn').disabled = !config.ai;
+  $('assistHint').textContent = [!config.photos && 'Para editar fotos añade PHOTOROOM_API_KEY en Vercel.', !config.ai && 'Para escribir con IA añade ANTHROPIC_API_KEY en Vercel.'].filter(Boolean).join(' ');
   load().then(() => { if (config.ebay.ready) syncEbay(api, { silent: true }); });
 }
 
@@ -80,6 +87,8 @@ function showTab(name) {
   document.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
   document.querySelectorAll('.tab').forEach((t) => { t.hidden = t.id !== `tab-${name}`; });
   store.set('tab', name);
+  const slot = $(`studioSlot-${name}`);
+  (slot || $('studioParking')).append($('studioOptions'));
   window.scrollTo({ top: 0 });
 }
 document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
@@ -146,29 +155,15 @@ async function showSetup() {
 }
 
 // ── Fotos ─────────────────────────────────────────────────
-function resize(file, max = 1600) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => {
-      const k = Math.min(1, max / Math.max(img.width, img.height));
-      const c = Object.assign(document.createElement('canvas'), { width: Math.round(img.width * k), height: Math.round(img.height * k) });
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      URL.revokeObjectURL(img.src);
-      resolve(c.toDataURL('image/jpeg', 0.85));
-    };
-    img.onerror = () => reject(new Error(`No se pudo leer ${file.name}`));
-    img.src = URL.createObjectURL(file);
-  });
-}
-
 $('photos').addEventListener('change', async (e) => {
   const files = [...e.target.files];
   e.target.value = '';
   for (const file of files) {
     const fig = addThumb(URL.createObjectURL(file), true);
     try {
-      const { url } = await api('/api/upload', { method: 'POST', body: { dataUrl: await resize(file) } });
+      const url = await uploadImage(api, file);
       uploaded.push(url);
+      originals.push(url);
       fig.remove();
       renderThumbs();
     } catch (err) {
@@ -191,7 +186,7 @@ function renderThumbs() {
   uploaded.forEach((url, i) => {
     const fig = addThumb(url);
     const x = Object.assign(document.createElement('button'), { type: 'button', textContent: '×', title: 'Quitar' });
-    x.onclick = () => { uploaded.splice(i, 1); renderThumbs(); saveDraft(); };
+    x.onclick = () => { uploaded.splice(i, 1); originals.splice(i, 1); renderThumbs(); saveDraft(); };
     fig.append(x);
   });
   saveDraft();
@@ -201,6 +196,76 @@ const allImages = () => [
   ...uploaded,
   ...$('photoUrls').value.split('\n').map((s) => s.trim()).filter((s) => /^https:\/\//.test(s)),
 ];
+
+/** Fija las fotos del formulario; originals[i] es la foto sin editar de uploaded[i]. */
+function setPhotos(images = [], orig = []) {
+  uploaded.splice(0, uploaded.length, ...images);
+  originals.splice(0, originals.length, ...images.map((u, i) => orig[i] || u));
+}
+
+// ── Asistente: fotos e IA ─────────────────────────────────
+$('editPhotosBtn').addEventListener('click', async () => {
+  if (!uploaded.length) return alert('Sube primero tus fotos.');
+  const opts = { ...studioOptions(), seed: newSeed() };
+  const btn = $('editPhotosBtn');
+  btn.disabled = true;
+  let done = 0;
+  btn.textContent = `Editando 0/${originals.length}…`;
+  const errors = [];
+  const edited = await editImages(api, [...originals], opts, (i, url, err) => {
+    done += 1;
+    btn.textContent = `Editando ${done}/${originals.length}…`;
+    if (err) errors.push(err.message);
+  });
+  edited.forEach((url, i) => { if (url) uploaded[i] = url; });
+  renderThumbs();
+  btn.disabled = false;
+  btn.textContent = '🎨 Editar fotos';
+  $('undoEditBtn').hidden = false;
+  if (errors.length) alert(`${errors.length} foto(s) no se pudieron editar: ${[...new Set(errors)].join(' · ')}`);
+});
+
+$('undoEditBtn').addEventListener('click', () => {
+  setPhotos([...originals], [...originals]);
+  renderThumbs();
+  $('undoEditBtn').hidden = true;
+});
+
+$('aiBtn').addEventListener('click', async () => {
+  const images = originals.length ? [...originals] : allImages();
+  if (!images.length) return alert('Sube primero tus fotos (incluye una de la etiqueta si puedes).');
+  const btn = $('aiBtn');
+  btn.disabled = true;
+  btn.textContent = 'La IA está escribiendo… (hasta 1 min)';
+  try {
+    const result = await describe(api, images, $('aiNotesInput').value, studioOptions().language);
+    applyFields(listingToFields(result));
+    if (result.comps?.count) {
+      $('aiNotes').textContent += `\n📊 eBay: ${result.comps.count} anuncios parecidos entre ${result.comps.low} y ${result.comps.high} (mediana ${result.comps.median}).`;
+    }
+  } catch (e) {
+    alert(e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ Escribir anuncio con IA';
+  }
+});
+
+function applyFields(f) {
+  for (const k of ['title', 'description', 'brand', 'size', 'color', 'condition', 'price', 'keywords', 'extraAspects', 'catSearch']) {
+    if (f[k] !== undefined && f[k] !== '') $(k).value = f[k];
+  }
+  const sel = $('ebayCategoryId');
+  if (f.categories?.length) {
+    sel.length = 1;
+    for (const c of f.categories) sel.add(new Option(`${c.path} (${c.id})`, c.id));
+    sel.value = f.ebayCategoryId;
+  }
+  $('aiNotes').textContent = f.aiNotes || '';
+  $('aiNotes').hidden = !f.aiNotes;
+  updateCount();
+  saveDraft();
+}
 
 // ── Categorías eBay ───────────────────────────────────────
 async function searchCategories() {
@@ -227,13 +292,13 @@ $('toEbay').addEventListener('change', (e) => { $('ebayFields').hidden = !e.targ
 // ── Borrador ──────────────────────────────────────────────
 const FIELDS = ['title', 'description', 'price', 'quantity', 'condition', 'brand', 'size', 'color', 'cost', 'location', 'keywords', 'extraAspects', 'photoUrls', 'catSearch'];
 function saveDraft() {
-  store.set('draft', { ...Object.fromEntries(FIELDS.map((f) => [f, $(f).value])), uploaded, currentItemId });
+  store.set('draft', { ...Object.fromEntries(FIELDS.map((f) => [f, $(f).value])), uploaded, originals, currentItemId });
 }
 function restoreDraft() {
   const d = store.get('draft', null);
   if (!d) return;
   FIELDS.forEach((f) => { if (d[f] != null) $(f).value = d[f]; });
-  uploaded.splice(0, uploaded.length, ...(d.uploaded || []));
+  setPhotos(d.uploaded, d.originals);
   setEditing(d.currentItemId || null);
   renderThumbs(); updateCount();
 }
@@ -252,7 +317,8 @@ function loadIntoForm(item) {
     if (![...sel.options].some((o) => o.value === item.ebayCategoryId)) sel.add(new Option(`Categoría ${item.ebayCategoryId}`, item.ebayCategoryId));
     sel.value = item.ebayCategoryId;
   }
-  uploaded.splice(0, uploaded.length, ...(item.images || []));
+  setPhotos(item.images, item.originalImages);
+  $('aiNotes').hidden = !item.aiNotes; $('aiNotes').textContent = item.aiNotes || '';
   setEditing(item.id);
   renderThumbs(); updateCount();
   $('results').hidden = true;
@@ -262,7 +328,8 @@ function loadIntoForm(item) {
 function clearForm() {
   $('listingForm').reset();
   $('condition').value = 'like_new';
-  uploaded.length = 0;
+  setPhotos([], []);
+  $('aiNotes').hidden = true;
   setEditing(null);
   renderThumbs(); updateCount();
 }
@@ -298,7 +365,7 @@ function readListing() {
 /** Guarda (o actualiza) el artículo del formulario en el inventario. Devuelve su id. */
 function saveToInventory(listing, listings = {}) {
   const { title, description, price, quantity, condition, brand, size, color, keywords, extraAspects, ebayCategoryId, cost, location, images } = listing;
-  const data = { title, description, price, quantity, condition, brand, size, color, keywords, extraAspects, ebayCategoryId, cost, location, images };
+  const data = { title, description, price, quantity, condition, brand, size, color, keywords, extraAspects, ebayCategoryId, cost, location, images, originalImages: [...originals] };
   const existing = currentItemId && findItem(currentItemId);
   let id = existing?.id;
   mutate((db) => {
@@ -306,7 +373,7 @@ function saveToInventory(listing, listings = {}) {
     if (item) {
       Object.assign(item, data);
       item.listings = { ...item.listings, ...listings };
-      if (item.status === 'retirado' && Object.keys(listings).length) item.status = 'disponible';
+      if (['retirado', 'borrador'].includes(item.status) && Object.keys(listings).length) item.status = 'disponible';
     } else {
       const created = newItem({ ...data, listings });
       id = created.id;

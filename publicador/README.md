@@ -19,6 +19,15 @@ Además tiene dos pestañas más:
 - **Finanzas**: ingresos, comisiones, envíos, costo de lo vendido, otros gastos y **ganancia neta** (por mes, por plataforma y total),
   valor del inventario, registro de gastos y descarga en **CSV** (Excel / Google Sheets). Las comisiones son estimaciones editables.
 
+- **Estudio con IA** (opcional):
+  - **Fotos**: quita el fondo y pone uno **vintage de boutique** generado con IA (o tu propia foto de fondo, o blanco limpio para eBay),
+    con sombra realista, luz mejorada sin cambiar el color de la prenda y **sin arrugas**. Todas las fotos de un artículo comparten estilo.
+  - **Textos**: mira las fotos (y la etiqueta) y escribe título con SEO (80 caracteres, palabras que más se buscan primero), descripción,
+    marca, talla, material, condición, palabras clave/hashtags, características de eBay, categoría y **precio sugerido** con
+    referencia de anuncios parecidos en eBay. Te dice qué revisar (medidas, etiqueta ilegible…). En inglés o español.
+  - **Lote**: eliges todas las fotos de golpe, la app las agrupa por artículo (por la hora en que las tomaste) y procesa todo.
+    Cada artículo queda como **Borrador** en Inventario para revisarlo y publicarlo.
+
 Los datos se guardan en tu **Vercel Blob** (se ven igual desde el móvil y el ordenador) y se conservan las últimas 10 versiones como copia de seguridad.
 
 ## 1. Desplegar en Vercel
@@ -32,6 +41,17 @@ Los datos se guardan en tu **Vercel Blob** (se ven igual desde el móvil y el or
 Vercel → tu proyecto → **Storage** → **Create → Blob** → conéctalo al proyecto. Eso crea `BLOB_READ_WRITE_TOKEN` solo. Haz **Redeploy**.
 Sin esto no se pueden subir fotos ni guardar el inventario.
 Las fotos se reducen a 1600 px en el móvil antes de subirse.
+
+### Estudio con IA (opcional)
+1. **Textos**: crea una clave en [platform.claude.com](https://platform.claude.com) → API Keys y ponla en `ANTHROPIC_API_KEY`.
+   Cada anuncio cuesta unos céntimos.
+2. **Fotos**: contrata el plan **Plus** de la [API de Photoroom](https://www.photoroom.com/api) (el Basic no incluye fondos con IA)
+   y pon la clave en `PHOTOROOM_API_KEY`. Cada foto editada gasta un crédito; mira sus precios actuales en su web.
+   Para probar gratis, usa su clave de **sandbox** (empieza por `sandbox_`): funciona igual pero con marca de agua.
+3. Redeploy.
+
+Consejos para mejores resultados: fotografía la prenda entera sobre una superficie lisa con buena luz, y añade **una foto de la etiqueta**
+(marca, talla, material). Para eBay, la primera foto en **Blanco limpio** suele funcionar mejor en las búsquedas.
 
 ## 2. Conectar eBay
 
@@ -67,4 +87,4 @@ npm run check   # sintaxis + tests
 npx vercel dev  # servidor local con las funciones /api
 ```
 
-Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel: `data` = inventario/finanzas, `ebay/*`, `upload`), `lib/` (eBay, almacenamiento en Blob, contraseña), `tests/`.
+Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel: `data` = inventario/finanzas, `ebay/*`, `ai/describe`, `photo/edit`, `upload`), `lib/` (eBay, Claude, Photoroom, almacenamiento en Blob, contraseña), `tests/`.
