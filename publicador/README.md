@@ -8,7 +8,15 @@ Escribes el anuncio **una sola vez** (fotos, título, precio, talla…) y la app
 | **Poshmark** | **Asistido**: textos ya adaptados, botón «Copiar», abre el formulario de Poshmark | Poshmark no tiene API pública; los bots que publican por ti incumplen sus condiciones y pueden cerrarte la cuenta |
 | **Depop** | **Asistido**: descripción con hashtags (máx. 1000 caracteres y 5 hashtags) | Su API de venta solo está disponible para socios aprobados por Depop |
 
-También guarda un historial en tu navegador para que, cuando vendas en un sitio, retires el artículo de los demás.
+Además tiene dos pestañas más:
+
+- **Inventario**: todos tus artículos con costo, precio, unidades, ubicación (caja/estante) y el estado en cada plataforma.
+  Al marcar **Vendido**, descuenta la unidad, estima la comisión y, si era la última, **retira el anuncio de eBay automáticamente**
+  y te recuerda borrar el de Poshmark/Depop para no venderlo dos veces.
+- **Finanzas**: ingresos, comisiones, envíos, costo de lo vendido, otros gastos y **ganancia neta** (por mes, por plataforma y total),
+  valor del inventario, registro de gastos y descarga en **CSV** (Excel / Google Sheets). Las comisiones son estimaciones editables.
+
+Los datos se guardan en tu **Vercel Blob** (se ven igual desde el móvil y el ordenador) y se conservan las últimas 10 versiones como copia de seguridad.
 
 ## 1. Desplegar en Vercel
 
@@ -17,8 +25,9 @@ También guarda un historial en tu navegador para que, cuando vendas en un sitio
 3. En **Environment Variables** añade como mínimo `APP_PASSWORD` (la contraseña de la app).
 4. Pulsa **Deploy**. Tu app queda en `https://TU-APP.vercel.app`.
 
-### Fotos
+### Fotos e inventario
 Vercel → tu proyecto → **Storage** → **Create → Blob** → conéctalo al proyecto. Eso crea `BLOB_READ_WRITE_TOKEN` solo. Haz **Redeploy**.
+Sin esto no se pueden subir fotos ni guardar el inventario.
 Las fotos se reducen a 1600 px en el móvil antes de subirse.
 
 ## 2. Conectar eBay
@@ -41,7 +50,9 @@ Cuando la etiqueta diga **eBay listo**, ya publica automáticamente. Todas las v
 ## 3. Uso diario
 1. Sube fotos, rellena el artículo y busca la categoría de eBay (mejor en inglés: *women dress*).
 2. Marca las plataformas y pulsa **Publicar**.
-3. eBay se publica solo y te da el enlace. Para Poshmark y Depop pulsa **Copiar todo** → **Abrir formulario**, pega y sube las fotos.
+3. eBay se publica solo y te da el enlace. Para Poshmark y Depop pulsa **Copiar todo** → **Abrir formulario**, pega y sube las fotos, y luego **Marcar como publicado**.
+4. El artículo queda en **Inventario**. Cuando lo vendas, pulsa **Vendido** y revisa la comisión y el envío.
+5. Apunta en **Finanzas → Gastos** lo que no es mercancía (cajas, cinta, suscripciones…). La mercancía ya cuenta con el «costo» de cada artículo.
 
 ## Desarrollo
 ```bash
@@ -50,4 +61,4 @@ npm run check   # sintaxis + tests
 npx vercel dev  # servidor local con las funciones /api
 ```
 
-Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel), `lib/` (cliente de eBay y contraseña), `tests/`.
+Estructura: `public/` (interfaz, sin build), `api/` (funciones serverless de Vercel: `data` = inventario/finanzas, `ebay/*`, `upload`), `lib/` (eBay, almacenamiento en Blob, contraseña), `tests/`.

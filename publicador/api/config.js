@@ -13,5 +13,6 @@ export default function handler(req, res) {
       missing,
     },
     uploads: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+    storage: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
   });
 }

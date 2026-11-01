@@ -44,5 +44,52 @@ button:disabled { opacity: .55; cursor: progress; }
 .assist dt { color: var(--muted); } .assist dd { margin: 0; white-space: pre-wrap; word-break: break-word; }
 .assist dd button { padding: 2px 8px; font-size: .75rem; margin-left: 6px; }
 .photoLinks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; } .photoLinks img { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; }
-.hist { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .9rem; flex-wrap: wrap; }
-.hist:first-child { border-top: 0; } .hist a { color: var(--brand); }
+
+/* ── Pestañas ─────────────────────────────── */
+.tabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; margin-bottom: 16px; position: sticky; top: 8px; z-index: 5; }
+.tabs button { flex: 1; background: transparent; color: var(--muted); border: 0; padding: 10px 8px; }
+.tabs button[aria-selected="true"] { background: var(--brand); color: var(--brand-ink); }
+button.small { padding: 4px 10px; font-size: .8rem; }
+button.danger { color: var(--err); border-color: var(--err); }
+button.wide { width: 100%; margin-top: 8px; }
+.editing { background: var(--soft); padding: 8px 12px; border-radius: 10px; font-size: .9rem; margin-top: 0; }
+.toolbar { margin: 12px 0 4px; } .toolbar input { flex: 1 1 200px; } .toolbar select { width: auto; margin-top: 0; }
+
+/* ── Indicadores ──────────────────────────── */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.kpi { background: var(--soft); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; }
+.kpi b { font-size: 1.25rem; font-variant-numeric: tabular-nums; } .kpi span { font-size: .8rem; color: var(--muted); }
+.kpi small { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+.kpi.good b { color: var(--ok); } .kpi.bad b { color: var(--err); }
+
+/* ── Inventario ───────────────────────────── */
+.item { display: flex; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
+.item > img, .item .noimg { width: 88px; height: 88px; flex: none; border-radius: 10px; object-fit: cover; background: var(--soft); }
+.item .noimg { display: grid; place-items: center; font-size: .75rem; color: var(--muted); }
+.item .body { flex: 1; min-width: 0; }
+.item h3 { font-size: 1rem; overflow-wrap: anywhere; }
+.itemHead { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.item .meta { margin: 2px 0; font-size: .85rem; color: var(--muted); }
+.item.vendido, .item.retirado { opacity: .75; }
+.badge { font-size: .72rem; padding: 2px 8px; border-radius: 99px; background: var(--soft); white-space: nowrap; }
+.badge.disponible { color: var(--ok); } .badge.vendido { color: var(--brand); } .badge.retirado { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.chip { font: inherit; font-size: .75rem; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--ink); text-decoration: none; cursor: pointer; }
+.chip.ok { color: var(--ok); border-color: currentColor; } .chip.err { color: var(--err); border-color: currentColor; }
+.actions button { padding: 6px 12px; font-size: .85rem; }
+
+/* ── Tablas ───────────────────────────────── */
+.tableWrap { overflow-x: auto; margin: 8px 0; }
+table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td:nth-child(2) { white-space: normal; min-width: 120px; }
+th { color: var(--muted); font-weight: 600; }
+#expenseForm { align-items: end; margin-bottom: 8px; } #expenseForm button { margin-bottom: 12px; }
+.feeRow { display: grid; grid-template-columns: 1fr 84px 84px; gap: 8px; align-items: center; margin-bottom: 4px; }
+.feeRow label { margin: 0; font-size: .75rem; color: var(--muted); } .feeRow input { padding: 8px; }
+label.inline { max-width: 120px; }
+
+/* ── Diálogos ─────────────────────────────── */
+dialog { border: 1px solid var(--line); border-radius: 16px; padding: 18px; width: min(560px, calc(100vw - 32px)); background: var(--card); color: var(--ink); }
+dialog::backdrop { background: rgb(0 0 0 / .45); }
+dialog .row { margin-top: 8px; }

@@ -1,4 +1,7 @@
 import { CONDITIONS, forPoshmark, forDepop, asCopyText } from './formatters.js';
+import { initStore, load, mutate, findItem } from './store.js';
+import { initInventory, newItem } from './inventory.js';
+import { initFinance } from './finance.js';
 
 const $ = (id) => document.getElementById(id);
 const store = {
@@ -9,6 +12,8 @@ const store = {
 let password = store.get('pw', '');
 let config = null;
 const uploaded = []; // URLs de fotos subidas
+let currentItemId = null; // artículo del inventario que se está publicando
+let started = false;
 
 async function api(path, { method = 'GET', body } = {}) {
   const r = await fetch(path, {
@@ -56,8 +61,26 @@ $('logout').addEventListener('click', () => { store.del('pw'); password = ''; sh
 
 function showApp() {
   $('login').hidden = true; $('app').hidden = false; $('logout').hidden = false;
-  renderStatus(); renderHistory(); restoreDraft();
+  renderStatus();
+  if (!started) {
+    started = true;
+    initStore(api);
+    initInventory({ api, loadIntoForm });
+    initFinance();
+    restoreDraft();
+  }
+  load();
 }
+
+// ── Pestañas ──────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+  document.querySelectorAll('.tab').forEach((t) => { t.hidden = t.id !== `tab-${name}`; });
+  store.set('tab', name);
+  window.scrollTo({ top: 0 });
+}
+document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+showTab(store.get('tab', 'publicar'));
 
 function renderStatus() {
   const { ebay, uploads } = config;
@@ -65,7 +88,7 @@ function renderStatus() {
   el.innerHTML = '';
   const pill = (txt, cls) => Object.assign(document.createElement('span'), { className: `pill ${cls || ''}`, textContent: txt });
   el.append(pill(ebay.ready ? `eBay listo (${ebay.env})` : `eBay sin terminar (${ebay.env})`, ebay.ready ? 'ok' : 'err'));
-  el.append(pill(uploads ? 'Subida de fotos activa' : 'Subida de fotos desactivada', uploads ? 'ok' : 'err'));
+  el.append(pill(uploads ? 'Fotos e inventario activos' : 'Falta Blob Store (fotos e inventario)', uploads ? 'ok' : 'err'));
   if (ebay.canConnect) {
     const b = Object.assign(document.createElement('button'), { className: 'ghost', type: 'button', textContent: ebay.missing.includes('EBAY_REFRESH_TOKEN') ? 'Conectar eBay' : 'Reconectar eBay' });
     b.onclick = async () => {
@@ -199,17 +222,48 @@ $('catSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.p
 $('toEbay').addEventListener('change', (e) => { $('ebayFields').hidden = !e.target.checked; });
 
 // ── Borrador ──────────────────────────────────────────────
-const FIELDS = ['title', 'description', 'price', 'quantity', 'condition', 'brand', 'size', 'color', 'keywords', 'extraAspects', 'photoUrls', 'catSearch'];
+const FIELDS = ['title', 'description', 'price', 'quantity', 'condition', 'brand', 'size', 'color', 'cost', 'location', 'keywords', 'extraAspects', 'photoUrls', 'catSearch'];
 function saveDraft() {
-  store.set('draft', { ...Object.fromEntries(FIELDS.map((f) => [f, $(f).value])), uploaded });
+  store.set('draft', { ...Object.fromEntries(FIELDS.map((f) => [f, $(f).value])), uploaded, currentItemId });
 }
 function restoreDraft() {
   const d = store.get('draft', null);
   if (!d) return;
   FIELDS.forEach((f) => { if (d[f] != null) $(f).value = d[f]; });
   uploaded.splice(0, uploaded.length, ...(d.uploaded || []));
+  setEditing(d.currentItemId || null);
   renderThumbs(); updateCount();
 }
+
+function setEditing(id) {
+  currentItemId = id;
+  $('editingBanner').hidden = !id;
+}
+
+/** Carga un artículo del inventario en el formulario para publicarlo (o republicarlo). */
+function loadIntoForm(item) {
+  const values = { ...item, price: item.price || '', cost: item.cost || '', quantity: item.quantity || 1, photoUrls: '', catSearch: '' };
+  FIELDS.forEach((f) => { $(f).value = values[f] ?? ''; });
+  if (item.ebayCategoryId) {
+    const sel = $('ebayCategoryId');
+    if (![...sel.options].some((o) => o.value === item.ebayCategoryId)) sel.add(new Option(`Categoría ${item.ebayCategoryId}`, item.ebayCategoryId));
+    sel.value = item.ebayCategoryId;
+  }
+  uploaded.splice(0, uploaded.length, ...(item.images || []));
+  setEditing(item.id);
+  renderThumbs(); updateCount();
+  $('results').hidden = true;
+  showTab('publicar');
+}
+
+function clearForm() {
+  $('listingForm').reset();
+  $('condition').value = 'like_new';
+  uploaded.length = 0;
+  setEditing(null);
+  renderThumbs(); updateCount();
+}
+$('newListing').addEventListener('click', clearForm);
 $('listingForm').addEventListener('input', saveDraft);
 
 function updateCount() {
@@ -232,9 +286,41 @@ function readListing() {
     keywords: $('keywords').value,
     extraAspects: $('extraAspects').value,
     ebayCategoryId: $('ebayCategoryId').value,
+    cost: Number($('cost').value) || 0,
+    location: $('location').value.trim(),
     images: allImages(),
   };
 }
+
+/** Guarda (o actualiza) el artículo del formulario en el inventario. Devuelve su id. */
+function saveToInventory(listing, listings = {}) {
+  const { title, description, price, quantity, condition, brand, size, color, keywords, extraAspects, ebayCategoryId, cost, location, images } = listing;
+  const data = { title, description, price, quantity, condition, brand, size, color, keywords, extraAspects, ebayCategoryId, cost, location, images };
+  const existing = currentItemId && findItem(currentItemId);
+  let id = existing?.id;
+  mutate((db) => {
+    const item = existing && db.items.find((x) => x.id === existing.id);
+    if (item) {
+      Object.assign(item, data);
+      item.listings = { ...item.listings, ...listings };
+      if (item.status === 'retirado' && Object.keys(listings).length) item.status = 'disponible';
+    } else {
+      const created = newItem({ ...data, listings });
+      id = created.id;
+      db.items.push(created);
+    }
+  });
+  setEditing(id);
+  saveDraft();
+  return id;
+}
+
+$('saveOnlyBtn').addEventListener('click', () => {
+  const listing = readListing();
+  if (!listing.title) return alert('Escribe al menos el título.');
+  saveToInventory(listing);
+  alert('Guardado en el inventario.');
+});
 
 $('listingForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -242,7 +328,7 @@ $('listingForm').addEventListener('submit', async (e) => {
   const targets = { ebay: $('toEbay').checked, poshmark: $('toPoshmark').checked, depop: $('toDepop').checked };
   if (!Object.values(targets).some(Boolean)) return alert('Elige al menos una plataforma.');
 
-  const entry = { id: Date.now(), date: new Date().toISOString(), title: listing.title, price: listing.price, platforms: {} };
+  const listings = {};
   const out = $('resultList');
   out.innerHTML = '';
   $('results').hidden = false;
@@ -256,11 +342,11 @@ $('listingForm').addEventListener('submit', async (e) => {
       line.className = 'ok';
       line.innerHTML = 'eBay: ✓ publicado — ';
       line.append(Object.assign(document.createElement('a'), { href: r.url, target: '_blank', rel: 'noopener', textContent: `ver anuncio ${r.listingId}` }));
-      entry.platforms.ebay = { status: 'publicado', url: r.url };
+      listings.ebay = { status: 'publicado', url: r.url, listingId: r.listingId, offerId: r.offerId, sku: r.sku };
     } catch (err) {
       line.className = 'err';
       line.textContent = `eBay: ✗ ${err.message}`;
-      entry.platforms.ebay = { status: 'error' };
+      listings.ebay = { status: 'error' };
     }
   }
 
@@ -269,19 +355,20 @@ $('listingForm').addEventListener('submit', async (e) => {
       'Poshmark no tiene API pública para publicar. Copia los datos, abre el formulario y sube las fotos (guárdalas desde aquí abajo).',
       forPoshmark(listing),
       { title: 'Título', description: 'Descripción', brand: 'Marca', size: 'Talla', color: 'Color', condition: 'Condición', price: 'Precio', styleTags: 'Estilos' },
-      listing.images, entry));
-    entry.platforms.poshmark = { status: 'pendiente' };
+      listing.images));
+    listings.poshmark = { status: 'pendiente' };
   }
   if (targets.depop) {
     out.append(assistCard('depop', 'Depop', 'https://www.depop.com/products/create/',
       'La API de Depop es solo para socios aprobados. Copia los datos, abre el formulario y sube las fotos.',
       forDepop(listing),
       { description: 'Descripción', brand: 'Marca', size: 'Talla', condition: 'Condición', price: 'Precio' },
-      listing.images, entry));
-    entry.platforms.depop = { status: 'pendiente' };
+      listing.images));
+    listings.depop = { status: 'pendiente' };
   }
 
-  addHistory(entry);
+  const itemId = saveToInventory(listing, listings);
+  out.querySelectorAll('.assist').forEach((n) => { n.dataset.item = itemId; });
   $('publishBtn').disabled = false;
   $('results').scrollIntoView({ behavior: 'smooth' });
 });
@@ -293,7 +380,7 @@ function copy(text, btn) {
   }, () => prompt('Copia el texto:', text));
 }
 
-function assistCard(key, name, url, hint, fields, labels, images, entry) {
+function assistCard(key, name, url, hint, fields, labels, images) {
   const node = $('assistTpl').content.firstElementChild.cloneNode(true);
   node.querySelector('h3').textContent = name;
   node.querySelector('.hint').textContent = hint;
@@ -310,7 +397,12 @@ function assistCard(key, name, url, hint, fields, labels, images, entry) {
   node.querySelector('.copyAll').onclick = (e) => copy(asCopyText(fields, labels), e.target);
   node.querySelector('.open').href = url;
   node.querySelector('.markDone').onclick = (e) => {
-    setStatus(entry.id, key, 'publicado'); e.target.textContent = '✓ Marcado'; e.target.disabled = true;
+    const id = node.dataset.item;
+    mutate((db) => {
+      const item = db.items.find((x) => x.id === id);
+      if (item) item.listings[key] = { ...item.listings[key], status: 'publicado' };
+    });
+    e.target.textContent = '✓ Marcado'; e.target.disabled = true;
   };
   const photos = node.querySelector('.photoLinks');
   images.forEach((src) => {
@@ -319,38 +411,6 @@ function assistCard(key, name, url, hint, fields, labels, images, entry) {
     photos.append(a);
   });
   return node;
-}
-
-// ── Historial ─────────────────────────────────────────────
-function addHistory(entry) {
-  store.set('history', [entry, ...store.get('history', [])].slice(0, 200));
-  renderHistory();
-}
-function setStatus(id, platform, status) {
-  const h = store.get('history', []);
-  const e = h.find((x) => x.id === id);
-  if (e) { e.platforms[platform] = { ...e.platforms[platform], status }; store.set('history', h); renderHistory(); }
-}
-function renderHistory() {
-  const h = store.get('history', []);
-  const el = $('history');
-  el.innerHTML = h.length ? '' : '<p class="hint">Aún no has publicado nada.</p>';
-  for (const e of h) {
-    const row = document.createElement('div');
-    row.className = 'hist';
-    const left = Object.assign(document.createElement('div'), { textContent: `${e.title} — ${e.price} · ${new Date(e.date).toLocaleDateString()}` });
-    const right = document.createElement('div');
-    for (const [p, info] of Object.entries(e.platforms)) {
-      const tag = info.url
-        ? Object.assign(document.createElement('a'), { href: info.url, target: '_blank', rel: 'noopener' })
-        : document.createElement('span');
-      tag.textContent = `${p}: ${info.status} `;
-      tag.className = info.status === 'error' ? 'err' : info.status === 'publicado' ? 'ok' : '';
-      right.append(tag);
-    }
-    row.append(left, right);
-    el.append(row);
-  }
 }
 
 boot();

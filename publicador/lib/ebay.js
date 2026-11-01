@@ -262,3 +262,9 @@ export async function createLocation({ key, name, postalCode, country }) {
   });
   return { key };
 }
+
+/** Finaliza el anuncio publicado de una oferta (el artículo sigue en tu inventario de eBay). */
+export async function withdrawOffer(offerId) {
+  const token = await userToken();
+  return call('POST', `/sell/inventory/v1/offer/${encodeURIComponent(offerId)}/withdraw`, { token });
+}

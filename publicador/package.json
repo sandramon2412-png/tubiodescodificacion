@@ -6,7 +6,7 @@
   "description": "Crea un anuncio una vez y publícalo en eBay (API oficial), Poshmark y Depop. Se despliega en Vercel.",
   "scripts": {
     "dev": "vercel dev",
-    "check": "node --check lib/auth.js && node --check lib/ebay.js && node --check api/config.js && node --check api/upload.js && node --check api/ebay/connect.js && node --check api/ebay/callback.js && node --check api/ebay/publish.js && node --check api/ebay/categories.js && node --check api/ebay/setup.js && node --check public/app.js && node --test tests/*.test.js"
+    "check": "node --check lib/auth.js && node --check lib/ebay.js && node --check api/config.js && node --check api/data.js && node --check api/ebay/withdraw.js && node --check lib/db.js && node --check public/store.js && node --check public/inventory.js && node --check public/finance.js && node --check public/finance-calc.js && node --check api/upload.js && node --check api/ebay/connect.js && node --check api/ebay/callback.js && node --check api/ebay/publish.js && node --check api/ebay/categories.js && node --check api/ebay/setup.js && node --check public/app.js && node --test tests/*.test.js"
   },
   "engines": { "node": ">=20" },
   "dependencies": {
