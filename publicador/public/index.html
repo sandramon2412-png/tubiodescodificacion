@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publicador Multicanal</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <h1>Publicador <span>eBay · Poshmark · Depop</span></h1>
+    <button id="logout" class="ghost" hidden>Salir</button>
+  </header>
+
+  <!-- Acceso -->
+  <section id="login" class="card narrow" hidden>
+    <h2>Entrar</h2>
+    <form id="loginForm">
+      <label>Contraseña de la app<input type="password" id="pw" autocomplete="current-password" required></label>
+      <button type="submit">Entrar</button>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+  </section>
+
+  <main id="app" hidden>
+    <section class="card status" id="status"></section>
+    <section class="card" id="setup" hidden></section>
+
+    <form id="listingForm" class="card">
+      <h2>1. Tu artículo</h2>
+
+      <label>Fotos
+        <input type="file" id="photos" accept="image/*" multiple>
+        <small>Se reducen a 1600 px y se suben a tu Vercel Blob. También puedes pegar URLs https (una por línea):</small>
+        <textarea id="photoUrls" rows="2" placeholder="https://…"></textarea>
+      </label>
+      <div id="thumbs" class="thumbs"></div>
+
+      <label>Título <small class="count" data-for="title" data-max="80"></small>
+        <input id="title" maxlength="80" required placeholder="Vestido midi floral Zara talla M">
+      </label>
+      <label>Descripción
+        <textarea id="description" rows="5" required placeholder="Estado, medidas, detalles…"></textarea>
+      </label>
+
+      <div class="grid">
+        <label>Precio<input id="price" type="number" min="0.01" step="0.01" required></label>
+        <label>Cantidad<input id="quantity" type="number" min="1" value="1"></label>
+        <label>Condición
+          <select id="condition" required></select>
+        </label>
+        <label>Marca<input id="brand"></label>
+        <label>Talla<input id="size"></label>
+        <label>Color<input id="color"></label>
+      </div>
+      <label>Palabras clave <small>(hashtags de Depop y estilos de Poshmark, separadas por comas)</small>
+        <input id="keywords" placeholder="vintage, boho, verano">
+      </label>
+
+      <h2>2. ¿Dónde publicar?</h2>
+      <div class="platforms">
+        <label class="check"><input type="checkbox" id="toEbay" checked> eBay <em>automático</em></label>
+        <label class="check"><input type="checkbox" id="toPoshmark" checked> Poshmark <em>asistido</em></label>
+        <label class="check"><input type="checkbox" id="toDepop" checked> Depop <em>asistido</em></label>
+      </div>
+
+      <fieldset id="ebayFields">
+        <legend>Datos para eBay</legend>
+        <label>Categoría
+          <div class="row">
+            <input id="catSearch" placeholder="Busca: women dress, sneakers…">
+            <button type="button" id="catBtn" class="ghost">Buscar</button>
+          </div>
+          <select id="ebayCategoryId"><option value="">— elige una categoría —</option></select>
+        </label>
+        <label>Características extra <small>(una por línea, «Clave: valor». eBay te dirá si falta alguna obligatoria)</small>
+          <textarea id="extraAspects" rows="3" placeholder="Department: Women&#10;Style: Midi"></textarea>
+        </label>
+      </fieldset>
+
+      <button type="submit" id="publishBtn" class="primary">Publicar</button>
+    </form>
+
+    <section id="results" class="card" hidden>
+      <h2>3. Resultado</h2>
+      <div id="resultList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Historial <small>(guardado en este navegador)</small></h2>
+      <p class="hint">Cuando vendas en una plataforma, retira el artículo de las demás para no venderlo dos veces.</p>
+      <div id="history"></div>
+    </section>
+  </main>
+
+  <template id="assistTpl">
+    <div class="assist">
+      <h3></h3>
+      <p class="hint"></p>
+      <dl></dl>
+      <div class="row wrap">
+        <button type="button" class="copyAll">Copiar todo</button>
+        <a class="button open" target="_blank" rel="noopener">Abrir formulario ↗</a>
+        <button type="button" class="ghost markDone">Marcar como publicado</button>
+      </div>
+      <div class="photoLinks"></div>
+    </div>
+  </template>
+</body>
+</html>
